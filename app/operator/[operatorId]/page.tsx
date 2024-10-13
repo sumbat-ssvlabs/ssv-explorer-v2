@@ -25,7 +25,7 @@ const getOperator = cache(async (operatorId: string) => {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const operator = await getOperator(params.operatorId);
 
-  const title = `SSV Operator: ${operator.name}` ?? "SSV Operator Not Found";
+  const title = `SSV Operator: ${operator.name}` || "SSV Operator Not Found";
   const description = `View details for SSV Operator ${
     operator.name
   }. Performance: ${operator.performance["30d"].toFixed(2)}%, Fee: ${

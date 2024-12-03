@@ -22,9 +22,7 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
     ),
-    cell: ({ row }) => (
-      <div className="line-clamp-1">{row.getValue("name")}</div>
-    ),
+    cell: ({ row }) => <div className="line-clamp-1">{row.getValue("name")}</div>,
     enableSorting: false,
   },
   {
@@ -33,9 +31,7 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
       <DataTableColumnHeader column={column} title="Owner Address" />
     ),
     cell: ({ row }) => (
-      <div className="line-clamp-1">
-        {shortenAddress(row.getValue("owner_address"))}
-      </div>
+      <div>{shortenAddress(row.getValue("owner_address"))}</div>
     ),
     enableSorting: false,
   },
@@ -54,9 +50,7 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Eth1 Node Client" />
     ),
-    cell: ({ row }) => (
-      <div className="line-clamp-1">{row.getValue("eth1_node_client")}</div>
-    ),
+    cell: ({ row }) => <div>{row.getValue("eth1_node_client")}</div>,
     enableSorting: false,
   },
   {
@@ -64,9 +58,7 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Eth2 Node Client" />
     ),
-    cell: ({ row }) => (
-      <div className="line-clamp-1">{row.getValue("eth2_node_client")}</div>
-    ),
+    cell: ({ row }) => <div>{row.getValue("eth2_node_client")}</div>,
     enableSorting: false,
   },
   {

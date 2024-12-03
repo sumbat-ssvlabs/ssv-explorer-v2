@@ -31,8 +31,10 @@ export function OperatorsTable({ dataPromise: data }: OperatorsTableProps) {
 
   return (
     <>
-      <Cmp table={table} />
-      <DataTableViewOptions table={table} />
+      <div className="flex">
+        <Cmp table={table} />
+        <DataTableViewOptions table={table} />
+      </div>
       <DataTable table={table}></DataTable>
     </>
   )

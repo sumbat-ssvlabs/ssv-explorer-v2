@@ -1,3 +1,3 @@
-export const boolify = (...values: (unknown | undefined)[]): boolean => {
-  return values.every(Boolean);
-};
+export const boolify = (...values: unknown[]): boolean => {
+  return values.every(Boolean)
+}

@@ -1,4 +1,4 @@
-import { ms } from "@/src/lib/utils/number";
+import { ms } from "@/lib/utils/number";
 
 export const wait = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));

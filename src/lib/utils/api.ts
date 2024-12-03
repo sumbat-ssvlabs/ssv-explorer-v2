@@ -1,4 +1,4 @@
-import type { Pagination } from "@/src/lib/types/api";
+import type { Pagination } from "@/types/api";
 
 export const createDefaultPagination = (
   options: Partial<Pagination> = {},

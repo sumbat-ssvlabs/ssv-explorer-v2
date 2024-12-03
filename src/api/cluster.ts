@@ -1,33 +1,30 @@
-import { endpoint } from "@/src/api";
-import { api } from "@/src/lib/api-client";
-import {
-  formatClusterData,
-  getDefaultClusterData,
-} from "@/src/lib/utils/cluster";
+import { endpoint } from "@/api"
+import { api } from "@/api/api-client"
+
 import type {
   GetClusterResponse,
   GetPaginatedClustersResponse,
   PaginatedValidatorsResponse,
-} from "@/src/lib/types/api";
-import type { Address } from "viem";
+} from "@/types/api"
+import { formatClusterData, getDefaultClusterData } from "@/lib/utils/cluster"
 
 export const getCluster = (hash: string) =>
   api
     .get<GetClusterResponse>(endpoint("clusters", hash))
-    .then((res) => res.cluster);
+    .then((res) => res.cluster)
 
 export const getClusterData = (hash: string) =>
   getCluster(hash)
     .then((cluster) =>
       cluster ? formatClusterData(cluster) : getDefaultClusterData()
     )
-    .catch(() => getDefaultClusterData());
+    .catch(() => getDefaultClusterData())
 
 export type GetPaginatedAccountClusters = {
-  account: string | Address;
-  page?: number;
-  perPage?: number;
-};
+  account: string
+  page?: number
+  perPage?: number
+}
 
 export const getPaginatedAccountClusters = ({
   account,
@@ -55,14 +52,14 @@ export const getPaginatedAccountClusters = ({
         page: response.pagination.page || 1,
         pages: response.pagination.pages || 1,
       },
-    }));
-};
+    }))
+}
 
 export type GetPaginatedClusterValidators = {
-  hash: string;
-  page?: number;
-  perPage?: number;
-};
+  hash: string
+  page?: number
+  perPage?: number
+}
 
 export const getPaginatedClusterValidators = ({
   hash,
@@ -87,5 +84,5 @@ export const getPaginatedClusterValidators = ({
         page: response.pagination.page || 1,
         pages: response.pagination.pages || 1,
       },
-    }));
-};
+    }))
+}

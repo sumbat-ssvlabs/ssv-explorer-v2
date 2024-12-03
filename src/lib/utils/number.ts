@@ -12,7 +12,7 @@ export const _percentageFormatter = new Intl.NumberFormat("en-US", {
 
 export const percentageFormatter = {
   format: (value?: number) => {
-    if (!value) return "0%";
+    if (!value) return "N/A";
     return _percentageFormatter.format(value / 100);
   },
 };

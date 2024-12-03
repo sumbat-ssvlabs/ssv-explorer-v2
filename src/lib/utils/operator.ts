@@ -1,27 +1,27 @@
-import { globals } from "@/src/lib/config";
-import type { Operator } from "@/src/lib/types/api";
-import { ethFormatter, sortNumbers } from "@/src/lib/utils/number";
-import { difference } from "lodash-es";
-import { formatUnits } from "viem";
+import { formatUnits } from "viem"
+
+import { globals } from "@/config/globals"
+import { ethFormatter, sortNumbers } from "@/lib/utils/number"
+import type { Operator } from "@/types/api"
 
 type GetYearlyFeeOpts = {
-  format?: boolean;
-};
+  format?: boolean
+}
 
-export function getYearlyFee(fee: bigint, opts: { format: true }): string;
-export function getYearlyFee(fee: bigint, opts?: GetYearlyFeeOpts): bigint;
+export function getYearlyFee(fee: bigint, opts: { format: true }): string
+export function getYearlyFee(fee: bigint, opts?: GetYearlyFeeOpts): bigint
 export function getYearlyFee(
   fee: bigint,
   opts?: GetYearlyFeeOpts
 ): string | bigint {
-  const yearlyFee = fee * BigInt(globals.BLOCKS_PER_YEAR);
+  const yearlyFee = fee * BigInt(globals.BLOCKS_PER_YEAR)
   if (opts?.format)
-    return ethFormatter.format(+formatUnits(yearlyFee, 18)) + " SSV";
-  return yearlyFee;
+    return ethFormatter.format(+formatUnits(yearlyFee, 18)) + " SSV"
+  return yearlyFee
 }
 
 export const getMevRelaysAmount = (mev?: string) =>
-  mev ? mev.split(",").filter((item: string) => item).length : 0;
+  mev ? mev.split(",").filter((item: string) => item).length : 0
 
 export const MEV_RELAYS = {
   AESTUS: "Aestus",
@@ -31,8 +31,9 @@ export const MEV_RELAYS = {
   EDEN: "Eden Network",
   FLASHBOTS: "Flashbots",
   MANIFOLD: "Manifold",
+  TITAN: "Titan Relay",
   ULTRA_SOUND: "Ultra Sound",
-};
+}
 
 export const MEV_RELAYS_LOGOS = {
   [MEV_RELAYS.AESTUS]: "Aestus",
@@ -40,15 +41,19 @@ export const MEV_RELAYS_LOGOS = {
   [MEV_RELAYS.BLOXROUTE_MAX_PROFIT]: "blox-route",
   [MEV_RELAYS.BLOXROUTE_REGULATED]: "blox-route",
   [MEV_RELAYS.EDEN]: "eden",
+  [MEV_RELAYS.TITAN]: "titan",
   [MEV_RELAYS.FLASHBOTS]: "Flashbots",
   [MEV_RELAYS.MANIFOLD]: "manifold",
   [MEV_RELAYS.ULTRA_SOUND]: "ultraSound",
-};
+}
 
-export const MEV_RELAY_OPTIONS = Object.values(MEV_RELAYS).map((value) => ({
-  value: value,
-  label: value,
-}));
+export const getMevRelaysOptions = (mevRelays: string[]) => {
+  return mevRelays.includes(MEV_RELAYS.EDEN)
+    ? Object.values(MEV_RELAYS).map((value) => ({ value: value, label: value }))
+    : Object.values(MEV_RELAYS)
+        .filter((mevRelay: string) => mevRelay !== MEV_RELAYS.EDEN)
+        .map((value) => ({ value: value, label: value }))
+}
 
 export type OperatorMetadataKeys = Extract<
   keyof Operator,
@@ -64,7 +69,7 @@ export type OperatorMetadataKeys = Extract<
   | "twitter_url"
   | "linkedin_url"
   | "dkg_address"
->;
+>
 
 export enum OperatorMetadataFields {
   OperatorName = "name",
@@ -94,46 +99,20 @@ export const SORTED_OPERATOR_METADATA_FIELDS: OperatorMetadataKeys[] = [
   OperatorMetadataFields.LinkedinUrl,
   OperatorMetadataFields.DkgAddress,
   OperatorMetadataFields.OperatorImage,
-] as const;
+] as const
 
 export const sortOperators = <T extends { id: number }[]>(operators: T) => {
-  return [...operators].sort((a, b) => a.id - b.id);
-};
-
-export const prepareOperatorsForShares = (operators: Operator[]) =>
-  sortOperators(operators).map((operator) => ({
-    id: operator.id,
-    operatorKey: operator.public_key,
-  }));
-
+  return [...operators].sort((a, b) => a.id - b.id)
+}
 export const sumOperatorsFee = (operators: Pick<Operator, "fee">[]) => {
-  return operators.reduce((acc, operator) => acc + BigInt(operator.fee), 0n);
-};
+  return operators.reduce((acc, operator) => acc + BigInt(operator.fee), 0n)
+}
 
 export const getOperatorIds = <T extends { id: number }[]>(operators: T) => {
-  return sortNumbers(operators.map((operator) => operator.id));
-};
+  return sortNumbers(operators.map((operator) => operator.id))
+}
 
-type MergeOperatorWhitelistAddressesOpts = {
-  shouldAdd: boolean;
-  operator: Operator;
-  delta: readonly (string | `0x${string}`)[];
-};
 
-export const mergeOperatorWhitelistAddresses = ({
-  shouldAdd,
-  operator,
-  delta,
-}: MergeOperatorWhitelistAddressesOpts) => {
-  const addresses = shouldAdd
-    ? [...(operator?.whitelist_addresses || []), ...delta]
-    : difference(operator?.whitelist_addresses, delta);
-
-  return {
-    ...operator,
-    whitelist_addresses: addresses,
-  } as Operator;
-};
 
 export const createDefaultOperator = (
   operator: Partial<Operator> & { id: number }
@@ -167,14 +146,16 @@ export const createDefaultOperator = (
   is_valid: true,
   is_deleted: false,
   is_active: 0,
-  status: "Inactive",
+  status: "No validators",
   validators_count: 0,
   version: "v4",
   network: "holesky",
   whitelist_addresses: [],
   updated_at: 0,
   ...operator,
-});
+})
+
 
 export const sumOperatorsFees = (operators: Operator[]) =>
-  operators.reduce((acc, operator) => acc + BigInt(operator.fee), 0n);
+  operators.reduce((acc, operator) => acc + BigInt(operator.fee), 0n)
+

@@ -2,8 +2,6 @@
 
 import { use } from "react"
 import { TableProvider } from "@/context/table-context"
-import { type VisibilityState } from "@tanstack/react-table"
-import { useLocalStorage } from "react-use"
 
 import { type OperatorsSearchResponse } from "@/types/api"
 import { useDataTable } from "@/hooks/use-data-table"
@@ -15,6 +13,21 @@ import { operatorsTableColumns } from "./operators-table-columns"
 
 interface OperatorsTableProps {
   dataPromise: Promise<OperatorsSearchResponse>
+}
+
+export const defaultColumns = {
+  name: true,
+  eth1_node_client: false,
+  fee: true,
+  location: false,
+  id: true,
+  owner_address: false,
+  eth2_node_client: false,
+  validators_count: false,
+  performance_24h: false,
+  performance_30d: true,
+  mev_relays: true,
+  status: true,
 }
 
 export function OperatorsTable({ dataPromise: data }: OperatorsTableProps) {

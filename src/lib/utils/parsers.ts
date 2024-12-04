@@ -1,7 +1,6 @@
-import { Task } from "@/db/schema"
-import type { ExtendedSortingState, Filter, Prettify } from "@/types"
+import type { ExtendedSortingState, Filter } from "@/types"
 import { type Row } from "@tanstack/react-table"
-import { createParser, parseAsStringEnum } from "nuqs/server"
+import { createParser } from "nuqs/server"
 import { z } from "zod"
 
 import { dataTableConfig } from "@/config/data-table"

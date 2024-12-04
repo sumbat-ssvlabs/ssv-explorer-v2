@@ -14,8 +14,13 @@
       "schema": true
     }
   ],
-  // Enable ESLint fix on save
+  // Enable ESLint fix and organize imports on save
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  }
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  // Optional: Add these if you want more specific import organization settings
+  "editor.formatOnSave": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always"
 }

@@ -1,7 +1,8 @@
 import { isAddress } from "viem"
 import { z } from "zod"
 
-const networksString = process.env.SSV_NETWORKS
+const networksString =
+  process.env.SSV_NETWORKS || process.env.NEXT_PUBLIC_SSV_NETWORKS
 
 const networkSchema = z
   .array(

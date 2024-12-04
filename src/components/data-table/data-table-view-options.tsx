@@ -30,7 +30,7 @@ export function DataTableViewOptions<TData>({
 }: DataTableViewOptionsProps<TData>) {
   const triggerRef = React.useRef<HTMLButtonElement>(null)
 
-  const { visibleColumnsCount } = useColumnsVisibility(table)
+  const { visibleColumnsCount } = useColumnsVisibility()
 
   return (
     <Popover modal>

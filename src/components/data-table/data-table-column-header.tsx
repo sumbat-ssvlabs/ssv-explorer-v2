@@ -25,8 +25,7 @@ export function DataTableColumnHeader<TData, TValue>({
   title,
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
-  const table = useTable()
-  const { visibleColumnsCount } = useColumnsVisibility(table)
+  const { visibleColumnsCount } = useColumnsVisibility()
 
   if (!column.getCanSort() && !column.getCanHide()) {
     return <div className={cn(className)}>{title}</div>

@@ -1,10 +1,12 @@
 "use client"
 
+import { useTable } from "@/context/table-context"
 import { SelectIcon } from "@radix-ui/react-select"
 import { type Column } from "@tanstack/react-table"
 import { ArrowDown, ArrowUp, ChevronsUpDown, EyeOff } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { useColumnsVisibility } from "@/hooks/table/use-columns-visibility"
 import {
   Select,
   SelectContent,
@@ -23,6 +25,9 @@ export function DataTableColumnHeader<TData, TValue>({
   title,
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
+  const table = useTable()
+  const { visibleColumnsCount } = useColumnsVisibility(table)
+
   if (!column.getCanSort() && !column.getCanHide()) {
     return <div className={cn(className)}>{title}</div>
   }
@@ -92,7 +97,7 @@ export function DataTableColumnHeader<TData, TValue>({
             </>
           )}
           {column.getCanHide() && (
-            <SelectItem value={hideValue}>
+            <SelectItem disabled={visibleColumnsCount === 1} value={hideValue}>
               <span className="flex items-center">
                 <EyeOff
                   className="mr-2 size-3.5 text-muted-foreground/70"

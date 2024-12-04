@@ -5,6 +5,7 @@ import type { Table } from "@tanstack/react-table"
 import { Check, ChevronsUpDown, Settings2 } from "lucide-react"
 
 import { cn, toSentenceCase } from "@/lib/utils"
+import { useColumnsVisibility } from "@/hooks/table/use-columns-visibility"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -29,16 +30,7 @@ export function DataTableViewOptions<TData>({
 }: DataTableViewOptionsProps<TData>) {
   const triggerRef = React.useRef<HTMLButtonElement>(null)
 
-  const allColumns = table.getAllColumns()
-  const hidableColumns = allColumns.filter(
-    (column) => typeof column.accessorFn !== "undefined" && column.getCanHide()
-  )
-
-  const fixedColumnsCount = allColumns.length - hidableColumns.length
-
-  const visibleColumnsCount =
-    hidableColumns.filter((column) => column.getIsVisible()).length +
-    fixedColumnsCount
+  const { visibleColumnsCount } = useColumnsVisibility(table)
 
   return (
     <Popover modal>

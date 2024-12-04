@@ -12,6 +12,7 @@ const config = {
     "plugin:tailwindcss/recommended",
   ],
   rules: {
+    "@typescript-eslint/no-floating-promises": "off",
     "@typescript-eslint/no-unsafe-call": "off",
     "@typescript-eslint/no-unsafe-argument": "off",
     "@typescript-eslint/array-type": "off",

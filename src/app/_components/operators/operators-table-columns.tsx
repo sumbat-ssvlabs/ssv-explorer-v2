@@ -7,6 +7,7 @@ import { percentageFormatter } from "@/lib/utils/number"
 import { getYearlyFee } from "@/lib/utils/operator"
 import { shortenAddress } from "@/lib/utils/strings"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
+import { MevRelaysDisplay } from "@/components/mev-relays-display"
 
 export const operatorsTableColumns: ColumnDef<Operator>[] = [
   {
@@ -22,7 +23,9 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
     ),
-    cell: ({ row }) => <div className="line-clamp-1">{row.getValue("name")}</div>,
+    cell: ({ row }) => (
+      <div className="line-clamp-1">{row.getValue("name")}</div>
+    ),
     enableSorting: false,
   },
   {
@@ -95,6 +98,15 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     cell: ({ row }) => {
       const performance = row.original.performance["30d"]
       return <div>{percentageFormatter.format(performance)}</div>
+    },
+  },
+  {
+    accessorKey: "mev_relays",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="MEV Relays" />
+    ),
+    cell: ({ row }) => {
+      return <MevRelaysDisplay mevRelays={row.original.mev_relays} />
     },
   },
   {

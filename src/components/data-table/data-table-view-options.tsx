@@ -69,7 +69,6 @@ export function DataTableViewOptions<TData>({
               {table
                 .getAllColumns()
                 .filter((column) => {
-                  console.log("column:", column)
                   return (
                     typeof column.accessorFn !== "undefined" &&
                     column.getCanHide()

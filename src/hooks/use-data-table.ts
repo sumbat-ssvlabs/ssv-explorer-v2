@@ -19,6 +19,7 @@ import {
   type Updater,
   type VisibilityState,
 } from "@tanstack/react-table"
+import { merge } from "lodash-es"
 import {
   parseAsArrayOf,
   parseAsInteger,
@@ -28,6 +29,7 @@ import {
   type Parser,
   type UseQueryStateOptions,
 } from "nuqs"
+import { useLocalStorage } from "react-use"
 
 import { getSortingStateParser } from "@/lib/utils/parsers"
 import { useDebouncedCallback } from "@/hooks/use-debounced-callback"
@@ -175,7 +177,10 @@ export function useDataTable<TData>({
     initialState?.rowSelection ?? {}
   )
   const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>(initialState?.columnVisibility ?? {})
+    useLocalStorage<VisibilityState>(
+      "columns",
+      initialState?.columnVisibility ?? {}
+    )
 
   const [page, setPage] = useQueryState(
     "page",
@@ -336,7 +341,12 @@ export function useDataTable<TData>({
     onPaginationChange,
     onSortingChange,
     onColumnFiltersChange,
-    onColumnVisibilityChange: setColumnVisibility,
+    onColumnVisibilityChange: (updater) => {
+      setColumnVisibility((prev = {}) => {
+        const next = typeof updater === "function" ? updater(prev) : updater
+        return merge(prev, next)
+      })
+    },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: enableAdvancedFilter
       ? undefined

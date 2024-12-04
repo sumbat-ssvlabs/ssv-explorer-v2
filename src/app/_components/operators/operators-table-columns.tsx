@@ -8,6 +8,8 @@ import { getYearlyFee } from "@/lib/utils/operator"
 import { shortenAddress } from "@/lib/utils/strings"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { MevRelaysDisplay } from "@/components/mev-relays-display"
+import { OperatorStatusBadge } from "@/components/operators/operator-status-badge"
+import { PerformanceText } from "@/components/operators/performance-text"
 
 export const operatorsTableColumns: ColumnDef<Operator>[] = [
   {
@@ -83,11 +85,17 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
   {
     accessorKey: "performance.24h",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="24h" />
+      <DataTableColumnHeader
+        className="justify-end"
+        column={column}
+        title="24h"
+      />
     ),
     cell: ({ row }) => {
       const performance = row.original.performance["24h"]
-      return <div>{percentageFormatter.format(performance)}</div>
+      return (
+        <PerformanceText className="text-right" performance={performance} />
+      )
     },
   },
   {
@@ -97,7 +105,9 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     ),
     cell: ({ row }) => {
       const performance = row.original.performance["30d"]
-      return <div>{percentageFormatter.format(performance)}</div>
+      return (
+        <PerformanceText className="text-right" performance={performance} />
+      )
     },
   },
   {
@@ -116,7 +126,7 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     ),
     cell: ({ row }) => {
       const status = row.original.status
-      return <div>{status}</div>
+      return <OperatorStatusBadge size="sm" status={status} />
     },
   },
 ]

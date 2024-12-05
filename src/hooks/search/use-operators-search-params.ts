@@ -5,7 +5,8 @@ import { usePaginationQuery } from "./use-pagination-query"
 export const useOperatorsSearchParams = () => {
   const [network, setNetwork] = useNetworkQuery()
   const [pagination, setPagination] = usePaginationQuery()
-  const { filters, setFilters, enabledFilters } = useOperatorFiltersQuery()
+  const { filters, setFilters, enabledFilters, clearFilters } =
+    useOperatorFiltersQuery()
 
   return {
     network,
@@ -15,5 +16,6 @@ export const useOperatorsSearchParams = () => {
     filters,
     setFilters,
     enabledFilters,
+    clearFilters,
   }
 }

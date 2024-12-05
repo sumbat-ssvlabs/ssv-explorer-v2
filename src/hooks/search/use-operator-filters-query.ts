@@ -1,4 +1,4 @@
-import { useMemo } from "react"
+import { useCallback, useMemo } from "react"
 import { useQueryStates } from "nuqs"
 
 import { operatorSearchFilters } from "@/lib/search-parsers/operator-search"
@@ -15,5 +15,11 @@ export const useOperatorFiltersQuery = () => {
     }
   }, [filters])
 
-  return { filters, setFilters, enabledFilters }
+  const clearFilters = useCallback(() => {
+    setFilters((prev) =>
+      Object.fromEntries(Object.entries(prev).map(([key]) => [key, null]))
+    )
+  }, [setFilters])
+
+  return { filters, setFilters, enabledFilters, clearFilters }
 }

@@ -2,7 +2,7 @@
 
 import { use } from "react"
 import { TableProvider } from "@/context/table-context"
-import { Settings2 } from "lucide-react"
+import { Settings2, X } from "lucide-react"
 
 import { type OperatorsSearchResponse } from "@/types/api"
 import { useOperatorsSearchParams } from "@/hooks/search/use-operators-search-params"
@@ -47,7 +47,8 @@ export function OperatorsTable({ dataPromise: data }: OperatorsTableProps) {
     clearOnDefault: true,
   })
 
-  const { filters, setFilters, enabledFilters } = useOperatorsSearchParams()
+  const { setFilters, enabledFilters, clearFilters } =
+    useOperatorsSearchParams()
 
   return (
     <>
@@ -61,13 +62,6 @@ export function OperatorsTable({ dataPromise: data }: OperatorsTableProps) {
             role="combobox"
             size="sm"
             className="ml-auto flex h-8"
-            onClick={() =>
-              setFilters((prev) =>
-                Object.fromEntries(
-                  Object.entries(prev).map(([key, value]) => [key, null])
-                )
-              )
-            }
           >
             <Settings2 className="mr-2 size-4" />
             Filters{" "}
@@ -82,6 +76,20 @@ export function OperatorsTable({ dataPromise: data }: OperatorsTableProps) {
               </Tooltip>
             )}
           </Button>
+          {enabledFilters.count > 0 && (
+            <Button
+              aria-label="Toggle columns"
+              variant="outline"
+              role="combobox"
+              size="sm"
+              className="ml-auto flex h-8"
+              onClick={clearFilters}
+            >
+              <X className="size-4" />
+              Clear
+            </Button>
+          )}
+
           <DataTableViewOptions table={table} />
         </div>
         <DataTable table={table}></DataTable>

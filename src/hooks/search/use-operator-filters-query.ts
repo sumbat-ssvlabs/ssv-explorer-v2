@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from "react"
+import { isEmpty } from "lodash-es"
 import { useQueryStates } from "nuqs"
 
 import { operatorSearchFilters } from "@/lib/search-parsers/operator-search"
@@ -8,7 +9,9 @@ export const useOperatorFiltersQuery = () => {
 
   const enabledFilters = useMemo(() => {
     const entries = Object.entries(filters)
-    const enabled = entries.filter(([, value]) => Boolean(value))
+    const enabled = entries.filter(
+      ([, value]) => Boolean(value) && !isEmpty(value)
+    )
     return {
       count: enabled.length,
       names: enabled.map(([key]) => key),

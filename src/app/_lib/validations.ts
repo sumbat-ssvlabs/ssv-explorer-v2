@@ -8,7 +8,11 @@ import {
 } from "nuqs/server"
 import * as z from "zod"
 
-import { operatorSearchParsers } from "@/lib/search-parsers/operator-search"
+import {
+  networkParser,
+  operatorSearchFilters,
+  paginationParser,
+} from "@/lib/search-parsers/operator-search"
 import {
   getFiltersStateParser,
   getSortingStateParser,
@@ -33,9 +37,11 @@ export const searchParamsCache = createSearchParamsCache({
   joinOperator: parseAsStringEnum(["and", "or"]).withDefault("and"),
 })
 
-export const operatorsSearchParamsCache = createSearchParamsCache(
-  operatorSearchParsers
-)
+export const operatorsSearchParamsCache = createSearchParamsCache({
+  ...networkParser,
+  ...paginationParser,
+  ...operatorSearchFilters,
+})
 
 export const createTaskSchema = z.object({
   title: z.string(),

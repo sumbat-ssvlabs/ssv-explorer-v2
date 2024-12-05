@@ -1,13 +1,25 @@
 import { useMemo } from "react"
-import { useSearchParams } from "next/navigation"
+import { useQueryState, useQueryStates } from "nuqs"
 
-import { parseSearchParams } from "@/lib/search-parsers"
-import { operatorSearchParsers } from "@/lib/search-parsers/operator-search"
+import {
+  networkParser,
+  operatorSearchFilters,
+  paginationParser,
+} from "@/lib/search-parsers/operator-search"
 
 export const useOperatorsSearchParams = () => {
-  const searchParams = useSearchParams()
-  return useMemo(
-    () => parseSearchParams(searchParams, operatorSearchParsers),
-    [searchParams]
-  )
+  const [network] = useQueryState("network", networkParser.chain)
+  const [pagination] = useQueryStates(paginationParser)
+  const [filters] = useQueryStates(operatorSearchFilters)
+
+  const enabledFilters = useMemo(() => {
+    const entries = Object.entries(filters)
+    const enabled = entries.filter(([, value]) => Boolean(value))
+    return {
+      count: enabled.length,
+      names: enabled.map(([key]) => key),
+    }
+  }, [filters])
+
+  return { network, pagination, filters, enabledFilters }
 }

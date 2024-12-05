@@ -7,29 +7,31 @@ import { networks } from "../utils/ssv-network-details"
 
 console.log("networks:", networks)
 
-export const operatorSearchParsers = {
+export const networkParser = {
   chain: parseAsNumberEnum(networks.map((n) => n.networkId)).withDefault(
     networks[0]!.networkId
   ),
+}
+
+export const paginationParser = {
+  page: parseAsInteger.withDefault(1),
+  perPage: parseAsInteger.withDefault(10),
+}
+
+export const operatorSearchFilters = {
   search: parseAsString.withDefault(""),
-  id: parseAsArrayOf(z.number({ coerce: true })).withDefault([]),
-  name: parseAsArrayOf(z.string()).withDefault([]),
-  owner: parseAsArrayOf(z.string().refine(isAddress)).withDefault([]),
-  location: parseAsArrayOf(z.string()).withDefault([]),
-  eth1: parseAsArrayOf(z.string()).withDefault([]),
-  eth2: parseAsArrayOf(z.string()).withDefault([]),
-  mev: parseAsArrayOf(z.string()).withDefault([]),
+  id: parseAsArrayOf(z.number({ coerce: true })),
+  name: parseAsArrayOf(z.string()),
+  owner: parseAsArrayOf(z.string().refine(isAddress)),
+  location: parseAsArrayOf(z.string()),
+  eth1: parseAsArrayOf(z.string()),
+  eth2: parseAsArrayOf(z.string()),
+  mev: parseAsArrayOf(z.string()),
   fee: parseAsTuple(
     [z.bigint({ coerce: true }), z.bigint({ coerce: true })],
     (values) => values.sort((a, b) => +a - +b)
-  ).withDefault([-1n, -1n]),
-  validators: parseAsArrayOf(z.tuple([z.string(), z.string()])).withDefault([]),
-  performance_24h: parseAsArrayOf(
-    z.tuple([z.string(), z.string()])
-  ).withDefault([]),
-  performance_30d: parseAsArrayOf(
-    z.tuple([z.string(), z.string()])
-  ).withDefault([]),
-  page: parseAsInteger.withDefault(1),
-  perPage: parseAsInteger.withDefault(10),
+  ),
+  validators: parseAsArrayOf(z.tuple([z.string(), z.string()])),
+  performance_24h: parseAsArrayOf(z.tuple([z.string(), z.string()])),
+  performance_30d: parseAsArrayOf(z.tuple([z.string(), z.string()])),
 }

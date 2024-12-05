@@ -2,13 +2,11 @@ import React from "react"
 import { searchOperators } from "@/api/operator"
 import { type SearchParams } from "@/types"
 
-import { stringifyBigints } from "@/lib/utils/bigint"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Shell } from "@/components/shell"
 
 import { OperatorsTable } from "../_components/operators/operators-table"
 import { operatorsSearchParamsCache } from "../_lib/validations"
-import { Cmp } from "./cmp"
 
 interface IndexPageProps {
   searchParams: Promise<SearchParams>
@@ -16,6 +14,7 @@ interface IndexPageProps {
 
 export default async function IndexPage(props: IndexPageProps) {
   const search = operatorsSearchParamsCache.parse(await props.searchParams)
+  console.log("search:", search)
 
   const operators = searchOperators(search)
 

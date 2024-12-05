@@ -2,6 +2,7 @@ import {
   parseAsArrayOf,
   parseAsInteger,
   parseAsString,
+  parseAsStringEnum,
   type Options,
 } from "nuqs/server"
 import { isAddress } from "viem"
@@ -46,6 +47,11 @@ export const operatorSearchFilters = {
   validators: parseAsArrayOf(z.tuple([z.string(), z.string()])).withOptions(
     searchOptions
   ),
+  status: parseAsStringEnum([
+    "active",
+    "inactive",
+    "no validators",
+  ]).withOptions(searchOptions),
   performance_24h: parseAsArrayOf(
     z.tuple([z.string(), z.string()])
   ).withOptions(searchOptions),

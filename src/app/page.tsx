@@ -1,14 +1,10 @@
-import * as React from "react"
+import Link from "next/link"
 import { type SearchParams } from "@/types"
 
 import { getValidFilters } from "@/lib/utils/data-table"
-import { Skeleton } from "@/components/ui/skeleton"
-import { DataTableSkeleton } from "@/components/data-table/data-table-skeleton"
-import { DateRangePicker } from "@/components/date-range-picker"
+import { Button } from "@/components/ui/button"
 import { Shell } from "@/components/shell"
 
-import { FeatureFlagsProvider } from "./_components/feature-flags-provider"
-import { TasksTable } from "./_components/tasks-table"
 import {
   getTaskPriorityCounts,
   getTasks,
@@ -35,33 +31,17 @@ export default async function IndexPage(props: IndexPageProps) {
     getTaskStatusCounts(),
     getTaskPriorityCounts(),
   ])
-  
 
   return (
     <Shell className="gap-2">
-      <FeatureFlagsProvider>
-        <React.Suspense fallback={<Skeleton className="h-7 w-52" />}>
-          <DateRangePicker
-            triggerSize="sm"
-            triggerClassName="ml-auto w-56 sm:w-60"
-            align="end"
-            shallow={false}
-          />
-        </React.Suspense>
-        <React.Suspense
-          fallback={
-            <DataTableSkeleton
-              columnCount={6}
-              searchableColumnCount={1}
-              filterableColumnCount={2}
-              cellWidths={["10rem", "40rem", "12rem", "12rem", "8rem", "8rem"]}
-              shrinkZero
-            />
-          }
-        >
-          <TasksTable promises={promises} />
-        </React.Suspense>
-      </FeatureFlagsProvider>
+      <div>
+        Nothing to see here <b>Ravid</b>
+      </div>
+      <Button asChild className="w-fit" variant="secondary">
+        <Link href="/operators" className="text-blue-500">
+          Go to operators
+        </Link>
+      </Button>
     </Shell>
   )
 }

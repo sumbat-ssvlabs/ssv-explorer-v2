@@ -1,25 +1,19 @@
-import { useMemo } from "react"
-import { useQueryState, useQueryStates } from "nuqs"
-
-import {
-  networkParser,
-  operatorSearchFilters,
-  paginationParser,
-} from "@/lib/search-parsers/operator-search"
+import { useNetworkQuery } from "./use-network-query"
+import { useOperatorFiltersQuery } from "./use-operator-filters-query"
+import { usePaginationQuery } from "./use-pagination-query"
 
 export const useOperatorsSearchParams = () => {
-  const [network] = useQueryState("network", networkParser.chain)
-  const [pagination] = useQueryStates(paginationParser)
-  const [filters] = useQueryStates(operatorSearchFilters)
+  const [network, setNetwork] = useNetworkQuery()
+  const [pagination, setPagination] = usePaginationQuery()
+  const { filters, setFilters, enabledFilters } = useOperatorFiltersQuery()
 
-  const enabledFilters = useMemo(() => {
-    const entries = Object.entries(filters)
-    const enabled = entries.filter(([, value]) => Boolean(value))
-    return {
-      count: enabled.length,
-      names: enabled.map(([key]) => key),
-    }
-  }, [filters])
-
-  return { network, pagination, filters, enabledFilters }
+  return {
+    network,
+    setNetwork,
+    pagination,
+    setPagination,
+    filters,
+    setFilters,
+    enabledFilters,
+  }
 }

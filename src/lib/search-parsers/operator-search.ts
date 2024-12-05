@@ -1,4 +1,9 @@
-import { parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
+import {
+  parseAsArrayOf,
+  parseAsInteger,
+  parseAsString,
+  type Options,
+} from "nuqs/server"
 import { isAddress } from "viem"
 import { z } from "zod"
 
@@ -18,20 +23,33 @@ export const paginationParser = {
   perPage: parseAsInteger.withDefault(10),
 }
 
+const searchOptions: Options = {
+  history: "replace",
+  shallow: false,
+}
+
 export const operatorSearchFilters = {
-  search: parseAsString.withDefault(""),
-  id: parseAsArrayOf(z.number({ coerce: true })),
-  name: parseAsArrayOf(z.string()),
-  owner: parseAsArrayOf(z.string().refine(isAddress)),
-  location: parseAsArrayOf(z.string()),
-  eth1: parseAsArrayOf(z.string()),
-  eth2: parseAsArrayOf(z.string()),
-  mev: parseAsArrayOf(z.string()),
+  search: parseAsString.withDefault("").withOptions(searchOptions),
+  id: parseAsArrayOf(z.number({ coerce: true })).withOptions(searchOptions),
+  name: parseAsArrayOf(z.string()).withOptions(searchOptions),
+  owner: parseAsArrayOf(z.string().refine(isAddress)).withOptions(
+    searchOptions
+  ),
+  location: parseAsArrayOf(z.string()).withOptions(searchOptions),
+  eth1: parseAsArrayOf(z.string()).withOptions(searchOptions),
+  eth2: parseAsArrayOf(z.string()).withOptions(searchOptions),
+  mev: parseAsArrayOf(z.string()).withOptions(searchOptions),
   fee: parseAsTuple(
     [z.bigint({ coerce: true }), z.bigint({ coerce: true })],
     (values) => values.sort((a, b) => +a - +b)
+  ).withOptions(searchOptions),
+  validators: parseAsArrayOf(z.tuple([z.string(), z.string()])).withOptions(
+    searchOptions
   ),
-  validators: parseAsArrayOf(z.tuple([z.string(), z.string()])),
-  performance_24h: parseAsArrayOf(z.tuple([z.string(), z.string()])),
-  performance_30d: parseAsArrayOf(z.tuple([z.string(), z.string()])),
+  performance_24h: parseAsArrayOf(
+    z.tuple([z.string(), z.string()])
+  ).withOptions(searchOptions),
+  performance_30d: parseAsArrayOf(
+    z.tuple([z.string(), z.string()])
+  ).withOptions(searchOptions),
 }

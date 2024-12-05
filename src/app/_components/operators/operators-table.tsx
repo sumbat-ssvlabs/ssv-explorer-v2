@@ -47,7 +47,7 @@ export function OperatorsTable({ dataPromise: data }: OperatorsTableProps) {
     clearOnDefault: true,
   })
 
-  const { enabledFilters } = useOperatorsSearchParams()
+  const { filters, setFilters, enabledFilters } = useOperatorsSearchParams()
 
   return (
     <>
@@ -61,6 +61,13 @@ export function OperatorsTable({ dataPromise: data }: OperatorsTableProps) {
             role="combobox"
             size="sm"
             className="ml-auto flex h-8"
+            onClick={() =>
+              setFilters((prev) =>
+                Object.fromEntries(
+                  Object.entries(prev).map(([key, value]) => [key, null])
+                )
+              )
+            }
           >
             <Settings2 className="mr-2 size-4" />
             Filters{" "}

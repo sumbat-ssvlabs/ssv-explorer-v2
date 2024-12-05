@@ -1,8 +1,5 @@
 "use client"
 
-import { use, useState } from "react"
-import { searchOperators } from "@/api/operator"
-
 import { Button, type ButtonProps } from "@/components/ui/button"
 import {
   Command,
@@ -18,11 +15,6 @@ import {
 } from "@/components/ui/popover"
 
 export function IdFilter(props: ButtonProps) {
-  const [search, setSearch] = useState<string>("")
-  const { operators } = use(
-    searchOperators({ search, perPage: 10, chain: 17000 })
-  )
-  console.log("operators:", operators)
   return (
     <Popover modal>
       <PopoverTrigger asChild>

@@ -28,7 +28,7 @@ export function Eth1ClientFilter(props: ButtonProps) {
   return (
     <Popover modal>
       <PopoverTrigger asChild>
-        <Button variant="outline" {...props}>
+        <Button variant={hasSelectedItems ? "secondary" : "outline"} {...props}>
           ETH1 Client{" "}
           {hasSelectedItems && (
             <Badge size="xs" variant="info">

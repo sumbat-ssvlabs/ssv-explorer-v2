@@ -22,7 +22,10 @@ export function VisibilityFilter(props: ButtonProps) {
   return (
     <Popover modal>
       <PopoverTrigger asChild>
-        <Button variant="outline" {...props}>
+        <Button
+          variant={filters.visibility ? "secondary" : "outline"}
+          {...props}
+        >
           Private{" "}
         </Button>
       </PopoverTrigger>

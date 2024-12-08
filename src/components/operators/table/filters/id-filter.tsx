@@ -46,13 +46,13 @@ export function IdFilter(props: ButtonProps) {
   console.log(" query.status:", query.data)
   console.log("query.status:", query.status)
 
-  const hasSelectedIds = Boolean(filters.id?.length)
+  const hasSelectedItems = Boolean(filters.id?.length)
   return (
     <Popover modal open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" {...props}>
+        <Button variant={hasSelectedItems ? "secondary" : "outline"} {...props}>
           ID{" "}
-          {hasSelectedIds && (
+          {hasSelectedItems && (
             <Badge size="xs" variant="info">
               {filters.id?.length}
             </Badge>
@@ -70,7 +70,7 @@ export function IdFilter(props: ButtonProps) {
             value={search}
             onValueChange={(value) => setSearch(value)}
           />
-          {hasSelectedIds && (
+          {hasSelectedItems && (
             <div className="flex flex-wrap gap-1 border-b p-1">
               {filters.id?.map((id) => (
                 <Button

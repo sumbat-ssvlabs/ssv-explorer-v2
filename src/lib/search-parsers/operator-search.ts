@@ -53,6 +53,9 @@ export const operatorSearchFilters = {
     "inactive",
     "no validators",
   ]).withOptions(searchOptions),
+  visibility: parseAsStringEnum(["all", "private", "public"]).withOptions(
+    searchOptions
+  ),
   performance_24h: parseAsArrayOf(
     z.tuple([z.string(), z.string()])
   ).withOptions(searchOptions),

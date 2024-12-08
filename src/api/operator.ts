@@ -4,7 +4,7 @@ import { endpoint } from "@/api"
 import { api } from "@/api/api-client"
 import { isUndefined, omitBy } from "lodash-es"
 
-import type { OperatorsSearchResponse } from "@/types/api"
+import type { Country, OperatorsSearchResponse } from "@/types/api"
 import { type OperatorsSearchSchema } from "@/lib/search-parsers/operator-search"
 import { stringifyBigints } from "@/lib/utils/bigint"
 import { unstable_cache } from "@/lib/utils/unstable-cache"
@@ -62,4 +62,8 @@ export interface OperatorMetadata {
   dkgAddress: string
   logo: string
   signature: string
+}
+
+export const getOperatorLocations = async (chain: number) => {
+  return api.get<Country[]>(endpoint(chain, "operators/locations"))
 }

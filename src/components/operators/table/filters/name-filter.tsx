@@ -5,7 +5,7 @@ import { searchOperators } from "@/api/operator"
 import { useQuery } from "@tanstack/react-query"
 import { CommandLoading } from "cmdk"
 import { xor } from "lodash-es"
-import { Loader2, X } from "lucide-react"
+import { Loader2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { useOperatorsSearchParams } from "@/hooks/search/use-operators-search-params"
@@ -65,26 +65,6 @@ export function NameFilter(props: ButtonProps) {
             value={search}
             onValueChange={(value) => setSearch(value)}
           />
-          {hasSelectedItems && (
-            <div className="flex flex-wrap gap-1 border-b p-1">
-              {filters.id?.map((id) => (
-                <Button
-                  size="sm"
-                  key={id}
-                  className="h-auto gap-0.5 rounded-full px-2 py-0.5"
-                  variant="secondary"
-                  onClick={() =>
-                    setFilters((prev) => ({
-                      ...prev,
-                      id: xor(prev.id, [id]),
-                    }))
-                  }
-                >
-                  {id} <X className="size-1" />
-                </Button>
-              ))}
-            </div>
-          )}
           <CommandList className="max-h-none overflow-y-auto">
             {query.isPending ? (
               <CommandLoading className="flex items-center justify-center p-4">

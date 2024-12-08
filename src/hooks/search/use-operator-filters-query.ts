@@ -9,13 +9,17 @@ export const useOperatorFiltersQuery = () => {
 
   const enabledFilters = useMemo(() => {
     const entries = Object.entries(filters)
-    const enabled = entries.filter(
-      ([, value]) => Boolean(value) && !isEmpty(value)
+    const enabled = entries.reduce(
+      (acc, [key, value]) => {
+        if (Boolean(value) && !isEmpty(value)) {
+          acc.count++
+          acc.names.push(key)
+        }
+        return acc
+      },
+      { count: 0, names: [] as string[] }
     )
-    return {
-      count: enabled.length,
-      names: enabled.map(([key]) => key),
-    }
+    return enabled
   }, [filters])
 
   const clearFilters = useCallback(() => {

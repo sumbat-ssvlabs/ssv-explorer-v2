@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button"
 import { Tooltip } from "@/components/ui/tooltip"
 import { DataTable } from "@/components/data-table/data-table"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
+import { Toolbar } from "@/components/operators/table/filters/toolbar"
 import { Cmp } from "@/app/operators/cmp"
 
 import { operatorsTableColumns } from "./operators-table-columns"
@@ -89,9 +90,9 @@ export function OperatorsTable({ dataPromise: data }: OperatorsTableProps) {
               Clear
             </Button>
           )}
-
           <DataTableViewOptions table={table} />
         </div>
+        <Toolbar />
         <DataTable table={table}></DataTable>
       </TableProvider>
     </>

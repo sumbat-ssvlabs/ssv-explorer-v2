@@ -11,6 +11,8 @@ import type { Metadata, Viewport } from "next"
 import { fontMono, fontSans } from "@/lib/utils/fonts"
 import { Toaster } from "@/components/ui/toaster"
 
+import { Providers } from "./_providers/providers"
+
 interface RootLayoutProps {
   children: React.ReactNode
   searchParams: { [key: string]: string | string[] | undefined }
@@ -68,9 +70,12 @@ export const viewport: Viewport = {
   ],
 }
 
-export default function RootLayout({ children, searchParams }: RootLayoutProps) {
-  console.log('Search Params:', searchParams)
-  
+export default function RootLayout({
+  children,
+  searchParams,
+}: RootLayoutProps) {
+  console.log("Search Params:", searchParams)
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
@@ -89,7 +94,9 @@ export default function RootLayout({ children, searchParams }: RootLayoutProps) 
         >
           <div className="relative flex min-h-screen flex-col">
             <SiteHeader />
-            <main className="flex-1">{children}</main>
+            <main className="flex-1">
+              <Providers>{children}</Providers>
+            </main>
           </div>
           <TailwindIndicator />
         </ThemeProvider>

@@ -1,4 +1,5 @@
 import {
+  createSearchParamsCache,
   parseAsArrayOf,
   parseAsInteger,
   parseAsString,
@@ -14,7 +15,7 @@ import { networks } from "../utils/ssv-network-details"
 console.log("networks:", networks)
 
 export const networkParser = {
-  chain: parseAsNumberEnum(networks.map((n) => n.networkId)).withDefault(
+  network: parseAsNumberEnum(networks.map((n) => n.networkId)).withDefault(
     networks[0]!.networkId
   ),
 }
@@ -59,3 +60,13 @@ export const operatorSearchFilters = {
     z.tuple([z.string(), z.string()])
   ).withOptions(searchOptions),
 }
+
+export const operatorsSearchParamsCache = createSearchParamsCache({
+  ...networkParser,
+  ...paginationParser,
+  ...operatorSearchFilters,
+})
+
+export type OperatorsSearchSchema = Awaited<
+  ReturnType<typeof operatorsSearchParamsCache.parse>
+>

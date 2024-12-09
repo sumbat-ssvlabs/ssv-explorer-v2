@@ -42,26 +42,59 @@ export const operatorSearchFilters = {
   eth2: parseAsArrayOf(z.string()).withOptions(searchOptions),
   mev: parseAsArrayOf(z.string()).withOptions(searchOptions),
   fee: parseAsTuple(
-    [z.bigint({ coerce: true }), z.bigint({ coerce: true })],
+    [z.number({ coerce: true }), z.number({ coerce: true })],
     (values) => values.sort((a, b) => +a - +b)
+  )
+    .withDefault([0, 100])
+    .withOptions({
+      ...searchOptions,
+      throttleMs: 500,
+    }),
+  validators: parseAsTuple(
+    [z.number({ coerce: true }), z.number({ coerce: true })],
+    (values) => values.sort((a, b) => +a - +b)
+  )
+    .withDefault([0, 1000])
+    .withOptions({
+      ...searchOptions,
+      throttleMs: 500,
+    }),
+  managedEth: parseAsTuple(
+    [z.number({ coerce: true }), z.number({ coerce: true })],
+    (values) => values.sort((a, b) => +a - +b)
+  )
+    .withDefault([0, 25000])
+    .withOptions({
+      ...searchOptions,
+      throttleMs: 500,
+    }),
+  status: parseAsArrayOf(
+    z.enum(["active", "inactive", "no validators", "invalid"])
   ).withOptions(searchOptions),
-  validators: parseAsArrayOf(z.tuple([z.string(), z.string()])).withOptions(
-    searchOptions
-  ),
-  status: parseAsStringEnum([
-    "active",
-    "inactive",
-    "no validators",
-  ]).withOptions(searchOptions),
   visibility: parseAsStringEnum(["all", "private", "public"]).withOptions(
     searchOptions
   ),
-  performance_24h: parseAsArrayOf(
-    z.tuple([z.string(), z.string()])
-  ).withOptions(searchOptions),
-  performance_30d: parseAsArrayOf(
-    z.tuple([z.string(), z.string()])
-  ).withOptions(searchOptions),
+  verified: parseAsStringEnum(["all", "verified", "unverified"]).withOptions(
+    searchOptions
+  ),
+  performance_24h: parseAsTuple(
+    [z.number({ coerce: true }), z.number({ coerce: true })],
+    (values) => values.sort((a, b) => +a - +b)
+  )
+    .withDefault([0, 100])
+    .withOptions({
+      ...searchOptions,
+      throttleMs: 500,
+    }),
+  performance_30d: parseAsTuple(
+    [z.number({ coerce: true }), z.number({ coerce: true })],
+    (values) => values.sort((a, b) => +a - +b)
+  )
+    .withDefault([0, 100])
+    .withOptions({
+      ...searchOptions,
+      throttleMs: 500,
+    }),
 }
 
 export const operatorsSearchParamsCache = createSearchParamsCache({

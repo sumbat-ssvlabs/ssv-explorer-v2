@@ -43,14 +43,16 @@ export function IdFilter(props: ButtonProps) {
     },
     enabled: open,
   })
-  console.log(" query.status:", query.data)
-  console.log("query.status:", query.status)
 
   const hasSelectedItems = Boolean(filters.id?.length)
   return (
     <Popover modal open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant={hasSelectedItems ? "secondary" : "outline"} {...props}>
+        <Button
+          size="sm"
+          variant={hasSelectedItems ? "secondary" : "outline"}
+          {...props}
+        >
           ID{" "}
           {hasSelectedItems && (
             <Badge size="xs" variant="info">
@@ -60,11 +62,7 @@ export function IdFilter(props: ButtonProps) {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[320px] overflow-auto p-0">
-        <Command
-        // filter={(value, search, keywords) => {
-        //   return 1
-        // }}
-        >
+        <Command>
           <CommandInput
             placeholder={"Search Ids"}
             value={search}
@@ -85,13 +83,13 @@ export function IdFilter(props: ButtonProps) {
                     }))
                   }
                 >
-                  {id} <X className="size-1" />
+                  {id} <X className="size-2" />
                 </Button>
               ))}
             </div>
           )}
           <CommandList className="max-h-none overflow-y-auto">
-            {query.isPending ? (
+            {query.isLoading ? (
               <CommandLoading className="flex items-center justify-center p-4">
                 <Loader2 className="animate-spin" />
               </CommandLoading>

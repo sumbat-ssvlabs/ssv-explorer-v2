@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/popover"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
-export function VisibilityFilter(props: ButtonProps) {
+export function VerifiedFilter(props: ButtonProps) {
   const { filters, setFilters } = useOperatorsSearchParams()
 
   return (
@@ -24,10 +24,10 @@ export function VisibilityFilter(props: ButtonProps) {
       <PopoverTrigger asChild>
         <Button
           size="sm"
-          variant={filters.visibility ? "secondary" : "outline"}
+          variant={filters.verified ? "secondary" : "outline"}
           {...props}
         >
-          Private{" "}
+          Verified
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[320px] overflow-auto p-0">
@@ -40,12 +40,12 @@ export function VisibilityFilter(props: ButtonProps) {
                 onSelect={() => {
                   setFilters((prev) => ({
                     ...prev,
-                    visibility: null,
+                    verified: null,
                   }))
                 }}
               >
                 <RadioGroupItem
-                  checked={!filters.visibility}
+                  checked={!filters.verified}
                   id="all"
                   value="all"
                   className="mr-2"
@@ -63,14 +63,14 @@ export function VisibilityFilter(props: ButtonProps) {
                 onSelect={() => {
                   setFilters((prev) => ({
                     ...prev,
-                    visibility: "private",
+                    verified: "verified",
                   }))
                 }}
               >
                 <RadioGroupItem
-                  checked={filters.visibility === "private"}
-                  id="private"
-                  value="private"
+                  checked={filters.verified === "verified"}
+                  id="verified"
+                  value="verified"
                   className="mr-2"
                 />
                 <span
@@ -78,7 +78,7 @@ export function VisibilityFilter(props: ButtonProps) {
                     "flex-1 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   )}
                 >
-                  Private
+                  Verified
                 </span>
               </CommandItem>
               <CommandItem
@@ -86,14 +86,14 @@ export function VisibilityFilter(props: ButtonProps) {
                 onSelect={() => {
                   setFilters((prev) => ({
                     ...prev,
-                    visibility: "public",
+                    verified: "unverified",
                   }))
                 }}
               >
                 <RadioGroupItem
-                  checked={filters.visibility === "public"}
-                  id="all"
-                  value="all"
+                  checked={filters.verified === "unverified"}
+                  id="unverified"
+                  value="unverified"
                   className="mr-2"
                 />
                 <span
@@ -101,7 +101,7 @@ export function VisibilityFilter(props: ButtonProps) {
                     "flex-1 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   )}
                 >
-                  Public
+                  Unverified
                 </span>
               </CommandItem>
             </RadioGroup>

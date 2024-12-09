@@ -20,11 +20,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-const clients = ["geth", "nethermind", "besu", "erigon"]
-export function Eth1ClientFilter(props: ButtonProps) {
+const statuses = ["active", "inactive", "no validators", "invalid"]
+export function StatusFilter(props: ButtonProps) {
   const { filters, setFilters } = useOperatorsSearchParams()
 
-  const hasSelectedItems = Boolean(filters.eth1?.length)
+  const hasSelectedItems = Boolean(filters.status?.length)
   return (
     <Popover modal>
       <PopoverTrigger asChild>
@@ -33,38 +33,40 @@ export function Eth1ClientFilter(props: ButtonProps) {
           variant={hasSelectedItems ? "secondary" : "outline"}
           {...props}
         >
-          ETH1 Client{" "}
+          Status{" "}
           {hasSelectedItems && (
             <Badge size="xs" variant="info">
-              {filters.eth1?.length}
+              {filters.status?.length}
             </Badge>
           )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[320px] overflow-auto p-0">
-        <Command
-        // filter={(value, search, keywords) => {
-        //   return 1
-        // }}
-        >
+        <Command>
           <CommandList className="max-h-none overflow-y-auto">
             <CommandEmpty>This list is empty.</CommandEmpty>
             <CommandGroup>
-              {clients.map((client) => (
+              {statuses.map((status) => (
                 <CommandItem
-                  key={client}
-                  value={client}
+                  key={status}
+                  value={status}
                   className="flex h-10 items-center space-x-2 px-2"
                   onSelect={() => {
                     setFilters((prev) => ({
                       ...prev,
-                      eth1: xor(prev.eth1, [client]),
+                      status: xor(prev.status, [
+                        status as
+                          | "active"
+                          | "inactive"
+                          | "no validators"
+                          | "invalid",
+                      ]),
                     }))
                   }}
                 >
                   <Checkbox
-                    id={client}
-                    checked={filters.eth1?.includes(client)}
+                    id={status}
+                    checked={filters.status?.includes(status)}
                     className="mr-2"
                   />
                   <span
@@ -72,7 +74,7 @@ export function Eth1ClientFilter(props: ButtonProps) {
                       "flex-1 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     )}
                   >
-                    {toSentenceCase(client)}
+                    {toSentenceCase(status)}
                   </span>
                 </CommandItem>
               ))}

@@ -7,12 +7,12 @@ import { cn } from "@/lib/utils"
 import { Spinner } from "@/components/ui/spinner"
 
 export const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
   {
     variants: {
       variant: {
         default:
-          "bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white",
+          "bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
@@ -24,7 +24,7 @@ export const buttonVariants = cva(
           "bg-success-100 text-success-500 hover:bg-success-300 active:bg-success-500",
         subtle:
           "bg-slate-400/5 hover:bg-slate-400/20 hover:text-accent-foreground",
-        link: "text-primary-500 inline-flex underline-offset-4 hover:underline",
+        link: "inline-flex text-primary-500 underline-offset-4 hover:underline",
         disabled: "cursor-not-allowed bg-gray-300 text-gray-500 opacity-50",
       },
       colorScheme: {
@@ -33,13 +33,13 @@ export const buttonVariants = cva(
         error: "",
       },
       size: {
-        default: "text-md h-10 rounded-lg px-4 py-2 font-medium",
-        sm: "h-9 rounded-lg px-3 text-sm font-medium",
-        lg: "text-md h-12 rounded-lg px-6 font-medium",
-        xl: "text-md h-[60px] rounded-lg px-6 font-medium",
-        icon: "size-7 rounded-lg",
-        network: "text-md h-12 rounded-lg pl-3 pr-4 font-medium",
-        wallet: "text-md h-12 rounded-lg px-4 font-medium",
+        default: "text-md h-10 px-4 py-2 font-medium",
+        sm: "h-9 px-3 text-sm font-medium",
+        lg: "text-md h-12 px-6 font-medium",
+        xl: "text-md h-[60px] px-6 font-medium",
+        icon: "size-7",
+        network: "text-md h-12 pl-3 pr-4 font-medium",
+        wallet: "text-md h-12 px-4 font-medium",
         none: "",
       },
       width: {

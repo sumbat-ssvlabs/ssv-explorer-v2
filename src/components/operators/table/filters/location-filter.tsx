@@ -40,7 +40,11 @@ export function LocationFilter(props: ButtonProps) {
   return (
     <Popover modal open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant={hasSelectedItems ? "secondary" : "outline"} {...props}>
+        <Button
+          size="sm"
+          variant={hasSelectedItems ? "secondary" : "outline"}
+          {...props}
+        >
           Location{" "}
           {hasSelectedItems && (
             <Badge size="xs" variant="info">

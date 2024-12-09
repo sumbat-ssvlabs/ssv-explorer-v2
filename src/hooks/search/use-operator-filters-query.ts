@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react"
-import { isEmpty } from "lodash-es"
+import { isEqual } from "lodash-es"
 import { useQueryStates } from "nuqs"
 
 import { operatorSearchFilters } from "@/lib/search-parsers/operator-search"
@@ -11,7 +11,12 @@ export const useOperatorFiltersQuery = () => {
     const entries = Object.entries(filters)
     const enabled = entries.reduce(
       (acc, [key, value]) => {
-        if (Boolean(value) && !isEmpty(value)) {
+        const parser =
+          operatorSearchFilters[key as keyof typeof operatorSearchFilters]
+        const defaultValue =
+          "defaultValue" in parser ? parser.defaultValue : null
+
+        if (!isEqual(value, defaultValue)) {
           acc.count++
           acc.names.push(key)
         }

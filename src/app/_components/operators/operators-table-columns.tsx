@@ -1,11 +1,13 @@
 "use client"
 
+import Link from "next/link"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { type Operator } from "@/types/api"
-import { percentageFormatter } from "@/lib/utils/number"
 import { getYearlyFee } from "@/lib/utils/operator"
 import { shortenAddress } from "@/lib/utils/strings"
+import { Button } from "@/components/ui/button"
+import { CopyBtn } from "@/components/ui/copy-btn"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { MevRelaysDisplay } from "@/components/mev-relays-display"
 import { OperatorStatusBadge } from "@/components/operators/operator-status-badge"
@@ -35,9 +37,19 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Owner Address" />
     ),
-    cell: ({ row }) => (
-      <div>{shortenAddress(row.getValue("owner_address"))}</div>
-    ),
+    cell: ({ row }) => {
+      const ownerAddress = row.original.owner_address
+      return (
+        <div className="flex gap-1">
+          <Button asChild variant="link">
+            <Link href={`/account/${ownerAddress}`}>
+              {shortenAddress(ownerAddress)}
+            </Link>
+          </Button>
+          <CopyBtn className="text-gray-500" text={ownerAddress} />
+        </div>
+      )
+    },
     enableSorting: false,
   },
   {

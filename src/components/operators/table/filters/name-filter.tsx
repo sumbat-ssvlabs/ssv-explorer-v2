@@ -9,8 +9,6 @@ import { Loader2 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 import { useOperatorsSearchParams } from "@/hooks/search/use-operators-search-params"
-import { Badge } from "@/components/ui/badge"
-import { Button, type ButtonProps } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
   Command,
@@ -20,13 +18,9 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+import { FilterButton } from "@/components/filter/filter-button"
 
-export function NameFilter(props: ButtonProps) {
+export function NameFilter() {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState<string>("")
   const { network, filters, setFilters } = useOperatorsSearchParams()
@@ -44,70 +38,60 @@ export function NameFilter(props: ButtonProps) {
     enabled: open,
   })
 
-  const hasSelectedItems = Boolean(filters.name?.length)
-
   return (
-    <Popover modal open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          size="sm"
-          variant={hasSelectedItems ? "secondary" : "outline"}
-          {...props}
-        >
-          Name{" "}
-          {hasSelectedItems && (
-            <Badge size="xs" variant="info">
-              {filters.name?.length}
-            </Badge>
+    <FilterButton
+      name="Name"
+      activeFiltersCount={filters.name?.length ?? 0}
+      onClear={() => setFilters((prev) => ({ ...prev, name: [] }))}
+      popoverProps={{
+        open,
+        onOpenChange: setOpen,
+      }}
+    >
+      <Command>
+        <CommandInput
+          placeholder="Search Names"
+          value={search}
+          onValueChange={(value) => setSearch(value)}
+        />
+        <CommandList className="max-h-none overflow-y-auto">
+          {query.isPending ? (
+            <CommandLoading className="flex items-center justify-center p-4">
+              <Loader2 className="animate-spin" />
+            </CommandLoading>
+          ) : (
+            <CommandEmpty>This list is empty.</CommandEmpty>
           )}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[320px] overflow-auto p-0">
-        <Command>
-          <CommandInput
-            placeholder={"Search Names"}
-            value={search}
-            onValueChange={(value) => setSearch(value)}
-          />
-          <CommandList className="max-h-none overflow-y-auto">
-            {query.isPending ? (
-              <CommandLoading className="flex items-center justify-center p-4">
-                <Loader2 className="animate-spin" />
-              </CommandLoading>
-            ) : (
-              <CommandEmpty>This list is empty.</CommandEmpty>
-            )}
-            <CommandGroup>
-              {query.data?.operators.map((operator) => (
-                <CommandItem
-                  key={operator.id}
-                  value={operator.name}
-                  className="flex h-10 items-center space-x-2 px-2"
-                  onSelect={() => {
-                    setFilters((prev) => ({
-                      ...prev,
-                      name: xor(prev.name, [operator.name]),
-                    }))
-                  }}
+          <CommandGroup>
+            {query.data?.operators.map((operator) => (
+              <CommandItem
+                key={operator.id}
+                value={operator.name}
+                className="flex h-10 items-center space-x-2 px-2"
+                onSelect={() => {
+                  setFilters((prev) => ({
+                    ...prev,
+                    name: xor(prev.name, [operator.name]),
+                  }))
+                }}
+              >
+                <Checkbox
+                  id={operator.name}
+                  checked={filters.name?.includes(operator.name)}
+                  className="mr-2"
+                />
+                <span
+                  className={cn(
+                    "flex-1 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  )}
                 >
-                  <Checkbox
-                    id={operator.name}
-                    checked={filters.name?.includes(operator.name)}
-                    className="mr-2"
-                  />
-                  <span
-                    className={cn(
-                      "flex-1 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                    )}
-                  >
-                    {operator.name}
-                  </span>
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+                  {operator.name}
+                </span>
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        </CommandList>
+      </Command>
+    </FilterButton>
   )
 }

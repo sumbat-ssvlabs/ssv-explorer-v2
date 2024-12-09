@@ -22,10 +22,10 @@ export const buttonVariants = cva(
         ghost: "hover:bg-gray-300",
         success:
           "bg-success-100 text-success-500 hover:bg-success-300 active:bg-success-500",
-        subtle:
-          "bg-slate-400/5 hover:bg-slate-400/20 hover:text-accent-foreground",
         link: "inline-flex text-primary-500 underline-offset-4 hover:underline",
         disabled: "cursor-not-allowed bg-gray-300 text-gray-500 opacity-50",
+        filter:
+          "bg-gray-100 text-primary-500 hover:bg-gray-50 active:bg-gray-50",
       },
       colorScheme: {
         wallet:

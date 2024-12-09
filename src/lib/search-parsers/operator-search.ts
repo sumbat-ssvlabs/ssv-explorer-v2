@@ -28,6 +28,7 @@ export const paginationParser = {
 const searchOptions: Options = {
   history: "replace",
   shallow: false,
+  clearOnDefault: true,
 }
 
 export const operatorSearchFilters = {

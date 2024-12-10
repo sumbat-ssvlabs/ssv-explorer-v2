@@ -33,10 +33,11 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     cell: ({ row }) => (
       <div className="flex h-[52px] items-center gap-2">
         <OperatorAvatar src={row.original.logo} />
-        <Text>{row.original.name}</Text>
+        <Text className="line-clamp-1 min-w-80">{row.original.name}</Text>
         <div className="flex items-center gap-1">
           {row.original.is_private && <MdOutlineLock className="size-[14px]" />}
           {row.original.verified_operator && (
+            // eslint-disable-next-line @next/next/no-img-element
             <img
               className="size-[14px]"
               src="/images/verified.svg"

@@ -1,8 +1,8 @@
 import * as React from "react"
 import { flexRender, type Table as TanstackTable } from "@tanstack/react-table"
 
-import { getCommonPinningStyles } from "@/lib/utils/data-table"
 import { cn } from "@/lib/utils"
+import { getCommonPinningStyles } from "@/lib/utils/data-table"
 import {
   Table,
   TableBody,
@@ -42,7 +42,7 @@ export function DataTable<TData>({
       {...props}
     >
       {children}
-      <div className="overflow-hidden rounded-md border">
+      <div className="overflow-hidden rounded-2xl">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (

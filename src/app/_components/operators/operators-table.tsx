@@ -9,11 +9,11 @@ import { useOperatorsSearchParams } from "@/hooks/search/use-operators-search-pa
 import { useDataTable } from "@/hooks/use-data-table"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { Text } from "@/components/ui/text"
 import { Tooltip } from "@/components/ui/tooltip"
 import { DataTable } from "@/components/data-table/data-table"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
 import { Toolbar } from "@/components/operators/table/filters/toolbar"
-import { Cmp } from "@/app/operators/cmp"
 
 import { operatorsTableColumns } from "./operators-table-columns"
 
@@ -55,7 +55,7 @@ export function OperatorsTable({ dataPromise: data }: OperatorsTableProps) {
     <>
       <TableProvider table={table}>
         <div className="flex gap-2">
-          <Cmp />
+          <Text variant="headline4"> Operators </Text>
           <div className="flex-1"></div>
           <Button
             aria-label="Toggle columns"

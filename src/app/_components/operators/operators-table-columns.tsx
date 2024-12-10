@@ -2,14 +2,17 @@
 
 import Link from "next/link"
 import { type ColumnDef } from "@tanstack/react-table"
+import { MdOutlineLock } from "react-icons/md"
 
 import { type Operator } from "@/types/api"
 import { getYearlyFee } from "@/lib/utils/operator"
 import { shortenAddress } from "@/lib/utils/strings"
 import { Button } from "@/components/ui/button"
 import { CopyBtn } from "@/components/ui/copy-btn"
+import { Text } from "@/components/ui/text"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { MevRelaysDisplay } from "@/components/mev-relays-display"
+import { OperatorAvatar } from "@/components/operators/operator-avatar"
 import { OperatorStatusBadge } from "@/components/operators/operator-status-badge"
 import { PerformanceText } from "@/components/operators/performance-text"
 
@@ -28,7 +31,20 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
       <DataTableColumnHeader column={column} title="Name" />
     ),
     cell: ({ row }) => (
-      <div className="line-clamp-1">{row.getValue("name")}</div>
+      <div className="flex h-[52px] items-center gap-2">
+        <OperatorAvatar src={row.original.logo} />
+        <Text>{row.original.name}</Text>
+        <div className="flex items-center gap-1">
+          {row.original.is_private && <MdOutlineLock className="size-[14px]" />}
+          {row.original.verified_operator && (
+            <img
+              className="size-[14px]"
+              src="/images/verified.svg"
+              alt="Verified"
+            />
+          )}
+        </div>
+      </div>
     ),
     enableSorting: false,
   },

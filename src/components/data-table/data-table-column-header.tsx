@@ -1,18 +1,11 @@
 "use client"
 
-import { useTable } from "@/context/table-context"
-import { SelectIcon } from "@radix-ui/react-select"
 import { type Column } from "@tanstack/react-table"
-import { ArrowDown, ArrowUp, ChevronsUpDown, EyeOff } from "lucide-react"
+import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa"
 
 import { cn } from "@/lib/utils"
-import { useColumnsVisibility } from "@/hooks/table/use-columns-visibility"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-} from "@/components/ui/select"
+
+import { Text } from "../ui/text"
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -25,19 +18,39 @@ export function DataTableColumnHeader<TData, TValue>({
   title,
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
-  const { visibleColumnsCount } = useColumnsVisibility()
-
-  if (!column.getCanSort() && !column.getCanHide()) {
-    return <div className={cn(className)}>{title}</div>
+  if (!column.getCanSort()) {
+    return (
+      <div className={cn("whitespace-nowrap text-gray-500", className)}>
+        <Text variant="caption-medium">{title}</Text>
+      </div>
+    )
   }
 
-  const ascValue = `${column.id}-asc`
-  const descValue = `${column.id}-desc`
-  const hideValue = `${column.id}-hide`
+  const sort = column.getIsSorted()
 
   return (
-    <div className={cn("flex items-center gap-2", className)}>
-      <Select
+    <div
+      onClick={() => column.toggleSorting()}
+      className={cn(
+        "flex h-full cursor-pointer select-none items-center gap-[6px] whitespace-nowrap text-gray-500",
+        className
+      )}
+    >
+      <Text variant="caption-medium">{title}</Text>
+      <div className="relative size-3">
+        <FaSort
+          className={cn("absolute inset-0 size-3", {
+            "text-gray-300": Boolean(sort),
+          })}
+        />
+        {sort === "asc" && (
+          <FaSortUp className="absolute inset-0 size-3 text-primary-500" />
+        )}
+        {sort === "desc" && (
+          <FaSortDown className="absolute inset-0 size-3 text-primary-500" />
+        )}
+      </div>
+      {/* <Select
         value={
           column.getIsSorted() === "desc"
             ? descValue
@@ -72,42 +85,7 @@ export function DataTableColumnHeader<TData, TValue>({
             )}
           </SelectIcon>
         </SelectTrigger>
-        <SelectContent align="start">
-          {column.getCanSort() && (
-            <>
-              <SelectItem value={ascValue}>
-                <span className="flex items-center">
-                  <ArrowUp
-                    className="mr-2 size-3.5 text-muted-foreground/70"
-                    aria-hidden="true"
-                  />
-                  Asc
-                </span>
-              </SelectItem>
-              <SelectItem value={descValue}>
-                <span className="flex items-center">
-                  <ArrowDown
-                    className="mr-2 size-3.5 text-muted-foreground/70"
-                    aria-hidden="true"
-                  />
-                  Desc
-                </span>
-              </SelectItem>
-            </>
-          )}
-          {column.getCanHide() && (
-            <SelectItem disabled={visibleColumnsCount === 1} value={hideValue}>
-              <span className="flex items-center">
-                <EyeOff
-                  className="mr-2 size-3.5 text-muted-foreground/70"
-                  aria-hidden="true"
-                />
-                Hide
-              </span>
-            </SelectItem>
-          )}
-        </SelectContent>
-      </Select>
+      </Select> */}
     </div>
   )
 }

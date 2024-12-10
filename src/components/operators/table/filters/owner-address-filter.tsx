@@ -12,7 +12,6 @@ import { isAddress, type Address } from "viem"
 import { cn } from "@/lib/utils"
 import { shortenAddress } from "@/lib/utils/strings"
 import { useOperatorsSearchParams } from "@/hooks/search/use-operators-search-params"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -22,6 +21,7 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
+import { Text } from "@/components/ui/text"
 import { FilterButton } from "@/components/filter/filter-button"
 
 export function OwnerAddressFilter() {
@@ -52,24 +52,29 @@ export function OwnerAddressFilter() {
       name="Owner Address"
       activeFiltersCount={filters.owner?.length ?? 0}
       onClear={() => setFilters((prev) => ({ ...prev, owner: [] }))}
-      popoverProps={{
-        open,
-        onOpenChange: setOpen,
+      popover={{
+        root: {
+          open,
+          onOpenChange: setOpen,
+        },
+        content: {
+          className: "w-[440px]",
+        },
       }}
     >
-      <Command className="w-[440px]">
+      <Command>
         <CommandInput
           placeholder="Search Owner Address"
           value={search}
           onValueChange={(value) => setSearch(value)}
         />
         {Boolean(filters.owner?.length) && (
-          <div className="flex flex-wrap gap-1 border-b p-1">
+          <div className="flex flex-wrap gap-1 border-y p-2">
             {filters.owner?.map((owner_address) => (
               <Button
                 size="sm"
                 key={owner_address}
-                className="h-auto gap-0.5 rounded-full px-2 py-0.5 text-xs"
+                className="h-6 gap-0.5 rounded-full pb-px pl-2 pr-1"
                 variant="secondary"
                 onClick={() =>
                   setFilters((prev) => ({
@@ -78,12 +83,21 @@ export function OwnerAddressFilter() {
                   }))
                 }
               >
-                {shortenAddress(owner_address)} <X className="size-2" />
+                <Text variant="caption-medium">
+                  {shortenAddress(owner_address)}
+                </Text>{" "}
+                <div className="flex size-4 items-center justify-center">
+                  <X className="size-2.5" />
+                </div>
               </Button>
             ))}
           </div>
         )}
-        <CommandList className="max-h-none overflow-y-auto">
+        <CommandList
+          className={cn("max-h-none overflow-y-auto", {
+            "pt-0": !filters.owner?.length,
+          })}
+        >
           {query.isLoading ? (
             <CommandLoading className="flex items-center justify-center p-4">
               <Loader2 className="animate-spin" />
@@ -111,9 +125,9 @@ export function OwnerAddressFilter() {
                 >
                   {owner_address}
                 </span>
-                <Badge variant="info" className="rounded-lg">
-                  <MdKeyboardReturn className="size-3" />
-                </Badge>
+                <div className="flex h-5 w-6 items-center justify-center rounded-md border border-gray-400 bg-gray-50">
+                  <MdKeyboardReturn className="size-3 text-gray-500" />
+                </div>
               </CommandItem>
             ))}
           </CommandGroup>

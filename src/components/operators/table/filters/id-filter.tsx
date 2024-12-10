@@ -62,7 +62,7 @@ export function IdFilter() {
         />
 
         {Boolean(filters.id?.length) && (
-          <div className="flex flex-wrap gap-1 border-y border-gray-200 p-1">
+          <div className="flex flex-wrap gap-1 border-y border-gray-200 p-2">
             {filters.id?.map((id) => (
               <Button
                 size="sm"

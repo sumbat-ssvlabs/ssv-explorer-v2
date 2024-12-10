@@ -1,8 +1,5 @@
-"use client"
-
 import * as React from "react"
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group"
-import { Circle } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -28,17 +25,21 @@ const RadioGroupItem = React.forwardRef<
     <RadioGroupPrimitive.Item
       ref={ref}
       className={cn(
-        "aspect-square h-4 w-4 rounded-full border border-primary text-primary shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50",
+        "text-primary peer flex aspect-square size-4 items-center justify-center overflow-hidden rounded-full border border-gray-500 ring-offset-background focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state='checked']:border-primary-500 data-[state='checked']:bg-primary-500",
         className
       )}
       {...props}
     >
-      <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-        <Circle className="h-3.5 w-3.5 fill-primary" />
-      </RadioGroupPrimitive.Indicator>
+      <RadioGroupPrimitive.Indicator className="flex size-2 rounded-full bg-gray-50" />
     </RadioGroupPrimitive.Item>
   )
 })
 RadioGroupItem.displayName = RadioGroupPrimitive.Item.displayName
+
+export const RadioButton: React.FC<
+  React.ComponentPropsWithoutRef<"div"> & { checked: boolean }
+> = ({ children, ...props }) => {
+  return <div {...props}>{children}</div>
+}
 
 export { RadioGroup, RadioGroupItem }

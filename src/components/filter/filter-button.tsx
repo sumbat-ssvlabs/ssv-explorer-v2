@@ -1,4 +1,10 @@
-import { type ComponentPropsWithoutRef, type FC, type RefObject } from "react"
+import {
+  type ComponentProps,
+  type ComponentPropsWithoutRef,
+  type FC,
+  type ReactNode,
+  type RefObject,
+} from "react"
 import { type PopoverProps } from "@radix-ui/react-popover"
 import { X } from "lucide-react"
 import { GoTriangleDown } from "react-icons/go"
@@ -14,23 +20,28 @@ type FilterButtonProps = {
   isActive?: boolean
   activeFiltersCount?: number
   name: string
-  popoverProps?: Omit<PopoverProps, "children">
+  popover?: Partial<{
+    root: Omit<PopoverProps, "children">
+    content: Omit<ComponentProps<typeof PopoverContent>, "children">
+  }>
   onClear?: () => void
+  children?: ReactNode
 }
 export const FilterButton: FC<
-  FilterButtonProps & ComponentPropsWithoutRef<"button">
+  FilterButtonProps &
+    Omit<ComponentPropsWithoutRef<"button">, keyof FilterButtonProps>
 > = ({
   ref,
   name,
   isActive,
   activeFiltersCount,
-  popoverProps = {},
+  popover,
   onClear,
   children,
   ...props
 }) => {
   return (
-    <Popover {...popoverProps}>
+    <Popover {...popover?.root}>
       <PopoverTrigger asChild>
         <button
           {...props}
@@ -78,7 +89,10 @@ export const FilterButton: FC<
           </div>
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-fit overflow-auto p-0">
+      <PopoverContent
+        {...popover?.content}
+        className={cn("overflow-auto p-0", popover?.content?.className ?? "")}
+      >
         {children}
       </PopoverContent>
     </Popover>

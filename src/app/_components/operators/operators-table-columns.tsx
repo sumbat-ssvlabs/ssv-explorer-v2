@@ -31,9 +31,9 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
       <DataTableColumnHeader column={column} title="Name" />
     ),
     cell: ({ row }) => (
-      <div className="flex h-[52px] items-center gap-2">
+      <div className="flex h-[52px] min-w-80 items-center gap-2">
         <OperatorAvatar src={row.original.logo} />
-        <Text className="line-clamp-1 min-w-80">{row.original.name}</Text>
+        <Text className="line-clamp-1">{row.original.name}</Text>
         <div className="flex items-center gap-1">
           {row.original.is_private && <MdOutlineLock className="size-[14px]" />}
           {row.original.verified_operator && (

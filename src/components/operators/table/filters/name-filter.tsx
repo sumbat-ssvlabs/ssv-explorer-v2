@@ -43,9 +43,11 @@ export function NameFilter() {
       name="Name"
       activeFiltersCount={filters.name?.length ?? 0}
       onClear={() => setFilters((prev) => ({ ...prev, name: [] }))}
-      popoverProps={{
-        open,
-        onOpenChange: setOpen,
+      popover={{
+        root: {
+          open,
+          onOpenChange: setOpen,
+        },
       }}
     >
       <Command>

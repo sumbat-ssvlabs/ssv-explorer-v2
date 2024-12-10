@@ -34,9 +34,11 @@ export function LocationFilter() {
       name="Location"
       activeFiltersCount={filters.location?.length ?? 0}
       onClear={() => setFilters((prev) => ({ ...prev, location: [] }))}
-      popoverProps={{
-        open,
-        onOpenChange: setOpen,
+      popover={{
+        root: {
+          open,
+          onOpenChange: setOpen,
+        },
       }}
     >
       <Command>

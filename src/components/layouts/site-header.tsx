@@ -2,7 +2,6 @@ import Link from "next/link"
 import { LayoutGrid } from "lucide-react"
 
 import { siteConfig } from "@/config/site"
-import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { ModeToggle } from "@/components/layouts/mode-toggle"
 
@@ -27,16 +26,14 @@ export function SiteHeader() {
           </Link>
         </nav>
         <nav className="flex flex-1 items-center md:justify-end">
-          <Button variant="ghost" size="icon" className="size-8" asChild>
-            <Link
-              aria-label="GitHub repo"
-              href={siteConfig.links.github}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Icons.gitHub className="size-4" aria-hidden="true" />
-            </Link>
-          </Button>
+          <Link
+            aria-label="GitHub repo"
+            href={siteConfig.links.github}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icons.gitHub className="size-4" aria-hidden="true" />
+          </Link>
           <ModeToggle />
         </nav>
       </div>

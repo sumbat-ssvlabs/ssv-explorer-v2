@@ -11,7 +11,6 @@ import { GoTriangleDown } from "react-icons/go"
 
 import { cn } from "@/lib/utils"
 
-import { Button } from "../ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import { Text } from "../ui/text"
 
@@ -74,17 +73,15 @@ export const FilterButton: FC<
               <GoTriangleDown className="sFGize-4 text-gray-500 transition-transform group-data-[state=open]:rotate-180 group-data-[state=open]:text-primary-500" />
             </div>
             {Boolean(activeFiltersCount || isActive) && (
-              <Button
+              <div
                 onClick={(event) => {
                   event.stopPropagation()
                   onClear?.()
                 }}
-                variant="ghost"
-                size="icon"
-                className="flex size-6 items-center justify-center rounded-md hover:bg-primary-50"
+                className="flex size-6 items-center justify-center rounded-md text-gray-500 hover:bg-primary-50 hover:text-primary-500"
               >
-                <X className="size-4 text-gray-500" />
-              </Button>
+                <X className="size-4" />
+              </div>
             )}
           </div>
         </button>

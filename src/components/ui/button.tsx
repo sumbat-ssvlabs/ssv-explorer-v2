@@ -25,7 +25,7 @@ export const buttonVariants = cva(
         link: "inline-flex text-primary-500 underline-offset-4 hover:underline",
         disabled: "cursor-not-allowed bg-gray-300 text-gray-500 opacity-50",
         filter:
-          "bg-gray-100 text-primary-500 hover:bg-gray-50 active:bg-gray-50",
+          "hover:bg-gray-sumbat active:bg-gray-sumbat bg-gray-100 text-primary-500",
       },
       colorScheme: {
         wallet:

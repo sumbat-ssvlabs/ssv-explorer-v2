@@ -7,7 +7,6 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -43,7 +42,7 @@ export function DataTable<TData>({
       {...props}
     >
       {children}
-      <div className="overflow-hidden rounded-2xl">
+      <div className="overflow-hidden">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -102,12 +101,11 @@ export function DataTable<TData>({
               </TableRow>
             )}
           </TableBody>
-          <TableFooter></TableFooter>
         </Table>
-      </div>
-      <div className="flex flex-col gap-2.5">
-        <DataTablePagination table={table} />
-        {table.getFilteredSelectedRowModel().rows.length > 0 && floatingBar}
+        <div className="flex flex-col gap-2.5 rounded-b-2xl bg-gray-50 px-6 py-3">
+          <DataTablePagination table={table} />
+          {table.getFilteredSelectedRowModel().rows.length > 0 && floatingBar}
+        </div>
       </div>
     </div>
   )

@@ -6,10 +6,10 @@ const Table = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement>
 >(({ className, ...props }, ref) => (
-  <div className="relative w-full overflow-auto">
+  <div className="scrollbox relative w-full overflow-auto">
     <table
       ref={ref}
-      className={cn("w-full caption-bottom bg-gray-50 text-sm", className)}
+      className={cn("bg-gray-sumbat w-full caption-bottom text-sm", className)}
       {...props}
     />
   </div>
@@ -34,7 +34,10 @@ const TableBody = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <tbody
     ref={ref}
-    className={cn("border-gray-300 [&_tr:last-child]:border-0", className)}
+    className={cn(
+      "overflow-auto border-gray-300 [&_tr:last-child]:border-0",
+      className
+    )}
     {...props}
   />
 ))
@@ -62,7 +65,7 @@ const TableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      "border-b border-gray-300 transition-colors hover:bg-gray-50 data-[state=selected]:bg-primary-50",
+      "hover:bg-gray-sumbat border-b border-gray-300 transition-colors data-[state=selected]:bg-primary-50",
       className
     )}
     {...props}
@@ -92,7 +95,7 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      "h-[52px] bg-gray-50 px-6 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+      "bg-gray-sumbat h-[52px] whitespace-nowrap px-6 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
       className
     )}
     {...props}

@@ -39,6 +39,7 @@ export const defaultColumns = {
 export function OperatorsTable({ dataPromise: data }: OperatorsTableProps) {
   const { operators, pagination } = use(data)
 
+  console.log("pagination.total:", pagination.total)
   const { table } = useDataTable({
     data: operators,
     columns: operatorsTableColumns,
@@ -46,6 +47,9 @@ export function OperatorsTable({ dataPromise: data }: OperatorsTableProps) {
     getRowId: (originalRow, index) => `${originalRow.id}-${index}`,
     shallow: false,
     clearOnDefault: true,
+    meta: {
+      total: pagination.total,
+    },
   })
 
   const { setFilters, enabledFilters, clearFilters } =

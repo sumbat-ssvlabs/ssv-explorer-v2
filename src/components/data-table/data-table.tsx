@@ -7,6 +7,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -101,6 +102,7 @@ export function DataTable<TData>({
               </TableRow>
             )}
           </TableBody>
+          <TableFooter></TableFooter>
         </Table>
       </div>
       <div className="flex flex-col gap-2.5">

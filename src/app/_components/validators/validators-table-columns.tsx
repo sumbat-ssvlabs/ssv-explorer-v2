@@ -22,7 +22,7 @@ export const validatorsTableColumns: ColumnDef<SearchValidator>[] = [
         <Text
           className="font-mono text-primary-500"
           as={Link}
-          href={`/validators/${row.original.public_key}`}
+          href={`/validator/${row.original.public_key}`}
         >
           <div>{shortenAddress(add0x(row.original.public_key))}</div>
         </Text>
@@ -41,7 +41,7 @@ export const validatorsTableColumns: ColumnDef<SearchValidator>[] = [
         <Text
           className="font-mono text-primary-500"
           as={Link}
-          href={`/validators/${row.original.public_key}`}
+          href={`/cluster/${row.original.public_key}`}
         >
           <div>{shortenAddress(remove0x(row.original.cluster))}</div>
         </Text>
@@ -77,12 +77,13 @@ export const validatorsTableColumns: ColumnDef<SearchValidator>[] = [
     cell: ({ row }) => (
       <div className="flex gap-1">
         {row.original.operators.map((operator) => (
-          <OperatorAvatar
-            key={operator.id}
-            src={operator.logo}
-            isPrivate={operator.is_private}
-            size="sm"
-          />
+          <Link href={`/operator/${operator.id}`} key={operator.id}>
+            <OperatorAvatar
+              src={operator.logo}
+              isPrivate={operator.is_private}
+              size="sm"
+            />
+          </Link>
         ))}
       </div>
     ),

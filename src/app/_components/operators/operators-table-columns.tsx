@@ -59,7 +59,7 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
       return (
         <div className="flex gap-1">
           <Button asChild variant="link">
-            <Link href={`/account/${ownerAddress}`}>
+            <Link href={`/account/${ownerAddress}`} className="font-mono">
               {shortenAddress(ownerAddress)}
             </Link>
           </Button>

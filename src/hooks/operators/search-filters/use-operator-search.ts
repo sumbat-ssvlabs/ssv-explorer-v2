@@ -6,7 +6,7 @@ import { type Operator } from "@/types/api"
 import { operatorSearchFilters } from "@/lib/search-parsers/operator-search"
 
 export const useOperatorSearch = () => {
-  const table = useTable<Operator>()
+  const { table } = useTable<Operator>()
   const [searchParams, setSearchParams] = useQueryState(
     "search",
     operatorSearchFilters.search.withOptions({

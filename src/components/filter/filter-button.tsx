@@ -55,7 +55,13 @@ export const FilterButton: FC<
         >
           {Boolean(activeFiltersCount) && (
             <div className="rounded-md bg-primary-50 px-2 py-[2px]">
-              <Text variant="body-3-semibold" className="text-primary-500">
+              <Text
+                variant="body-3-semibold"
+                className={cn("text-primary-500")}
+                style={{
+                  width: `${(activeFiltersCount?.toString().length ?? 1) * 0.9}ch`,
+                }}
+              >
                 {activeFiltersCount}
               </Text>
             </div>

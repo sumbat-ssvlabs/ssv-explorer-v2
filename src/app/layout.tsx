@@ -5,16 +5,21 @@ import { ThemeProvider } from "@/components/providers"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 
 import "@/styles/globals.css"
+import "@fontsource/manrope/400.css"
+import "@fontsource/manrope/500.css"
+import "@fontsource/manrope/700.css"
+import "@fontsource/manrope/800.css"
+import "@fontsource/roboto-mono"
 
 import type { Metadata, Viewport } from "next"
 
-import { fontMono, fontSans } from "@/lib/utils/fonts"
 import { Toaster } from "@/components/ui/toaster"
 
 import { Providers } from "./_providers/providers"
 
 interface RootLayoutProps {
   children: React.ReactNode
+  params: any
   searchParams: { [key: string]: string | string[] | undefined }
 }
 
@@ -70,22 +75,11 @@ export const viewport: Viewport = {
   ],
 }
 
-export default function RootLayout({
-  children,
-  searchParams,
-}: RootLayoutProps) {
-  console.log("Search Params:", searchParams)
-
+export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
-      <body
-        className={cn(
-          "min-h-screen bg-gray-200 font-sans antialiased",
-          fontSans.variable,
-          fontMono.variable
-        )}
-      >
+      <body className={cn("min-h-screen bg-gray-200 font-sans antialiased")}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

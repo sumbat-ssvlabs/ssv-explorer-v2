@@ -1,10 +1,23 @@
 "use client"
 
-import { createContext, use, type ReactNode } from "react"
+import {
+  createContext,
+  use,
+  useState,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+} from "react"
 import { type Table } from "@tanstack/react-table"
 
+type TableContextType<TData> = {
+  table: Table<TData>
+  isFiltersOpen: boolean
+  setIsFiltersOpen: Dispatch<SetStateAction<boolean>>
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const TableContext = createContext<Table<any> | null>(null)
+const TableContext = createContext<TableContextType<any> | null>(null)
 
 interface TableProviderProps<TData> {
   children: ReactNode
@@ -15,7 +28,12 @@ export function TableProvider<TData = unknown>({
   children,
   table,
 }: TableProviderProps<TData>) {
-  return <TableContext.Provider value={table}>{children}</TableContext.Provider>
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false)
+  return (
+    <TableContext.Provider value={{ table, isFiltersOpen, setIsFiltersOpen }}>
+      {children}
+    </TableContext.Provider>
+  )
 }
 
 export function useTable<TData = unknown>() {
@@ -23,5 +41,5 @@ export function useTable<TData = unknown>() {
   if (context === undefined) {
     throw new Error("useTableContext must be used within a TableProvider")
   }
-  return context as Table<TData>
+  return context as TableContextType<TData>
 }

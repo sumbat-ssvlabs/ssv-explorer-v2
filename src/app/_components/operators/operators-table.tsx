@@ -2,18 +2,17 @@
 
 import { use } from "react"
 import { TableProvider } from "@/context/table-context"
-import { Settings2, X } from "lucide-react"
+import { X } from "lucide-react"
 
 import { type OperatorsSearchResponse } from "@/types/api"
 import { useOperatorsSearchParams } from "@/hooks/search/use-operators-search-params"
 import { useDataTable } from "@/hooks/use-data-table"
-import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Text } from "@/components/ui/text"
-import { Tooltip } from "@/components/ui/tooltip"
 import { DataTable } from "@/components/data-table/data-table"
+import { DataTableFiltersButton } from "@/components/data-table/data-table-filters-button"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
-import { Toolbar } from "@/components/operators/table/filters/toolbar"
+import { Filters } from "@/components/operators/table/filters/filters"
 
 import { operatorsTableColumns } from "./operators-table-columns"
 
@@ -39,7 +38,6 @@ export const defaultColumns = {
 export function OperatorsTable({ dataPromise: data }: OperatorsTableProps) {
   const { operators, pagination } = use(data)
 
-  console.log("pagination.total:", pagination.total)
   const { table } = useDataTable({
     data: operators,
     columns: operatorsTableColumns,
@@ -52,35 +50,15 @@ export function OperatorsTable({ dataPromise: data }: OperatorsTableProps) {
     },
   })
 
-  const { setFilters, enabledFilters, clearFilters } =
-    useOperatorsSearchParams()
+  const { enabledFilters, clearFilters } = useOperatorsSearchParams()
 
   return (
     <>
       <TableProvider table={table}>
         <div className="flex gap-2">
-          <Text variant="headline4"> Operators </Text>
+          <Text variant="headline4">Operators</Text>
           <div className="flex-1"></div>
-          <Button
-            aria-label="Toggle columns"
-            variant="outline"
-            role="combobox"
-            size="sm"
-            className="ml-auto flex h-8"
-          >
-            <Settings2 className="mr-2 size-4" />
-            Filters{" "}
-            {enabledFilters.count > 0 && (
-              <Tooltip
-                asChild
-                content={`Enabled filters: ${enabledFilters.names.join(", ")}`}
-              >
-                <Badge size="xs" variant="info">
-                  {enabledFilters.count}
-                </Badge>
-              </Tooltip>
-            )}
-          </Button>
+          <DataTableFiltersButton enabledFilters={enabledFilters} />
           {enabledFilters.count > 0 && (
             <Button
               aria-label="Toggle columns"
@@ -96,8 +74,8 @@ export function OperatorsTable({ dataPromise: data }: OperatorsTableProps) {
           )}
           <DataTableViewOptions table={table} />
         </div>
-        <Toolbar />
-        <DataTable table={table}></DataTable>
+        <Filters />
+        <DataTable table={table} />
       </TableProvider>
     </>
   )

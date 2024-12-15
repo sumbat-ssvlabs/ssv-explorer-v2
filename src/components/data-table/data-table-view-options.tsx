@@ -70,7 +70,7 @@ export function DataTableViewOptions<TData>({
             <p className="text-sm font-medium">Select Columns</p>
             <Button
               variant="ghost"
-              className="h-auto px-2 py-1 text-xs text-muted-foreground hover:text-primary"
+              className="hover:text-primary h-auto px-2 py-1 text-xs text-muted-foreground"
               onClick={resetColumns}
             >
               Reset

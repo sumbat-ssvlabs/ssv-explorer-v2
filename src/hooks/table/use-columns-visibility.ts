@@ -1,7 +1,7 @@
 import { useTable } from "@/context/table-context"
 
 export const useColumnsVisibility = () => {
-  const table = useTable()
+  const { table } = useTable()
   const allColumns = table.getAllColumns()
   const hidableColumns = allColumns.filter(
     (column) => typeof column.accessorFn !== "undefined" && column.getCanHide()

@@ -1,12 +1,21 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
+import { cn } from "@/lib/utils"
 import { ModeToggle } from "@/components/layouts/mode-toggle"
 
+import { Input } from "../ui/input"
+import { Text } from "../ui/text"
+
 export function SiteHeader() {
+  const pathname = usePathname()
+
   return (
-    <header className="sticky top-0 z-50 h-[60px] w-full border-b border-gray-300 backdrop-blur">
-      <div className="container flex h-14 items-center">
+    <header className="w-full backdrop-blur">
+      <div className="container flex h-[60px] items-center border-b border-gray-300 font-mono">
         <Link href="/" className="mr-2 flex items-center md:mr-6 md:space-x-2">
           <Image src="/images/logo.svg" alt="Logo" width={140} height={28} />
         </Link>
@@ -14,6 +23,64 @@ export function SiteHeader() {
         <nav className="flex flex-1 items-center md:justify-end">
           <ModeToggle />
         </nav>
+      </div>
+      <div className="container flex h-[60px] items-center justify-between gap-6">
+        <div className="flex gap-6">
+          <Text
+            as={Link}
+            variant="body-3-medium"
+            href="/overview"
+            className={cn({
+              "text-primary-500": pathname === "/overview",
+            })}
+          >
+            Overview
+          </Text>
+          <Text
+            as={Link}
+            variant="body-3-medium"
+            href="/operators"
+            className={cn({
+              "text-primary-500": pathname === "/operators",
+            })}
+          >
+            Operators
+          </Text>
+          <Text
+            as={Link}
+            variant="body-3-medium"
+            href="/validators"
+            className={cn({
+              "text-primary-500": pathname === "/validators",
+            })}
+          >
+            Validators
+          </Text>
+          <Text
+            as={Link}
+            variant="body-3-medium"
+            href="/clusters"
+            className={cn({
+              "text-primary-500": pathname === "/clusters",
+            })}
+          >
+            Clusters
+          </Text>
+          <Text
+            as={Link}
+            variant="body-3-medium"
+            href="/accounts"
+            className={cn({
+              "text-primary-500": pathname === "/accounts",
+            })}
+          >
+            Accounts
+          </Text>
+        </div>
+        <Input
+          placeholder="Search"
+          className="h-[40px] w-[600px] bg-gray-100"
+        />
       </div>
     </header>
   )

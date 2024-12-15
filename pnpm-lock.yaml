@@ -20,6 +20,12 @@ importers:
       '@dnd-kit/utilities':
         specifier: ^3.2.2
         version: 3.2.2(react@18.3.1)
+      '@fontsource/manrope':
+        specifier: ^5.1.0
+        version: 5.1.0
+      '@fontsource/roboto-mono':
+        specifier: ^5.1.0
+        version: 5.1.0
       '@hookform/resolvers':
         specifier: ^3.9.0
         version: 3.9.1(react-hook-form@7.53.2(react@18.3.1))
@@ -128,6 +134,9 @@ importers:
       react:
         specifier: ^18.3.1
         version: 18.3.1
+      react-collapse:
+        specifier: ^5.1.1
+        version: 5.1.1(react@18.3.1)
       react-day-picker:
         specifier: ^8.10.1
         version: 8.10.1(date-fns@4.1.0)(react@18.3.1)
@@ -189,6 +198,9 @@ importers:
       '@types/react':
         specifier: ^18.3.11
         version: 18.3.12
+      '@types/react-collapse':
+        specifier: ^5.0.4
+        version: 5.0.4
       '@types/react-dom':
         specifier: ^18.3.1
         version: 18.3.1
@@ -792,6 +804,12 @@ packages:
 
   '@floating-ui/utils@0.2.8':
     resolution: {integrity: sha512-kym7SodPp8/wloecOpcmSnWJsK7M0E5Wg8UcFA+uO4B9s5d0ywXOEro/8HM9x0rW+TljRzul/14UYz3TleT3ig==}
+
+  '@fontsource/manrope@5.1.0':
+    resolution: {integrity: sha512-q3Va+3ymeE1n9mHSkp9fCqcFGX0q59Nn94WOjuPYaSYa1szt8qlaGbBQH0w9e1+PcPD8jf4JUIz3/KjWM6wcCw==}
+
+  '@fontsource/roboto-mono@5.1.0':
+    resolution: {integrity: sha512-7lIxTeanF2XrwAIukUrOUvO9veGkQiG7L7vizMxVjl+lrTwS4GAYyOvziyGZ6/3kU80K3lGd/FnWrmoTud0V6A==}
 
   '@hookform/resolvers@3.9.1':
     resolution: {integrity: sha512-ud2HqmGBM0P0IABqoskKWI6PEf6ZDDBZkFqe2Vnl+mTHCEHzr3ISjjZyCwTjC/qpL25JC9aIDkloQejvMeq0ug==}
@@ -1585,6 +1603,9 @@ packages:
 
   '@types/prop-types@15.7.13':
     resolution: {integrity: sha512-hCZTSvwbzWGvhqxp/RqVqwU999pBf2vp7hzIjiYOsl8wqOmUxkQ6ddw1cV3l8811+kdUFus/q4d1Y3E3SyEifA==}
+
+  '@types/react-collapse@5.0.4':
+    resolution: {integrity: sha512-tM5cVB6skGLneNYnRK2E3R56VOHguSeJQHslGPTIMC58ytL3oelT8L/l1onkwHGn5vSEs2BEq2Olzrur+YdliA==}
 
   '@types/react-dom@18.3.1':
     resolution: {integrity: sha512-qW1Mfv8taImTthu4KoXgDfLuk4bydU6Q/TkADnDWWHwi4NX4BR+LWfTp2sVmTqRrsHvyDDTelgelxJ+SsejKKQ==}
@@ -3157,6 +3178,11 @@ packages:
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
 
+  react-collapse@5.1.1:
+    resolution: {integrity: sha512-k6cd7csF1o9LBhQ4AGBIdxB60SUEUMQDAnL2z1YvYNr9KoKr+nDkhN6FK7uGaBd/rYrYfrMpzpmJEIeHRYogBw==}
+    peerDependencies:
+      react: '>=16.3.0'
+
   react-day-picker@8.10.1:
     resolution: {integrity: sha512-TMx7fNbhLk15eqcMt+7Z7S2KF7mfTId/XJDjKE8f+IUcFn0l08/kI4FiYTL/0yuOLmEcbR4Fwe3GJf/NiiMnPA==}
     peerDependencies:
@@ -4065,6 +4091,10 @@ snapshots:
 
   '@floating-ui/utils@0.2.8': {}
 
+  '@fontsource/manrope@5.1.0': {}
+
+  '@fontsource/roboto-mono@5.1.0': {}
+
   '@hookform/resolvers@3.9.1(react-hook-form@7.53.2(react@18.3.1))':
     dependencies:
       react-hook-form: 7.53.2(react@18.3.1)
@@ -4812,6 +4842,10 @@ snapshots:
       undici-types: 6.19.8
 
   '@types/prop-types@15.7.13': {}
+
+  '@types/react-collapse@5.0.4':
+    dependencies:
+      '@types/react': 18.3.12
 
   '@types/react-dom@18.3.1':
     dependencies:
@@ -6458,6 +6492,10 @@ snapshots:
   punycode@2.3.1: {}
 
   queue-microtask@1.2.3: {}
+
+  react-collapse@5.1.1(react@18.3.1):
+    dependencies:
+      react: 18.3.1
 
   react-day-picker@8.10.1(date-fns@4.1.0)(react@18.3.1):
     dependencies:

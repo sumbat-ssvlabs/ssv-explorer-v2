@@ -94,8 +94,8 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ["var(--font-geist-sans)", ...fontFamily.sans],
-        mono: ["var(--font-geist-mono)", ...fontFamily.mono],
+        sans: ["manrope", ...fontFamily.sans],
+        mono: ["roboto-mono", ...fontFamily.mono],
       },
       keyframes: {
         "accordion-down": {

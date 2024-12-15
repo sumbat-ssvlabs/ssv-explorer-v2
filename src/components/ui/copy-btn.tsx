@@ -18,7 +18,7 @@ export const CopyBtn: FCProps = ({ className, text, ...props }) => {
   return (
     <IconButton
       disabled={!text}
-      variant="subtle"
+      variant="ghost"
       className={cn("relative inline-flex size-6 overflow-hidden", className)}
       {...props}
       onClick={(ev) => {
@@ -60,7 +60,7 @@ export const CopyBtn: FCProps = ({ className, text, ...props }) => {
             animate={{ opacity: 1, rotate: 0, x: "-50%", y: "-50%" }}
             exit={{ opacity: 0, rotate: 180, x: "-50%", y: "-50%" }}
           >
-            <LuCheck className="text-success-500 size-full" strokeWidth="2.5" />
+            <LuCheck className="size-full text-success-500" strokeWidth="2.5" />
           </motion.div>
         )}
       </AnimatePresence>

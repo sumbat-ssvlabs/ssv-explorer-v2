@@ -1,49 +1,31 @@
+"use server"
+
 import { endpoint } from "@/api"
 import { api } from "@/api/api-client"
+import { isUndefined, omitBy } from "lodash-es"
 
-import { add0x } from "@/lib/utils/strings"
+import type { PaginatedValidatorsResponse } from "@/types/api"
+import { type ValidatorsSearchSchema } from "@/lib/search-parsers/validators-search"
+import { stringifyBigints } from "@/lib/utils/bigint"
+import { unstable_cache } from "@/lib/utils/unstable-cache"
 
-export interface IsRegisteredValidatorResponse {
-  type: string
-  data: {
-    id: number
-    network: string
-    version: string
-    ownerAddress: string
-    publicKey: string
-    operators: number[]
-    cluster: string
-    shares: string
-    sharesPublicKeys: string[]
-    encryptedKeys: string[]
-    memo: string
-    blockNumber: number
-    logIndex: number
-    transactionIndex: number
-    addedAtBlockNumber: number
-    addedAtLogIndex: number
-    addedAtTransactionIndex: number
-    isValid: boolean
-    isDeleted: boolean
-    isLiquidated: boolean
-    ignoreOnSync: boolean
-    createdAt: string
-    updatedAt: string
-    isDraft: boolean
-    isPublicKeyValid: boolean
-    isSharesValid: boolean
-    isOperatorsValid: boolean
-  }
-}
-
-export const getIsRegisteredValidator = async (publicKey: string) => {
-  return await api.get<IsRegisteredValidatorResponse>(
-    endpoint("validators/isRegisteredValidator", add0x(publicKey))
-  )
-}
-
-export const getAllValidators = async (clusterHash: string) => {
-  return await api.get<IsRegisteredValidatorResponse>(
-    endpoint("validators/validatorsByClusterHash", add0x(clusterHash))
-  )
-}
+export const getValidators = async (
+  params: Partial<ValidatorsSearchSchema> &
+    Pick<ValidatorsSearchSchema, "network">
+) =>
+  await unstable_cache(
+    async () => {
+      const filtered = omitBy(params, isUndefined)
+      const searchParams = new URLSearchParams(
+        filtered as unknown as Record<string, string>
+      )
+      return api.get<PaginatedValidatorsResponse>(
+        endpoint(params.network, "validators", `?${searchParams}`)
+      )
+    },
+    [JSON.stringify(stringifyBigints(params))],
+    {
+      revalidate: 30,
+      tags: ["validators"],
+    }
+  )()

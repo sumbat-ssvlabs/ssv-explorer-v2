@@ -52,8 +52,8 @@ export const OperatorAvatar = forwardRef<HTMLDivElement, FCProps>(
         {...props}
       >
         {isPrivate && (
-          <div className="bg-gray-sumbat absolute left-0 top-0 -m-2 flex size-7 items-center justify-center rounded-full border text-gray-800">
-            <MdOutlineLock className="size-4" />
+          <div className="absolute right-0 top-1/2 w-fit rounded-sm bg-gray-50">
+            <MdOutlineLock className="size-3 stroke-gray-50" />
           </div>
         )}
       </div>

@@ -2,7 +2,12 @@ import { isNumber, merge } from "lodash-es"
 import type { Address } from "viem"
 import { encodePacked, keccak256 } from "viem"
 
-import type { Cluster, Operator, SolidityCluster, Validator } from "@/types/api"
+import type {
+  Cluster,
+  Operator,
+  SearchValidator,
+  SolidityCluster,
+} from "@/types/api"
 import { sortNumbers } from "@/lib/utils/number"
 import { add0x } from "@/lib/utils/strings"
 
@@ -49,7 +54,7 @@ export const formatClusterData = (
 })
 
 export const filterOutRemovedValidators = (
-  fetchedValidators: Validator[],
+  fetchedValidators: SearchValidator[],
   removedOptimisticValidatorsPKs: string[]
 ) =>
   fetchedValidators.filter(

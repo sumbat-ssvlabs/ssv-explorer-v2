@@ -9,16 +9,8 @@ import {
 import { isAddress } from "viem"
 import { z } from "zod"
 
-import { parseAsNumberEnum, parseAsTuple } from "../utils/parsers"
-import { networks } from "../utils/ssv-network-details"
-
-console.log("networks:", networks)
-
-export const networkParser = {
-  network: parseAsNumberEnum(networks.map((n) => n.networkId)).withDefault(
-    networks[0]!.networkId
-  ),
-}
+import { networkParser } from "."
+import { parseAsTuple } from "../utils/parsers"
 
 export const paginationParser = {
   page: parseAsInteger.withDefault(1),

@@ -24,6 +24,8 @@ export const buttonVariants = cva(
           "bg-success-100 text-success-500 hover:bg-success-300 active:bg-success-500",
         link: "inline-flex text-primary-500 underline-offset-4 hover:underline",
         disabled: "cursor-not-allowed bg-gray-300 text-gray-500 opacity-50",
+        subtle:
+          "bg-slate-400/5 hover:bg-slate-400/20 hover:text-accent-foreground",
         filter:
           "hover:bg-gray-sumbat active:bg-gray-sumbat bg-gray-100 text-primary-500",
       },

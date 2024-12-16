@@ -22,6 +22,7 @@ export const getClusters = async (
           ...params,
           from: (params.page ?? 0) * (params.perPage ?? 10),
           limit: params.perPage ?? 10,
+          operatorDetails: "operatorDetails",
         },
         isUndefined
       )

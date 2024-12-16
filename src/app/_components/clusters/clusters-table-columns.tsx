@@ -15,7 +15,7 @@ export const clustersTableColumns: ColumnDef<Cluster>[] = [
   {
     accessorKey: "clusterId",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Id" />
+      <DataTableColumnHeader column={column} title="Cluster ID" />
     ),
     cell: ({ row }) => (
       <div className="flex items-center gap-1">
@@ -34,7 +34,7 @@ export const clustersTableColumns: ColumnDef<Cluster>[] = [
   {
     accessorKey: "ownerAddress",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Id" />
+      <DataTableColumnHeader column={column} title="Owner Address" />
     ),
     cell: ({ row }) => (
       <div className="flex items-center gap-1">
@@ -57,15 +57,18 @@ export const clustersTableColumns: ColumnDef<Cluster>[] = [
     ),
     cell: ({ row }) => (
       <div className="flex gap-1">
-        {row.original.operators.map((operator) => (
-          <Link href={`/operator/${operator.id}`} key={operator.id}>
-            <OperatorAvatar
-              src={operator.logo}
-              isPrivate={operator.is_private}
-              size="sm"
-            />
-          </Link>
-        ))}
+        {row.original.operators.map((operator) => {
+          console.log("operator :", operator)
+          return (
+            <Link href={`/operator/${operator.id}`} key={operator.id}>
+              <OperatorAvatar
+                src={operator.logo}
+                isPrivate={operator.is_private}
+                size="sm"
+              />
+            </Link>
+          )
+        })}
       </div>
     ),
     enableSorting: false,
@@ -75,7 +78,7 @@ export const clustersTableColumns: ColumnDef<Cluster>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Balance" />
     ),
-    cell: ({ row }) => <div>{formatSSV(BigInt(row.original.balance))}</div>,
+    cell: ({ row }) => <div>{formatSSV(BigInt(row.original.balance))} SSV</div>,
   },
   {
     accessorKey: "validatorCount",

@@ -1,27 +1,25 @@
 import React from "react"
-import { searchOperators } from "@/api/operator"
 import { type SearchParams } from "@/types"
 
-import { operatorsSearchParamsCache } from "@/lib/search-parsers/operator-search"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Text } from "@/components/ui/text"
 import { Shell } from "@/components/shell"
-
-import { OperatorsTable } from "../_components/operators/operators-table"
 
 interface IndexPageProps {
   searchParams: Promise<SearchParams>
 }
 
 export default async function IndexPage(props: IndexPageProps) {
-  const search = operatorsSearchParamsCache.parse(await props.searchParams)
-
-  const operators = searchOperators(search)
-
   return (
     <Shell className="gap-2">
       <React.Suspense fallback={<Skeleton className="h-7 w-52" />}>
         {/* <pre>{JSON.stringify(stringifyBigints(search), null, 2)}</pre> */}
-        <OperatorsTable dataPromise={operators} />
+        <Text variant="headline4">Welcome to the SSV Explorer ☝️</Text>
+        <Text>
+          This dashboard provides a comprehensive overview of the SSV Network,
+          including operator performance, cluster statistics, and network
+          activity.
+        </Text>
       </React.Suspense>
     </Shell>
   )

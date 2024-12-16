@@ -27,9 +27,10 @@ export const Filters = () => {
           "flex flex-wrap items-center gap-2 overflow-hidden border-t border-gray-300 py-2 transition-opacity duration-300",
           {
             "opacity-100": isFiltersOpen,
-            "opacity-0": !isFiltersOpen,
+            "invisible opacity-0": !isFiltersOpen,
           }
         )}
+        aria-hidden={!isFiltersOpen}
       >
         <IdFilter />
         <NameFilter />

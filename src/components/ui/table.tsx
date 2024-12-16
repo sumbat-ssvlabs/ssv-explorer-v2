@@ -128,7 +128,7 @@ const TableMenuButton = React.forwardRef<
   <button
     ref={ref}
     className={cn(
-      "group flex h-10 select-none items-center gap-2 whitespace-nowrap rounded-xl border border-transparent bg-gray-100 px-4 text-sm font-medium",
+      "group flex h-10 select-none items-center gap-2 whitespace-nowrap rounded-xl border border-transparent bg-gray-50 px-4 text-sm font-medium transition-colors hover:bg-gray-100",
       {
         "border border-primary-500": isActive,
         "pr-2": activeCount && activeCount > 0,
@@ -139,9 +139,12 @@ const TableMenuButton = React.forwardRef<
   >
     {icon && (
       <Slot
-        className={cn("size-4 text-gray-500 group-hover:text-gray-800", {
-          "text-gray-800": isActive,
-        })}
+        className={cn(
+          "size-4 text-gray-500 transition-colors group-hover:text-gray-800",
+          {
+            "text-gray-800": isActive,
+          }
+        )}
       >
         {icon}
       </Slot>

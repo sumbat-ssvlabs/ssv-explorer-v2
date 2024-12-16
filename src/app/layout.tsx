@@ -19,8 +19,6 @@ import { Providers } from "./_providers/providers"
 
 interface RootLayoutProps {
   children: React.ReactNode
-  params: any
-  searchParams: { [key: string]: string | string[] | undefined }
 }
 
 export const metadata: Metadata = {
@@ -80,6 +78,13 @@ export default async function RootLayout({ children }: RootLayoutProps) {
     <html lang="en" suppressHydrationWarning>
       <head />
       <body className={cn("min-h-screen bg-gray-200 font-sans antialiased")}>
+        <style id="scroll-locked-style">
+          {`
+              body[data-scroll-locked] {
+                margin-right: 0px !important;
+              }
+          `}
+        </style>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

@@ -125,7 +125,7 @@ export function OwnerAddressFilter() {
                 >
                   {owner_address}
                 </span>
-                <div className="bg-gray-sumbat flex h-5 w-6 items-center justify-center rounded-md border border-gray-400">
+                <div className="flex h-5 w-6 items-center justify-center rounded-md border border-gray-400">
                   <MdKeyboardReturn className="size-3 text-gray-500" />
                 </div>
               </CommandItem>

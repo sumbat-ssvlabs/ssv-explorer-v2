@@ -3,10 +3,7 @@
 import { useTable } from "@/context/table-context"
 import { Settings2 } from "lucide-react"
 
-import { Button } from "@/components/ui/button"
-
-import { Badge } from "../ui/badge"
-import { Tooltip } from "../ui/tooltip"
+import { TableMenuButton } from "@/components/ui/table"
 
 interface DataTableFiltersButtonProps {
   enabledFilters: {
@@ -15,31 +12,20 @@ interface DataTableFiltersButtonProps {
   }
 }
 
-export function DataTableFiltersButton({
+export function DataTableMenuButton({
   enabledFilters,
 }: DataTableFiltersButtonProps) {
-  const { setIsFiltersOpen } = useTable()
+  const { isFiltersOpen, setIsFiltersOpen } = useTable()
   return (
-    <Button
+    <TableMenuButton
       aria-label="Toggle columns"
-      variant="outline"
       role="combobox"
-      size="sm"
-      className="ml-auto flex h-8"
       onClick={() => setIsFiltersOpen((prev) => !prev)}
+      activeCount={enabledFilters.count}
+      isActive={isFiltersOpen}
+      icon={<Settings2 />}
     >
-      <Settings2 className="mr-2 size-4" />
-      Filters{" "}
-      {enabledFilters.count > 0 && (
-        <Tooltip
-          asChild
-          content={`Enabled filters: ${enabledFilters.names.join(", ")}`}
-        >
-          <Badge size="xs" variant="info">
-            {enabledFilters.count}
-          </Badge>
-        </Tooltip>
-      )}
-    </Button>
+      Filters
+    </TableMenuButton>
   )
 }

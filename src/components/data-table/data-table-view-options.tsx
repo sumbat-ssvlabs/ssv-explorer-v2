@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import type { Table } from "@tanstack/react-table"
-import { Settings2 } from "lucide-react"
+import { FiSidebar } from "react-icons/fi"
 
 import { cn, toSentenceCase } from "@/lib/utils"
 import { useColumnsVisibility } from "@/hooks/table/use-columns-visibility"
@@ -20,6 +20,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { TableMenuButton } from "@/components/ui/table"
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
@@ -28,6 +29,7 @@ interface DataTableViewOptionsProps<TData> {
 export function DataTableViewOptions<TData>({
   table,
 }: DataTableViewOptionsProps<TData>) {
+  const [open, setOpen] = React.useState(false)
   const triggerRef = React.useRef<HTMLButtonElement>(null)
   const { visibleColumnsCount } = useColumnsVisibility()
 
@@ -53,19 +55,17 @@ export function DataTableViewOptions<TData>({
   }
 
   return (
-    <Popover modal>
+    <Popover modal open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button
+        <TableMenuButton
           ref={triggerRef}
           aria-label="Toggle columns"
-          variant="outline"
           role="combobox"
-          size="sm"
-          className="ml-auto flex h-8"
+          isActive={open}
+          icon={<FiSidebar />}
         >
-          <Settings2 className="mr-2 size-4" />
           Customize Table
-        </Button>
+        </TableMenuButton>
       </PopoverTrigger>
       <PopoverContent
         align="end"

@@ -11,6 +11,7 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
+        "table-menu": "bg-gray-100 text-primary-500",
         default:
           "bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700",
         destructive:
@@ -26,8 +27,6 @@ export const buttonVariants = cva(
         disabled: "cursor-not-allowed bg-gray-300 text-gray-500 opacity-50",
         subtle:
           "bg-slate-400/5 hover:bg-slate-400/20 hover:text-accent-foreground",
-        filter:
-          "hover:bg-gray-sumbat active:bg-gray-sumbat bg-gray-100 text-primary-500",
       },
       colorScheme: {
         wallet:

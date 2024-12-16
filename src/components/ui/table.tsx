@@ -1,6 +1,8 @@
 import * as React from "react"
+import { Slot } from "@radix-ui/react-slot"
 
 import { cn } from "@/lib/utils"
+import { Text } from "@/components/ui/text"
 
 const Table = React.forwardRef<
   HTMLTableElement,
@@ -9,7 +11,7 @@ const Table = React.forwardRef<
   <div className="scrollbox relative w-full overflow-auto">
     <table
       ref={ref}
-      className={cn("bg-gray-sumbat w-full caption-bottom text-sm", className)}
+      className={cn("w-full caption-bottom text-sm", className)}
       {...props}
     />
   </div>
@@ -65,7 +67,7 @@ const TableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      "hover:bg-gray-sumbat border-b border-gray-300 transition-colors data-[state=selected]:bg-primary-50",
+      "border-b border-gray-300 transition-colors data-[state=selected]:bg-primary-50",
       className
     )}
     {...props}
@@ -95,7 +97,7 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      "bg-gray-sumbat h-[52px] whitespace-nowrap px-6 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
+      "h-[52px] whitespace-nowrap px-6 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
       className
     )}
     {...props}
@@ -115,6 +117,49 @@ const TableCaption = React.forwardRef<
 ))
 TableCaption.displayName = "TableCaption"
 
+const TableMenuButton = React.forwardRef<
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    icon?: React.ReactNode
+    activeCount?: number
+    isActive?: boolean
+  }
+>(({ className, icon, activeCount, isActive, children, ...props }, ref) => (
+  <button
+    ref={ref}
+    className={cn(
+      "group flex h-10 items-center gap-2 whitespace-nowrap rounded-xl border border-transparent bg-gray-100 px-4 text-sm font-medium",
+      {
+        "border border-primary-500": isActive,
+        "pr-2": activeCount && activeCount > 0,
+      },
+      className
+    )}
+    {...props}
+  >
+    {icon && (
+      <Slot className="size-4 text-gray-500 group-hover:text-gray-800">
+        {icon}
+      </Slot>
+    )}
+    {children}
+    {Boolean(activeCount) && (
+      <div className="rounded-md bg-primary-50 px-2 py-[2px]">
+        <Text
+          variant="body-3-semibold"
+          className={cn("text-primary-500")}
+          style={{
+            width: `${(activeCount?.toString().length ?? 1) * 0.9}ch`,
+          }}
+        >
+          {activeCount}
+        </Text>
+      </div>
+    )}
+  </button>
+))
+TableMenuButton.displayName = "TableMenuButton"
+
 export {
   Table,
   TableBody,
@@ -123,5 +168,6 @@ export {
   TableFooter,
   TableHead,
   TableHeader,
+  TableMenuButton,
   TableRow,
 }

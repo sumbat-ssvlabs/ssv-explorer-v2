@@ -10,7 +10,7 @@ import { useDataTable } from "@/hooks/use-data-table"
 import { Button } from "@/components/ui/button"
 import { Text } from "@/components/ui/text"
 import { DataTable } from "@/components/data-table/data-table"
-import { DataTableFiltersButton } from "@/components/data-table/data-table-filters-button"
+import { DataTableMenuButton } from "@/components/data-table/data-table-filters-button"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
 import { Filters } from "@/components/operators/table/filters/filters"
 
@@ -49,7 +49,7 @@ export function AccountsTable({ dataPromise: data }: AccountsTableProps) {
         <div className="flex gap-2">
           <Text variant="headline4">Accounts</Text>
           <div className="flex-1"></div>
-          <DataTableFiltersButton enabledFilters={enabledFilters} />
+          <DataTableMenuButton enabledFilters={enabledFilters} />
           {enabledFilters.count > 0 && (
             <Button
               aria-label="Toggle columns"

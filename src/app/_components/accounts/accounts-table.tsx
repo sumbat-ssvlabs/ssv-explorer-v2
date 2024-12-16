@@ -4,8 +4,8 @@ import { use } from "react"
 import { TableProvider } from "@/context/table-context"
 import { X } from "lucide-react"
 
-import { type PaginatedClustersResponse } from "@/types/api"
-import { useOperatorsSearchParams } from "@/hooks/search/use-operators-search-params"
+import { type PaginatedAccountsResponse } from "@/types/api/account"
+import { useAccountsSearchParams } from "@/hooks/search/use-accounts-search-params"
 import { useDataTable } from "@/hooks/use-data-table"
 import { Button } from "@/components/ui/button"
 import { Text } from "@/components/ui/text"
@@ -14,35 +14,28 @@ import { DataTableFiltersButton } from "@/components/data-table/data-table-filte
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
 import { Filters } from "@/components/operators/table/filters/filters"
 
-import { clustersTableColumns } from "./clusters-table-columns"
+import { accountsTableColumns } from "./accounts-table-columns"
 
-interface ClustersTableProps {
-  dataPromise: Promise<PaginatedClustersResponse>
+interface AccountsTableProps {
+  dataPromise: Promise<PaginatedAccountsResponse>
 }
 
 export const defaultColumns = {
-  name: true,
-  eth1_node_client: false,
-  fee: true,
-  location: false,
   id: true,
-  owner_address: false,
-  eth2_node_client: false,
-  clusters_count: false,
-  performance_24h: false,
-  performance_30d: true,
-  mev_relays: true,
-  status: true,
+  owner_address: true,
+  recipient_address: true,
+  version: true,
 }
 
-export function ClustersTable({ dataPromise: data }: ClustersTableProps) {
-  const { clusters, pagination } = use(data)
+export function AccountsTable({ dataPromise: data }: AccountsTableProps) {
+  const { accounts, pagination } = use(data)
+  const { enabledFilters, clearFilters } = useAccountsSearchParams()
 
   const { table } = useDataTable({
-    data: clusters,
-    columns: clustersTableColumns,
+    data: accounts,
+    columns: accountsTableColumns,
     pageCount: pagination.pages,
-    getRowId: (originalRow, index) => `${originalRow.clusterId}-${index}`,
+    getRowId: (originalRow, index) => `${originalRow.ownerAddress}-${index}`,
     shallow: false,
     clearOnDefault: true,
     meta: {
@@ -50,13 +43,11 @@ export function ClustersTable({ dataPromise: data }: ClustersTableProps) {
     },
   })
 
-  const { enabledFilters, clearFilters } = useOperatorsSearchParams()
-
   return (
     <>
       <TableProvider table={table}>
         <div className="flex gap-2">
-          <Text variant="headline4">Clusters</Text>
+          <Text variant="headline4">Accounts</Text>
           <div className="flex-1"></div>
           <DataTableFiltersButton enabledFilters={enabledFilters} />
           {enabledFilters.count > 0 && (

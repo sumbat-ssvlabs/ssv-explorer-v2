@@ -25,7 +25,6 @@ if (!networksString) {
   throw new Error("SSV_NETWORKS is not defined in the environment variables")
 }
 
-console.log("networksString:", networksString)
 const parsed = networkSchema.safeParse(JSON.parse(networksString))
 export const networks = parsed.data!
 

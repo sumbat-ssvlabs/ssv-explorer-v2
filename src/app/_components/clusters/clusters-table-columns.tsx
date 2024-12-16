@@ -58,7 +58,6 @@ export const clustersTableColumns: ColumnDef<Cluster>[] = [
     cell: ({ row }) => (
       <div className="flex gap-1">
         {row.original.operators.map((operator) => {
-          console.log("operator :", operator)
           return (
             <Link href={`/operator/${operator.id}`} key={operator.id}>
               <OperatorAvatar

@@ -1,5 +1,3 @@
-import type { Prettify } from "@/types/ts-utils"
-
 import type { Operator } from "./operator"
 import type { WithPagination } from "./paginations"
 
@@ -11,33 +9,38 @@ export type SolidityCluster = {
   validatorCount: number
 }
 
-export type Cluster<
-  T extends { operators: (Operator | number)[] } = { operators: Operator[] },
-> = Prettify<
-  {
-    id: number
-    clusterId: string
-    network: string
-    version: string
-    ownerAddress: string
-    validatorCount: number
-    networkFeeIndex: string
-    index: string
-    balance: string
-    active: boolean
-    isLiquidated: boolean
-    blockNumber: number
-    createdAt: string
-    updatedAt: string
-  } & T
->
+export type Cluster<T extends (Operator | number)[] = Operator[]> = {
+  id: number
+  clusterId: string
+  network: string
+  version: string
+  ownerAddress: string
+  validatorCount: number
+  networkFeeIndex: string
+  index: string
+  balance: string
+  active: boolean
+  isLiquidated: boolean
+  blockNumber: number
+  createdAt: string
+  updatedAt: string
+  operators: T
+}
 
-export type GetPaginatedClustersResponse = WithPagination<{
+export type PaginatedClustersResponse = WithPagination<{
   type: string
   clusters: Cluster[]
 }>
+export type FilteredClustersResponse = {
+  type: string
+  clusters: Cluster[]
+  filter: {
+    from: number
+    limit: number
+  }
+}
 
 export interface GetClusterResponse {
   type: string
-  cluster: Cluster<{ operators: number[] }> | null
+  cluster: Cluster<number[]> | null
 }

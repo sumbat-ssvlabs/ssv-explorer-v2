@@ -20,7 +20,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { defaultColumns } from "@/app/_components/operators/operators-table"
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>
@@ -31,13 +30,21 @@ export function DataTableViewOptions<TData>({
 }: DataTableViewOptionsProps<TData>) {
   const triggerRef = React.useRef<HTMLButtonElement>(null)
   const { visibleColumnsCount } = useColumnsVisibility()
+
   const columns = table.getAllColumns().filter((column) => {
     return typeof column.accessorFn !== "undefined" && column.getCanHide()
   })
 
   const resetColumns = () => {
+    if (!table.options.meta || !("defaultColumns" in table.options.meta))
+      return alert("no defaults bruh")
+    const defaultColumns = table.options.meta.defaultColumns as Record<
+      string,
+      boolean
+    >
+
     columns.forEach((column) => {
-      if (defaultColumns[column.id as keyof typeof defaultColumns]) {
+      if (defaultColumns[column.id]) {
         column.toggleVisibility(true)
       } else {
         column.toggleVisibility(false)

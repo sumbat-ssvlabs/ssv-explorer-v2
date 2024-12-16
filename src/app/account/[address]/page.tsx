@@ -10,7 +10,7 @@ export default async function IndexPage(props: IndexPageProps) {
 
   return (
     <Shell className="gap-2">
-      <Text>Validator Page</Text>
+      <Text>Account Page</Text>
       <Text>{address}</Text>
     </Shell>
   )

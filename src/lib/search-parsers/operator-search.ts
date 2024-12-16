@@ -1,7 +1,6 @@
 import {
   createSearchParamsCache,
   parseAsArrayOf,
-  parseAsInteger,
   parseAsString,
   parseAsStringEnum,
   type Options,
@@ -9,13 +8,8 @@ import {
 import { isAddress } from "viem"
 import { z } from "zod"
 
-import { networkParser } from "."
-import { parseAsTuple } from "../utils/parsers"
-
-export const paginationParser = {
-  page: parseAsInteger.withDefault(1),
-  perPage: parseAsInteger.withDefault(10),
-}
+import { networkParser, paginationParser } from "@/lib/search-parsers"
+import { parseAsTuple } from "@/lib/utils/parsers"
 
 const searchOptions: Options = {
   history: "replace",

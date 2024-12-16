@@ -13,16 +13,16 @@ const searchOptions: Options = {
   clearOnDefault: true,
 }
 
-export const validatorsSearchFilters = {
+export const clustersSearchFilters = {
   id: parseAsArrayOf(z.number({ coerce: true })).withOptions(searchOptions),
 }
 
-export const validatorsSearchParamsCache = createSearchParamsCache({
+export const clustersSearchParamsCache = createSearchParamsCache({
   ...networkParser,
   ...paginationParser,
-  ...validatorsSearchFilters,
+  ...clustersSearchFilters,
 })
 
-export type ValidatorsSearchSchema = Awaited<
-  ReturnType<typeof validatorsSearchParamsCache.parse>
+export type ClustersSearchSchema = Awaited<
+  ReturnType<typeof clustersSearchParamsCache.parse>
 >

@@ -1,12 +1,11 @@
 import React from "react"
-import { searchOperators } from "@/api/operator"
+import { getClusters } from "@/api/clusters"
 import { type SearchParams } from "@/types"
 
 import { operatorsSearchParamsCache } from "@/lib/search-parsers/operator-search"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Shell } from "@/components/shell"
-
-import { OperatorsTable } from "../_components/operators/operators-table"
+import { ClustersTable } from "@/app/_components/clusters/clusters-table"
 
 interface IndexPageProps {
   searchParams: Promise<SearchParams>
@@ -15,13 +14,12 @@ interface IndexPageProps {
 export default async function IndexPage(props: IndexPageProps) {
   const search = operatorsSearchParamsCache.parse(await props.searchParams)
 
-  const operators = searchOperators(search)
+  const clusters = getClusters(search)
 
   return (
     <Shell className="gap-2">
       <React.Suspense fallback={<Skeleton className="h-7 w-52" />}>
-        {/* <pre>{JSON.stringify(stringifyBigints(search), null, 2)}</pre> */}
-        <OperatorsTable dataPromise={operators} />
+        <ClustersTable dataPromise={clusters} />
       </React.Suspense>
     </Shell>
   )

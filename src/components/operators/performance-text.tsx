@@ -1,4 +1,4 @@
-import { type ComponentPropsWithRef, type FC, type RefObject } from "react"
+import { type ComponentPropsWithRef, type FC } from "react"
 
 import { cn } from "@/lib/utils"
 import { percentageFormatter } from "@/lib/utils/number"
@@ -16,15 +16,14 @@ const getColor = (performance: number) => {
 }
 
 export const PerformanceText: FC<
-  PerformanceTextProps & ComponentPropsWithRef<"div">
-> = ({ performance, ref, className, ...props }) => {
+  PerformanceTextProps & ComponentPropsWithRef<"span">
+> = ({ performance, className, ...props }) => {
   return (
-    <div
-      ref={ref}
+    <span
       className={cn(getColor(performance), "font-medium", className)}
       {...props}
     >
       {percentageFormatter.format(performance)}
-    </div>
+    </span>
   )
 }

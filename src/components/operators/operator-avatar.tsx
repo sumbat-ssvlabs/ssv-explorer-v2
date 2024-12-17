@@ -9,19 +9,17 @@ import { cn } from "@/lib/utils"
 export const variants = cva("object-cover", {
   variants: {
     variant: {
-      circle: "rounded-full",
-      square: "rounded-lg border border-gray-400 bg-gray-200",
+      outline: "border border-gray-400 bg-gray-200",
+      unstyled: "",
     },
-
     size: {
-      sm: "size-6",
-      md: "size-7",
-      lg: "size-12",
+      lg: "size-8 rounded-lg",
+      base: "size-6 rounded-lg",
     },
   },
   defaultVariants: {
-    size: "md",
-    variant: "square",
+    size: "base",
+    variant: "outline",
   },
 })
 

@@ -15,7 +15,7 @@ export const validatorsTableColumns: ColumnDef<SearchValidator>[] = [
   {
     accessorKey: "public_key",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Id" />
+      <DataTableColumnHeader column={column} title="Public Key" />
     ),
     cell: ({ row }) => (
       <div className="flex items-center gap-1">
@@ -81,7 +81,6 @@ export const validatorsTableColumns: ColumnDef<SearchValidator>[] = [
             <OperatorAvatar
               src={operator.logo}
               isPrivate={operator.is_private}
-              size="sm"
             />
           </Link>
         ))}

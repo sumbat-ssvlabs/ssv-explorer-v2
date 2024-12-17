@@ -1,8 +1,8 @@
 import { formatUnits } from "viem"
 
+import type { Operator } from "@/types/api"
 import { globals } from "@/config/globals"
 import { ethFormatter, sortNumbers } from "@/lib/utils/number"
-import type { Operator } from "@/types/api"
 
 type GetYearlyFeeOpts = {
   format?: boolean
@@ -112,8 +112,6 @@ export const getOperatorIds = <T extends { id: number }[]>(operators: T) => {
   return sortNumbers(operators.map((operator) => operator.id))
 }
 
-
-
 export const createDefaultOperator = (
   operator: Partial<Operator> & { id: number }
 ): Operator => ({
@@ -155,7 +153,5 @@ export const createDefaultOperator = (
   ...operator,
 })
 
-
 export const sumOperatorsFees = (operators: Operator[]) =>
   operators.reduce((acc, operator) => acc + BigInt(operator.fee), 0n)
-

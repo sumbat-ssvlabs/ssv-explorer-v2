@@ -16,11 +16,12 @@ export default async function IndexPage(props: IndexPageProps) {
   const search = operatorsSearchParamsCache.parse(await props.searchParams)
 
   const operators = searchOperators(search)
-
+  const length = 4
   return (
     <Shell className="gap-2">
       <React.Suspense fallback={<Skeleton className="h-7 w-52" />}>
         {/* <pre>{JSON.stringify(stringifyBigints(search), null, 2)}</pre> */}
+
         <OperatorsTable dataPromise={operators} />
       </React.Suspense>
     </Shell>

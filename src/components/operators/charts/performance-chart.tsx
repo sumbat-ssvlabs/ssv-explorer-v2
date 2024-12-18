@@ -69,9 +69,16 @@ export default class Example extends PureComponent {
               />
             </linearGradient>
           </defs>
-          <Tooltip />
+          <Tooltip
+            contentStyle={{
+              backgroundColor: "var(--gray-50)",
+              borderRadius: 16,
+              border: "none",
+              boxShadow: "0 0 20px var(--gray-200)",
+            }}
+          />
           <Area
-            type="monotone"
+            type="natural"
             dataKey="uv"
             stroke="var(--primary-500)"
             strokeWidth={1.5}

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { getOperatorLocations } from "@/api/operator"
+import { getOperator } from "@/api/operator"
 import { useQuery } from "@tanstack/react-query"
 import { CommandLoading } from "cmdk"
 import { xor } from "lodash-es"
@@ -25,7 +25,7 @@ export function LocationFilter() {
   const { network, filters, setFilters } = useOperatorsSearchParams()
   const query = useQuery({
     queryKey: ["operators", "locations", network],
-    queryFn: async () => getOperatorLocations(network),
+    queryFn: async () => getOperator(network),
     enabled: open,
   })
 

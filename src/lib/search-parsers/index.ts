@@ -1,4 +1,4 @@
-import { parseAsInteger } from "nuqs/server"
+import { createSearchParamsCache, parseAsInteger } from "nuqs/server"
 
 import { parseAsNumberEnum } from "@/lib/utils/parsers"
 import { networks } from "@/lib/utils/ssv-network-details"
@@ -8,6 +8,8 @@ export const networkParser = {
     networks[0]!.networkId
   ),
 }
+
+export const networkParserCache = createSearchParamsCache(networkParser)
 
 export const paginationParser = {
   page: parseAsInteger.withDefault(1),

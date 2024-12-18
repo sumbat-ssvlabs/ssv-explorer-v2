@@ -1,7 +1,6 @@
 "use client"
 
 import { use } from "react"
-import { StatusIndicator } from "@/assets/images/status-indicator"
 import { TableProvider } from "@/context/table-context"
 import { X } from "lucide-react"
 
@@ -59,9 +58,6 @@ export function OperatorsTable({ dataPromise: data }: OperatorsTableProps) {
       <TableProvider table={table}>
         <div className="flex gap-2">
           <Text variant="headline4">Operators</Text>
-          <StatusIndicator status="active" />
-          <StatusIndicator status="offline" />
-          <StatusIndicator status="no-validators" />
 
           <div className="flex-1"></div>
           <DataTableMenuButton enabledFilters={enabledFilters} />

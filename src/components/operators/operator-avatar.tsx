@@ -13,8 +13,9 @@ export const variants = cva("object-cover", {
       unstyled: "",
     },
     size: {
-      lg: "size-8 rounded-lg",
       base: "size-6 rounded-lg",
+      lg: "size-8 rounded-lg",
+      xl: "size-[68px] rounded-lg",
     },
   },
   defaultVariants: {

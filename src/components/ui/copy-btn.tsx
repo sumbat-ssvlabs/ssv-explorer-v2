@@ -1,3 +1,5 @@
+"use client"
+
 import type { FC } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { LuCheck, LuCopy } from "react-icons/lu"
@@ -19,7 +21,10 @@ export const CopyBtn: FCProps = ({ className, text, ...props }) => {
     <IconButton
       disabled={!text}
       variant="ghost"
-      className={cn("relative inline-flex size-6 overflow-hidden", className)}
+      className={cn(
+        "relative inline-flex size-6 overflow-hidden text-gray-500",
+        className
+      )}
       {...props}
       onClick={(ev) => {
         ev.stopPropagation()

@@ -12,17 +12,14 @@ const getColor = (performance: number) => {
   if (performance > 96) return "text-[#7ED90B]"
   if (performance > 90) return "text-[#FD9D2F]"
   if (performance > 0) return "text-[#EC1C26]"
-  if (performance === 0) return "text-gray-500 text-xs"
+  if (performance === 0) return "text-gray-500"
 }
 
 export const PerformanceText: FC<
   PerformanceTextProps & ComponentPropsWithRef<"span">
 > = ({ performance, className, ...props }) => {
   return (
-    <span
-      className={cn(getColor(performance), "font-medium", className)}
-      {...props}
-    >
+    <span className={cn(getColor(performance), className)} {...props}>
       {percentageFormatter.format(performance)}
     </span>
   )

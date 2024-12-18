@@ -1,6 +1,6 @@
 "use client"
 
-import { PureComponent } from "react"
+import { type FC } from "react"
 import {
   Area,
   AreaChart,
@@ -21,7 +21,7 @@ const data = [
   { name: "Page G", uv: 3490, pv: 4300, amt: 2100 },
   { name: "Page H", uv: 3800, pv: 5200, amt: 3000 },
   { name: "Page I", uv: 2900, pv: 3700, amt: 2700 },
-  { name: "Page J", uv: 3400, pv: 4100, amt: 2900 },
+  { name: "Page J", uv: 2950, pv: 4100, amt: 2900 },
   { name: "Page K", uv: 2500, pv: 3300, amt: 2200 },
   { name: "Page L", uv: 3700, pv: 4500, amt: 3100 },
   { name: "Page M", uv: 3200, pv: 5600, amt: 4000 },
@@ -30,62 +30,69 @@ const data = [
   { name: "Page P", uv: 3800, pv: 4200, amt: 2900 },
 ]
 
-export default class Example extends PureComponent {
-  render() {
-    return (
-      <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data}>
-          <CartesianGrid stroke="var(--gray-300)" />
-          <XAxis
-            stroke="var(--gray-300)"
-            tick={{
-              fontSize: 12,
-              fill: "var(--gray-500)",
-            }}
-          />
-          <YAxis
-            domain={[0, 100]}
-            stroke="var(--gray-300)"
-            tick={{
-              fontSize: 12,
-              fill: "var(--gray-500)",
-            }}
-          />
-          <defs>
-            <linearGradient
-              id="myInlineGradient"
-              x1="0%"
-              y1="0%"
-              x2="0%"
-              y2="100%"
-            >
-              <stop
-                offset="0%"
-                style={{ stopColor: "var(--primary-500)", stopOpacity: 0.7 }}
-              />
-              <stop
-                offset="100%"
-                style={{ stopColor: "var(--primary-500)", stopOpacity: 0 }}
-              />
-            </linearGradient>
-          </defs>
-          <Tooltip
-            contentStyle={{
-              backgroundColor: "var(--gray-50)",
-              borderRadius: 16,
-              border: "none",
-              boxShadow: "0 0 20px var(--gray-200)",
-            }}
-          />
-          <Area
-            type="natural"
-            dataKey="uv"
-            stroke="var(--primary-500)"
-            strokeWidth={1.5}
-            fill="url(#myInlineGradient)"
-          />
-        </AreaChart>
-      </ResponsiveContainer>
-    )
-  }
+const PerformanceChart: FC = () => {
+  const max = Math.max(...data.map((item) => item.uv))
+
+  return (
+    <ResponsiveContainer width="100%" height="100%">
+      <AreaChart
+        data={data}
+        margin={{
+          left: -23,
+        }}
+      >
+        <CartesianGrid stroke="var(--gray-300)" />
+        <XAxis
+          stroke="var(--gray-300)"
+          tick={{
+            fontSize: 12,
+            fill: "var(--gray-500)",
+          }}
+        />
+        <YAxis
+          domain={[0, max]}
+          stroke="var(--gray-300)"
+          tick={{
+            fontSize: 12,
+            fill: "var(--gray-500)",
+          }}
+        />
+        <defs>
+          <linearGradient
+            id="myInlineGradient"
+            x1="0%"
+            y1="0%"
+            x2="0%"
+            y2="100%"
+          >
+            <stop
+              offset="0%"
+              style={{ stopColor: "var(--primary-500)", stopOpacity: 0.7 }}
+            />
+            <stop
+              offset="100%"
+              style={{ stopColor: "var(--primary-500)", stopOpacity: 0 }}
+            />
+          </linearGradient>
+        </defs>
+        <Tooltip
+          contentStyle={{
+            backgroundColor: "var(--gray-50)",
+            borderRadius: 16,
+            border: "none",
+            boxShadow: "0 0 20px var(--gray-200)",
+          }}
+        />
+        <Area
+          type="natural"
+          dataKey="uv"
+          stroke="var(--primary-500)"
+          strokeWidth={1.5}
+          fill="url(#myInlineGradient)"
+        />
+      </AreaChart>
+    </ResponsiveContainer>
+  )
 }
+
+export default PerformanceChart

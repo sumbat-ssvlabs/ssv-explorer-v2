@@ -15,16 +15,16 @@ const data = [
   { name: "Page A", uv: 4000, pv: 2400, amt: 2400 },
   { name: "Page B", uv: 3000, pv: 1398, amt: 2210 },
   { name: "Page C", uv: 2000, pv: 9800, amt: 2290 },
-  { name: "Page D", uv: 2780, pv: 3908, amt: 2000 },
+  { name: "Page D", uv: 2200, pv: 3908, amt: 2000 },
   { name: "Page E", uv: 1890, pv: 4800, amt: 2181 },
   { name: "Page F", uv: 2390, pv: 3800, amt: 2500 },
   { name: "Page G", uv: 3490, pv: 4300, amt: 2100 },
-  { name: "Page H", uv: 4200, pv: 5200, amt: 3000 },
+  { name: "Page H", uv: 3800, pv: 5200, amt: 3000 },
   { name: "Page I", uv: 2900, pv: 3700, amt: 2700 },
   { name: "Page J", uv: 3400, pv: 4100, amt: 2900 },
   { name: "Page K", uv: 2500, pv: 3300, amt: 2200 },
   { name: "Page L", uv: 3700, pv: 4500, amt: 3100 },
-  { name: "Page M", uv: 4600, pv: 5600, amt: 4000 },
+  { name: "Page M", uv: 3200, pv: 5600, amt: 4000 },
   { name: "Page N", uv: 2800, pv: 3100, amt: 2400 },
   { name: "Page O", uv: 3100, pv: 3800, amt: 2600 },
   { name: "Page P", uv: 3800, pv: 4200, amt: 2900 },
@@ -44,6 +44,7 @@ export default class Example extends PureComponent {
             }}
           />
           <YAxis
+            domain={[0, 100]}
             stroke="var(--gray-300)"
             tick={{
               fontSize: 12,

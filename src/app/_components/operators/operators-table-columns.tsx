@@ -9,7 +9,6 @@ import { getYearlyFee } from "@/lib/utils/operator"
 import { shortenAddress } from "@/lib/utils/strings"
 import { Button } from "@/components/ui/button"
 import { CopyBtn } from "@/components/ui/copy-btn"
-import { Text } from "@/components/ui/text"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { MevRelaysDisplay } from "@/components/mev-relays-display"
 import { OperatorAvatar } from "@/components/operators/operator-avatar"
@@ -33,7 +32,9 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     cell: ({ row }) => (
       <div className="flex h-[52px] min-w-80 items-center gap-2">
         <OperatorAvatar src={row.original.logo} />
-        <Text className="line-clamp-1">{row.original.name}</Text>
+        <Button asChild variant="link">
+          <Link href={`/operator/${row.original.id}`}>{row.original.name}</Link>
+        </Button>
         <div className="flex items-center gap-1">
           {row.original.is_private && <MdOutlineLock className="size-[14px]" />}
           {row.original.verified_operator && (

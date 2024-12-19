@@ -34,7 +34,7 @@ export default async function IndexPage(props: IndexPageProps) {
           return (
             <div className="flex flex-col gap-6">
               <Card>
-                <div className="flex gap-2">
+                <div className="flex gap-[14px]">
                   <OperatorAvatar
                     size="xl"
                     variant="unstyled"

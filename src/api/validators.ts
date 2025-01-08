@@ -4,7 +4,7 @@ import { endpoint } from "@/api"
 import { api } from "@/api/api-client"
 import { isUndefined, omitBy } from "lodash-es"
 
-import type { PaginatedValidatorsResponse } from "@/types/api"
+import type { PaginatedValidatorsResponse, SearchValidator } from "@/types/api"
 import { type ValidatorsSearchSchema } from "@/lib/search-parsers/validators-search"
 import { stringifyBigints } from "@/lib/utils/bigint"
 import { unstable_cache } from "@/lib/utils/unstable-cache"
@@ -27,5 +27,23 @@ export const getValidators = async (
     {
       revalidate: 30,
       tags: ["validators"],
+    }
+  )()
+
+export const getValidator = async (
+  params: Pick<ValidatorsSearchSchema, "network"> & {
+    publicKey: string
+  }
+) =>
+  await unstable_cache(
+    async () => {
+      return api.get<SearchValidator>(
+        endpoint(params.network, `validators/${params.publicKey}`)
+      )
+    },
+    [JSON.stringify(stringifyBigints(params))],
+    {
+      revalidate: 30,
+      tags: ["validator"],
     }
   )()

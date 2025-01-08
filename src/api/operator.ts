@@ -64,13 +64,16 @@ export interface OperatorMetadata {
   signature: string
 }
 
-export const getOperator = async (chain: number, operatorId: number) => {
+export const getOperator = async (
+  params: Pick<OperatorsSearchSchema, "network"> & { id: number }
+) => {
   return await unstable_cache(
-    async () => api.get<Operator>(endpoint(chain, "operators", operatorId)),
-    [chain.toString(), operatorId.toString()],
+    async () =>
+      api.get<Operator>(endpoint(params.network, "operators", params.id)),
+    [params.network.toString(), params.id.toString()],
     {
       revalidate: 30,
-      tags: ["operators", operatorId.toString()],
+      tags: ["operators", params.id.toString()],
     }
   )()
 }

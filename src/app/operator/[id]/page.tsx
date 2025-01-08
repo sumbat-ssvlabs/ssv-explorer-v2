@@ -1,9 +1,11 @@
 import Image from "next/image"
 import Link from "next/link"
 import { getOperator } from "@/api/operator"
+import { getValidators } from "@/api/validators"
 import { MdOutlineLock } from "react-icons/md"
 
 import { networkParserCache } from "@/lib/search-parsers"
+import { validatorsSearchParamsCache } from "@/lib/search-parsers/validators-search"
 import { shortenAddress } from "@/lib/utils/strings"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -15,7 +17,7 @@ import PerformanceChart from "@/components/operators/charts/performance-chart"
 import { OperatorAvatar } from "@/components/operators/operator-avatar"
 import { PerformanceText } from "@/components/operators/performance-text"
 import { Shell } from "@/components/shell"
-import { OperatorsTable } from "@/app/_components/operators/operators-table"
+import { ValidatorsTable } from "@/app/_components/validators/validators-table"
 
 interface IndexPageProps {
   params: Promise<{ id: string }>
@@ -24,13 +26,20 @@ interface IndexPageProps {
 
 export default async function IndexPage(props: IndexPageProps) {
   const { id } = await props.params
-  const serach = networkParserCache.parse(await props.searchParams)
+  const networkSearch = networkParserCache.parse(await props.searchParams)
+  const validatorsSearch = validatorsSearchParamsCache.parse(
+    await props.searchParams
+  )
+  const validators = getValidators(validatorsSearch)
 
   return (
     <Shell className="gap-2">
       {(async () => {
         try {
-          const operator = await getOperator(serach.network, +id)
+          const operator = await getOperator({
+            network: networkSearch.network,
+            id: +id,
+          })
           return (
             <div className="flex flex-col gap-6">
               <Card>
@@ -90,7 +99,7 @@ export default async function IndexPage(props: IndexPageProps) {
                           variant="caption-medium"
                           className="text-gray-500"
                         >
-                          Owner:
+                          Public Key:
                         </Text>
                         <Text
                           variant="body-3-medium"
@@ -158,19 +167,7 @@ export default async function IndexPage(props: IndexPageProps) {
                 </Card>
               </div>
               <Card>
-                <OperatorsTable
-                  dataPromise={Promise.resolve({
-                    operators: [],
-                    pagination: {
-                      page: 1,
-                      pages: 100,
-                      current_first: 1,
-                      current_last: 100,
-                      total: 100,
-                      per_page: 100,
-                    },
-                  })}
-                />
+                <ValidatorsTable dataPromise={validators} />
               </Card>
             </div>
           )

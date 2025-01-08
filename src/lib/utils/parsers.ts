@@ -73,8 +73,10 @@ export const parseAsTuple = <T extends [z.ZodTypeAny, ...z.ZodTypeAny[]]>(
   })
 }
 
-export const parseAsNumberEnum = (enumValues: number[]) => {
-  return createParser({
+export const parseAsNumberEnum = <T extends [number, ...number[]]>(
+  enumValues: T
+) => {
+  return createParser<T[number]>({
     parse: (value) => {
       if (!value) return null
       const parsed = parseInt(value)

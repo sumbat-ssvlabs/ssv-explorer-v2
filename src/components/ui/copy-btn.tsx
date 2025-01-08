@@ -10,7 +10,7 @@ import type { ButtonProps } from "@/components/ui/button"
 import { IconButton } from "@/components/ui/button"
 
 export type CopyBtnProps = {
-  text: string | undefined
+  text: string | number | undefined
 }
 
 type FCProps = FC<Omit<ButtonProps, keyof CopyBtnProps> & CopyBtnProps>
@@ -29,7 +29,7 @@ export const CopyBtn: FCProps = ({ className, text, ...props }) => {
       onClick={(ev) => {
         ev.stopPropagation()
         props.onClick?.(ev)
-        return copy(text ?? "")
+        return copy(text?.toString() ?? "")
       }}
     >
       <AnimatePresence>

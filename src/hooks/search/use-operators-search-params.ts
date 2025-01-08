@@ -3,14 +3,14 @@ import { useOperatorFiltersQuery } from "./use-operator-filters-query"
 import { usePaginationQuery } from "./use-pagination-query"
 
 export const useOperatorsSearchParams = () => {
-  const [network, setNetwork] = useNetworkQuery()
+  const { query } = useNetworkQuery()
   const [pagination, setPagination] = usePaginationQuery()
   const { filters, setFilters, enabledFilters, clearFilters } =
     useOperatorFiltersQuery()
 
   return {
-    network,
-    setNetwork,
+    network: query.value,
+    setNetwork: query.set,
     pagination,
     setPagination,
     filters,

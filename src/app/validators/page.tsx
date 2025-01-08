@@ -13,7 +13,6 @@ interface IndexPageProps {
 
 export default async function IndexPage(props: IndexPageProps) {
   const search = validatorsSearchParamsCache.parse(await props.searchParams)
-
   const validators = getValidators(search)
 
   return (

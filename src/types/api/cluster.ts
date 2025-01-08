@@ -41,6 +41,10 @@ export type FilteredClustersResponse = {
 }
 
 export interface GetClusterResponse {
-  type: string
+  type: "cluster"
   cluster: Cluster<number[]> | null
+}
+export interface GetClusterWithOperatorsDataResponse {
+  type: "cluster"
+  cluster: Cluster<Operator[]> | null
 }

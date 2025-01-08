@@ -2,10 +2,13 @@
 
 import { endpoint } from "@/api"
 import { api } from "@/api/api-client"
-import { isUndefined, omitBy } from "lodash-es"
+import { getOperator } from "@/api/operator"
+import { isUndefined, merge, omitBy } from "lodash-es"
 
 import type {
+  Cluster,
   FilteredClustersResponse,
+  GetClusterResponse,
   PaginatedClustersResponse,
 } from "@/types/api"
 import { type ClustersSearchSchema } from "@/lib/search-parsers/clusters-search"
@@ -43,6 +46,38 @@ export const getClusters = async (
           pages: 100,
         },
       } satisfies PaginatedClustersResponse
+    },
+    [JSON.stringify(stringifyBigints(params))],
+    {
+      revalidate: 30,
+      tags: ["clusters"],
+    }
+  )()
+
+export const getCluster = async (
+  params: Pick<ClustersSearchSchema, "network"> & { id: string }
+): Promise<Cluster> =>
+  await unstable_cache(
+    async () => {
+      console.log("params.network:", params.network)
+      const response = await api.get<GetClusterResponse>(
+        endpoint(params.network, `clusters/${params.id}`)
+      )
+      console.log("response:", response)
+
+      if (!response.cluster) {
+        throw new Error("Cluster not found")
+      }
+
+      const operators = await Promise.all(
+        response.cluster.operators.map((id) =>
+          getOperator({ id, network: params.network })
+        )
+      )
+
+      return merge({}, response.cluster, {
+        operators,
+      })
     },
     [JSON.stringify(stringifyBigints(params))],
     {

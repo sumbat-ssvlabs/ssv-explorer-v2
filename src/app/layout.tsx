@@ -85,20 +85,20 @@ export default async function RootLayout({ children }: RootLayoutProps) {
               }
           `}
         </style>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <div className="relative flex min-h-screen flex-col">
-            <SiteHeader />
-            <main className="flex-1">
-              <Providers>{children}</Providers>
-            </main>
-          </div>
-          <TailwindIndicator />
-        </ThemeProvider>
+        <Providers>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <div className="relative flex min-h-screen flex-col">
+              <SiteHeader />
+              <main className="flex-1">{children}</main>
+            </div>
+            <TailwindIndicator />
+          </ThemeProvider>
+        </Providers>
         <Toaster />
       </body>
     </html>

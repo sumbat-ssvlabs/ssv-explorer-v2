@@ -14,29 +14,6 @@ export const useOperatorSearch = () => {
     })
   )
 
-  // const [search, _setSearch] = useState(searchParams)
-
-  // const updateSearch = useCallback(
-  //   async (value: string) => {
-  //     await setSearchParams(value)
-  //     return table.resetPageIndex()
-  //   },
-  //   [setSearchParams, table]
-  // )
-  // const debouncedUpdateSearch = useDebouncedCallback(updateSearch, 500)
-
-  // const setSearch = useCallback(
-  //   (value: string) => {
-  //     _setSearch(value)
-  //     if (!value) {
-  //       updateSearch(value)
-  //     } else {
-  //       debouncedUpdateSearch(value)
-  //     }
-  //   },
-  //   [debouncedUpdateSearch, updateSearch]
-  // )
-
   const setSearch = useCallback(
     (value: string) => {
       setSearchParams(value)

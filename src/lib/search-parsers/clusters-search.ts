@@ -1,9 +1,8 @@
 import {
   createSearchParamsCache,
-  parseAsArrayOf,
+  parseAsString,
   type Options,
 } from "nuqs/server"
-import { z } from "zod"
 
 import { networkParser, paginationParser } from "@/lib/search-parsers"
 
@@ -14,7 +13,10 @@ const searchOptions: Options = {
 }
 
 export const clustersSearchFilters = {
-  id: parseAsArrayOf(z.number({ coerce: true })).withOptions(searchOptions),
+  search: parseAsString.withOptions({
+    ...searchOptions,
+    throttleMs: 500,
+  }),
 }
 
 export const clustersSearchParamsCache = createSearchParamsCache({

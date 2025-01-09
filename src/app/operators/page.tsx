@@ -14,6 +14,7 @@ interface IndexPageProps {
 
 export default async function IndexPage(props: IndexPageProps) {
   const search = operatorsSearchParamsCache.parse(await props.searchParams)
+  console.log("search:", search)
 
   const operators = searchOperators(search)
   const length = 4

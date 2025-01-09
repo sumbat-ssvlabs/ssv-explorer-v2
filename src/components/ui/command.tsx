@@ -16,10 +16,7 @@ const Command = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive
     ref={ref}
-    className={cn(
-      "flex size-full flex-col overflow-hidden bg-gray-50 text-gray-900",
-      className
-    )}
+    className={cn("flex size-full flex-col overflow-hidden", className)}
     {...props}
   />
 ))
@@ -56,22 +53,20 @@ const CommandInput = React.forwardRef<
   React.ComponentRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
-  <div className="p-2" cmdk-input-wrapper="">
-    <CommandPrimitive.Input
-      asChild
-      ref={ref}
-      className={cn(
-        "flex h-10 w-full bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
-        className
-      )}
-      {...props}
-    >
-      <Input
-        className="rounded-xl"
-        leftSlot={<Search className="size-4 shrink-0 opacity-50" />}
-      />
-    </CommandPrimitive.Input>
-  </div>
+  <CommandPrimitive.Input
+    asChild
+    ref={ref}
+    className={cn(
+      "flex h-10 w-full bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50",
+      className
+    )}
+    {...props}
+  >
+    <Input
+      className="rounded-xl"
+      leftSlot={<Search className="size-4 shrink-0 opacity-50" />}
+    />
+  </CommandPrimitive.Input>
 ))
 
 CommandInput.displayName = CommandPrimitive.Input.displayName

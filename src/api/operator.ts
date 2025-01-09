@@ -38,7 +38,7 @@ export const searchOperators = async (
         filtered as Record<string, string>
       )
       return api.get<OperatorsSearchResponse>(
-        endpoint(params.network, "operators", `?${searchParams}`)
+        endpoint(params.network, "operators", `?${searchParams}&sort=id:asc`)
       )
     },
     [JSON.stringify(stringifyBigints(params))],

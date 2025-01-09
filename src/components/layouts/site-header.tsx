@@ -6,9 +6,9 @@ import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
+import { GlobalSearch } from "@/components/global-search/gobal-search"
 import { ModeToggle } from "@/components/layouts/mode-toggle"
 
-import { Input } from "../ui/input"
 import { Text } from "../ui/text"
 
 export function SiteHeader() {
@@ -86,9 +86,12 @@ export function SiteHeader() {
             Accounts
           </Text>
         </div>
-        <Input
-          placeholder="Search"
-          className="h-[40px] w-[600px] bg-gray-100"
+        <GlobalSearch
+          commands={[
+            { value: "calendar", label: "Calendar" },
+            { value: "search-emoji", label: "Search Emoji" },
+            { value: "calculator", label: "Calculator" },
+          ]}
         />
       </div>
     </header>

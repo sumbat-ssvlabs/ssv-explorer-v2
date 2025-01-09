@@ -1,6 +1,7 @@
 import {
   createSearchParamsCache,
   parseAsArrayOf,
+  parseAsString,
   type Options,
 } from "nuqs/server"
 import { z } from "zod"
@@ -14,6 +15,7 @@ const searchOptions: Options = {
 }
 
 export const validatorsSearchFilters = {
+  search: parseAsString.withDefault("").withOptions(searchOptions),
   id: parseAsArrayOf(z.number({ coerce: true })).withOptions(searchOptions),
 }
 

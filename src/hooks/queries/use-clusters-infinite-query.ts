@@ -1,4 +1,4 @@
-import { getClusters } from "@/api/clusters"
+import { searchClusters } from "@/api/clusters"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { type ClustersSearchSchema } from "@/lib/search-parsers/clusters-search"
@@ -12,7 +12,7 @@ export const useClustersInfiniteQuery = (
   return useInfiniteQuery({
     queryKey: ["clusters", params.search],
     queryFn: ({ pageParam = 1 }) =>
-      getClusters({
+      searchClusters({
         network: chain.chainId,
         page: pageParam ?? 1,
         perPage: params.perPage,

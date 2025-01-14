@@ -7,7 +7,6 @@ import { useClustersInfiniteQuery } from "@/hooks/queries/use-clusters-infinite-
 import { useOperatorsInfiniteQuery } from "@/hooks/queries/use-operators-infinite-query"
 import { useValidatorsInfiniteQuery } from "@/hooks/queries/use-validators-infinite-query"
 import { useDebounceValue } from "@/hooks/use-debounce"
-import { Button } from "@/components/ui/button"
 import {
   Command,
   CommandEmpty,
@@ -21,7 +20,6 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Spinner } from "@/components/ui/spinner"
-import { Text } from "@/components/ui/text"
 
 import { ClustersGroup } from "./groups/clusters-group"
 import { OperatorsGroup } from "./groups/operators-group"
@@ -30,6 +28,8 @@ import { ValidatorsGroup } from "./groups/validators-group"
 export function GlobalSearch() {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
+  const [isFocused, setIsFocused] = React.useState(false)
+  const inputRef = React.useRef<HTMLInputElement>(null)
   const debouncedValue = useDebounceValue(value, 500)
 
   const asyncRoutePush = useAsyncRoutePush()
@@ -49,34 +49,47 @@ export function GlobalSearch() {
     perPage: 5,
   })
 
+  const hasAnyLoadedData = Boolean(
+    operatorsQuery.data?.length ||
+      validatorsQuery.data?.length ||
+      clustersQuery.data?.length
+  )
+
   const isLoading =
     operatorsQuery.isLoading ||
     validatorsQuery.isLoading ||
     clustersQuery.isLoading
 
+  const close = () => {
+    inputRef.current?.blur()
+    setOpen(false)
+  }
+
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className="w-[600px] max-w-full justify-between"
-        >
-          <Text variant="body-3-medium" className="text-gray-500">
-            Search operator ID or name, validator public key, cluster ID or
-            account address
-          </Text>
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[600px] max-w-full p-0">
-        <Command className="flex flex-col gap-6 p-2" shouldFilter={false}>
+    <Popover
+      open={(open || isFocused) && (!!value || hasAnyLoadedData)}
+      onOpenChange={setOpen}
+    >
+      <Command
+        className="flex max-w-[600px] flex-col gap-6 p-2"
+        shouldFilter={false}
+      >
+        <PopoverTrigger className="rounded-xl">
           <CommandInput
-            placeholder="Search framework..."
+            ref={inputRef}
+            placeholder="Search operator ID or name, validator public key, cluster ID or account address"
             value={value}
+            className="p-0 px-4"
             onValueChange={(value) => setValue(value)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
           />
-          <CommandList className="relative flex flex-col gap-6 p-0">
+        </PopoverTrigger>
+        <PopoverContent
+          className="h-full w-[var(--radix-popover-trigger-width)] border-gray-300 p-0 shadow-none outline outline-[6px] outline-gray-200"
+          onOpenAutoFocus={(e) => e.preventDefault()}
+        >
+          <CommandList className="flex flex-col">
             {!isLoading && value && <CommandEmpty>No found.</CommandEmpty>}
             {isLoading && (
               <div className="flex items-center justify-center p-6">
@@ -88,7 +101,7 @@ export function GlobalSearch() {
                 <OperatorsGroup
                   query={operatorsQuery}
                   onSelect={(group, operator) => {
-                    setOpen(false)
+                    close()
                     asyncRoutePush.mutate(`/operator/${operator.id}`)
                   }}
                 />
@@ -96,7 +109,7 @@ export function GlobalSearch() {
                 <ValidatorsGroup
                   query={validatorsQuery}
                   onSelect={(group, validator) => {
-                    setOpen(false)
+                    close()
                     asyncRoutePush.mutate(`/validator/${validator.public_key}`)
                   }}
                 />
@@ -104,15 +117,15 @@ export function GlobalSearch() {
                 <ClustersGroup
                   query={clustersQuery}
                   onSelect={(group, cluster) => {
-                    setOpen(false)
+                    close()
                     asyncRoutePush.mutate(`/cluster/${cluster.clusterId}`)
                   }}
                 />
               </>
             )}
           </CommandList>
-        </Command>
-      </PopoverContent>
+        </PopoverContent>
+      </Command>
     </Popover>
   )
 }

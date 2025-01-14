@@ -61,9 +61,9 @@ export const clustersTableColumns: ColumnDef<Cluster>[] = [
           return (
             <Link href={`/operator/${operator.id}`} key={operator.id}>
               <OperatorAvatar
+                size="base"
                 src={operator.logo}
                 isPrivate={operator.is_private}
-                size="sm"
               />
             </Link>
           )

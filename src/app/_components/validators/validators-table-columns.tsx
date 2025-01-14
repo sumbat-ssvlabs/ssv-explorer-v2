@@ -9,7 +9,7 @@ import { CopyBtn } from "@/components/ui/copy-btn"
 import { Text } from "@/components/ui/text"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { OperatorAvatar } from "@/components/operators/operator-avatar"
-import { ValidatorStatusBadge } from "@/components/validator/validator-status-badge"
+import { ValidatorStatusBadge } from "@/components/validators/validator-status-badge"
 
 export const validatorsTableColumns: ColumnDef<SearchValidator>[] = [
   {

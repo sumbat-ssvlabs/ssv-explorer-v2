@@ -3,47 +3,46 @@
 import { endpoint } from "@/api"
 import { api } from "@/api/api-client"
 import { getOperator } from "@/api/operator"
-import { isUndefined, merge, omitBy } from "lodash-es"
+import { merge, omitBy } from "lodash-es"
 
 import type {
   Cluster,
-  FilteredClustersResponse,
   GetClusterResponse,
+  GetClustersResponse,
   PaginatedClustersResponse,
 } from "@/types/api"
 import { type ClustersSearchSchema } from "@/lib/search-parsers/clusters-search"
 import { stringifyBigints } from "@/lib/utils/bigint"
 import { unstable_cache } from "@/lib/utils/unstable-cache"
 
-export const getClusters = async (
+export const searchClusters = async (
   params: Partial<ClustersSearchSchema> & Pick<ClustersSearchSchema, "network">
 ): Promise<PaginatedClustersResponse> =>
   await unstable_cache(
     async () => {
       const filtered = omitBy(
-        {
-          ...params,
-          from: (params.page ?? 0) * (params.perPage ?? 10),
-          limit: params.perPage ?? 10,
-          operatorDetails: "operatorDetails",
-        },
-        isUndefined
+        params,
+        (value) => value === undefined || value === null
       )
 
       const searchParams = new URLSearchParams(
         filtered as unknown as Record<string, string>
       )
-      const response = await api.get<FilteredClustersResponse>(
-        endpoint(params.network, "clusters", `?${searchParams}`)
+      const a = endpoint(
+        params.network,
+        "clusters/explorer",
+        `?${searchParams}`
       )
+      console.log("endpoint:", a)
+
+      const response = await api.get<GetClustersResponse>(a)
       return {
-        type: response.type,
-        clusters: response.clusters,
+        clusters: response.data,
         pagination: {
-          page: params.page ?? 1,
-          per_page: params.perPage ?? 10,
-          total: 100 * (params.perPage ?? 10),
-          pages: 100,
+          page: response.meta.page,
+          per_page: response.meta.perPage,
+          total: response.meta.totalItems,
+          pages: response.meta.totalPages,
         },
       } satisfies PaginatedClustersResponse
     },

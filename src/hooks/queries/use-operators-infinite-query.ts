@@ -1,5 +1,5 @@
 import { searchOperators } from "@/api/operator"
-import { useInfiniteQuery } from "@tanstack/react-query"
+import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query"
 
 import { type OperatorsSearchSchema } from "@/lib/search-parsers/operator-search"
 import { useNetworkQuery } from "@/hooks/search/use-network-query"
@@ -19,6 +19,7 @@ export const useOperatorsInfiniteQuery = (
         search: params.search,
       }),
     select: (data) => data.pages.flatMap((page) => page.operators),
+    placeholderData: keepPreviousData,
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       const { page, pages } = lastPage.pagination

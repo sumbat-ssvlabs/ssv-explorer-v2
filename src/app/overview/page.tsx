@@ -3,6 +3,7 @@ import { type SearchParams } from "@/types"
 
 import { Skeleton } from "@/components/ui/skeleton"
 import { Text } from "@/components/ui/text"
+import { GlobalSearch } from "@/components/global-search/gobal-search"
 import { Shell } from "@/components/shell"
 
 interface IndexPageProps {
@@ -20,6 +21,8 @@ export default async function IndexPage(props: IndexPageProps) {
           including operator performance, cluster statistics, and network
           activity.
         </Text>
+        <GlobalSearch />
+        <p>Text</p>
       </React.Suspense>
     </Shell>
   )

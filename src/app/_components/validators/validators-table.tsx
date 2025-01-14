@@ -12,7 +12,7 @@ import { Text } from "@/components/ui/text"
 import { DataTable } from "@/components/data-table/data-table"
 import { DataTableMenuButton } from "@/components/data-table/data-table-filters-button"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
-import { Filters } from "@/components/operators/table/filters/filters"
+import { Filters } from "@/app/_components/operators/filters/filters"
 
 import { validatorsTableColumns } from "./validators-table-columns"
 

@@ -35,7 +35,7 @@ export const StatusIndicator: StatusIndicatorFC = ({
           height="12"
           rx="6"
           fill="var(--success-500)"
-          fill-opacity="0.16"
+          fillOpacity="0.16"
         />
         <rect
           x="7"
@@ -53,7 +53,7 @@ export const StatusIndicator: StatusIndicatorFC = ({
           height="3"
           rx="1.5"
           fill="var(--gray-50)"
-          fill-opacity="0.32"
+          fillOpacity="0.32"
         />
         <rect
           opacity="0.32"
@@ -63,7 +63,7 @@ export const StatusIndicator: StatusIndicatorFC = ({
           height="3"
           rx="1.5"
           fill="var(--gray-50)"
-          fill-opacity="0.32"
+          fillOpacity="0.32"
         />
         <path
           opacity="0.32"
@@ -96,7 +96,7 @@ export const StatusIndicator: StatusIndicatorFC = ({
           height="12"
           rx="6"
           fill="var(--error-500)"
-          fill-opacity="0.2"
+          fillOpacity="0.2"
         />
         <rect
           opacity="0.72"

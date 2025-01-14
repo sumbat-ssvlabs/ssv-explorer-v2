@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { type ColumnDef } from "@tanstack/react-table"
-import { MdOutlineLock } from "react-icons/md"
 
 import { type Operator } from "@/types/api"
 import { getYearlyFee } from "@/lib/utils/operator"
@@ -11,7 +10,8 @@ import { Button } from "@/components/ui/button"
 import { CopyBtn } from "@/components/ui/copy-btn"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { MevRelaysDisplay } from "@/components/mev-relays-display"
-import { OperatorAvatar } from "@/components/operators/operator-avatar"
+import { OperatorInfo } from "@/components/operators/operator-info"
+import { OperatorPerformanceTooltip } from "@/components/operators/operator-performance-tooltip"
 import { OperatorStatusBadge } from "@/components/operators/operator-status-badge"
 import { PerformanceText } from "@/components/operators/performance-text"
 
@@ -29,25 +29,7 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
     ),
-    cell: ({ row }) => (
-      <div className="flex h-[52px] min-w-80 items-center gap-2">
-        <OperatorAvatar src={row.original.logo} />
-        <Button asChild variant="link">
-          <Link href={`/operator/${row.original.id}`}>{row.original.name}</Link>
-        </Button>
-        <div className="flex items-center gap-1">
-          {row.original.is_private && <MdOutlineLock className="size-[14px]" />}
-          {row.original.verified_operator && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              className="size-[14px]"
-              src="/images/verified.svg"
-              alt="Verified"
-            />
-          )}
-        </div>
-      </div>
-    ),
+    cell: ({ row }) => <OperatorInfo operator={row.original} />,
     enableSorting: false,
   },
   {
@@ -124,7 +106,9 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     cell: ({ row }) => {
       const performance = row.original.performance["24h"]
       return (
-        <PerformanceText className="text-right" performance={performance} />
+        <OperatorPerformanceTooltip>
+          <PerformanceText className="text-right" performance={performance} />
+        </OperatorPerformanceTooltip>
       )
     },
   },
@@ -136,7 +120,9 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     cell: ({ row }) => {
       const performance = row.original.performance["30d"]
       return (
-        <PerformanceText className="text-right" performance={performance} />
+        <OperatorPerformanceTooltip>
+          <PerformanceText className="text-right" performance={performance} />
+        </OperatorPerformanceTooltip>
       )
     },
   },

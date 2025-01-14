@@ -1,7 +1,6 @@
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { SiteHeader } from "@/components/layouts/site-header"
-import { ThemeProvider } from "@/components/providers"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 
 import "@/styles/globals.css"
@@ -88,23 +87,15 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         </style>
         <Suspense>
           <Providers>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <div className="relative flex min-h-screen flex-col">
-                <SiteHeader />
-                <main className="flex-1">
-                  <Suspense>{children}</Suspense>
-                </main>
-              </div>
-              <TailwindIndicator />
-            </ThemeProvider>
+            <div className="relative flex min-h-screen flex-col">
+              <SiteHeader />
+              <main className="flex-1">
+                <Suspense>{children}</Suspense>
+              </main>
+            </div>
+            <TailwindIndicator />
           </Providers>
         </Suspense>
-
         <Toaster />
       </body>
     </html>

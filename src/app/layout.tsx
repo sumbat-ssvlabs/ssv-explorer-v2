@@ -11,6 +11,7 @@ import "@fontsource/manrope/700.css"
 import "@fontsource/manrope/800.css"
 import "@fontsource/roboto-mono"
 
+import { Suspense } from "react"
 import type { Metadata, Viewport } from "next"
 
 import { Toaster } from "@/components/ui/toaster"
@@ -85,20 +86,25 @@ export default async function RootLayout({ children }: RootLayoutProps) {
               }
           `}
         </style>
-        <Providers>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <div className="relative flex min-h-screen flex-col">
-              <SiteHeader />
-              <main className="flex-1">{children}</main>
-            </div>
-            <TailwindIndicator />
-          </ThemeProvider>
-        </Providers>
+        <Suspense>
+          <Providers>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <div className="relative flex min-h-screen flex-col">
+                <SiteHeader />
+                <main className="flex-1">
+                  <Suspense>{children}</Suspense>
+                </main>
+              </div>
+              <TailwindIndicator />
+            </ThemeProvider>
+          </Providers>
+        </Suspense>
+
         <Toaster />
       </body>
     </html>

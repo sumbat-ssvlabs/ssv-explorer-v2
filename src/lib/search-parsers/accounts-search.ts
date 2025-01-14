@@ -3,6 +3,7 @@ import {
   parseAsArrayOf,
   type Options,
 } from "nuqs/server"
+import { isAddress } from "viem"
 import { z } from "zod"
 
 import { networkParser, paginationParser } from "@/lib/search-parsers"
@@ -15,7 +16,9 @@ const searchOptions: Options = {
 
 export const accountsSearchFilters = {
   id: parseAsArrayOf(z.number({ coerce: true })).withOptions(searchOptions),
-  ownerAddress: parseAsArrayOf(z.string()).withOptions(searchOptions),
+  ownerAddress: parseAsArrayOf(z.string().refine(isAddress)).withOptions(
+    searchOptions
+  ),
   recipientAddress: parseAsArrayOf(z.string()).withOptions(searchOptions),
   version: parseAsArrayOf(z.string()).withOptions(searchOptions),
 }

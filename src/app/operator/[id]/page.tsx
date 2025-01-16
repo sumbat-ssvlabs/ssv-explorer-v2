@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { getOperator } from "@/api/operator"
-import { getValidators } from "@/api/validators"
+import { searchValidators } from "@/api/validators"
 import { MdOutlineLock } from "react-icons/md"
 
 import { networkParserCache } from "@/lib/search-parsers"
@@ -30,7 +30,7 @@ export default async function IndexPage(props: IndexPageProps) {
   const validatorsSearch = validatorsSearchParamsCache.parse(
     await props.searchParams
   )
-  const validators = getValidators(validatorsSearch)
+  const validators = searchValidators({ ...validatorsSearch, operators: [+id] })
 
   return (
     <Shell className="gap-2">

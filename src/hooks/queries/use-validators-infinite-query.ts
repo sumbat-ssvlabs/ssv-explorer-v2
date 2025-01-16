@@ -1,4 +1,4 @@
-import { getValidators } from "@/api/validators"
+import { searchValidators } from "@/api/validators"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { type ValidatorsSearchSchema } from "@/lib/search-parsers/validators-search"
@@ -12,7 +12,7 @@ export const useValidatorsInfiniteQuery = (
   return useInfiniteQuery({
     queryKey: ["validators", params.search],
     queryFn: ({ pageParam = 1 }) =>
-      getValidators({
+      searchValidators({
         network: chain.chainId,
         page: pageParam ?? 1,
         perPage: params.perPage,

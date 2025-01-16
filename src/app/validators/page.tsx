@@ -1,5 +1,5 @@
 import React from "react"
-import { getValidators } from "@/api/validators"
+import { searchValidators } from "@/api/validators"
 import { type SearchParams } from "@/types"
 
 import { validatorsSearchParamsCache } from "@/lib/search-parsers/validators-search"
@@ -13,7 +13,7 @@ interface IndexPageProps {
 
 export default async function IndexPage(props: IndexPageProps) {
   const search = validatorsSearchParamsCache.parse(await props.searchParams)
-  const validators = getValidators(search)
+  const validators = searchValidators(search)
 
   return (
     <Shell className="gap-2">

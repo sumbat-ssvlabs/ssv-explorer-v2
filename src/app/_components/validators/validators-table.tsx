@@ -18,6 +18,7 @@ import { validatorsTableColumns } from "./validators-table-columns"
 
 interface ValidatorsTableProps {
   dataPromise: Promise<PaginatedValidatorsResponse>
+  operatorId?: number
 }
 
 export const defaultColumns = {
@@ -36,17 +37,17 @@ export const defaultColumns = {
 }
 
 export function ValidatorsTable({ dataPromise: data }: ValidatorsTableProps) {
-  const { validators, pagination } = use(data)
+  const response = use(data)
 
   const { table } = useDataTable({
-    data: validators,
+    data: response.validators,
     columns: validatorsTableColumns,
-    pageCount: pagination.pages,
+    pageCount: response.pagination.pages,
     getRowId: (originalRow, index) => `${originalRow.id}-${index}`,
     shallow: false,
     clearOnDefault: true,
     meta: {
-      total: pagination.total,
+      total: response.pagination.total,
     },
   })
 

@@ -17,7 +17,6 @@ export default async function IndexPage(props: IndexPageProps) {
   console.log("search:", search)
 
   const operators = searchOperators(search)
-  const length = 4
   return (
     <Shell className="gap-2">
       <React.Suspense fallback={<Skeleton className="h-7 w-52" />}>

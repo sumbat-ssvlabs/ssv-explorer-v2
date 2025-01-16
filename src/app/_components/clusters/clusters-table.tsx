@@ -6,6 +6,7 @@ import { X } from "lucide-react"
 import { withErrorBoundary } from "react-error-boundary"
 
 import { type PaginatedClustersResponse } from "@/types/api"
+import { defaultClusterSort } from "@/lib/search-parsers/clusters-search"
 import { useClustersSearchParams } from "@/hooks/search/use-clusters-search-params"
 import { useDataTable } from "@/hooks/use-data-table"
 import { Button } from "@/components/ui/button"
@@ -47,6 +48,9 @@ export const ClustersTable = withErrorBoundary(
       getRowId: (originalRow, index) => `${originalRow.clusterId}-${index}`,
       shallow: false,
       clearOnDefault: true,
+      initialState: {
+        sorting: defaultClusterSort,
+      },
       meta: {
         total: pagination.total,
       },

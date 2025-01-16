@@ -7,13 +7,13 @@ import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
 import { GlobalSearch } from "@/components/global-search/gobal-search"
-import { ModeToggle } from "@/components/layouts/mode-toggle"
+import { ThemeToggle } from "@/components/layouts/mode-toggle"
 
 import { Text } from "../ui/text"
 
 export function SiteHeader() {
   const pathname = usePathname()
-  const { theme } = useTheme()
+  const { resolvedTheme } = useTheme()
 
   return (
     <header className="container w-full backdrop-blur">
@@ -21,7 +21,9 @@ export function SiteHeader() {
         <Link href="/" className="mr-2 flex items-center md:mr-6 md:space-x-2">
           <Image
             src={
-              theme === "dark" ? "/images/logo-dark.svg" : "/images/logo.svg"
+              resolvedTheme === "dark"
+                ? "/images/logo-dark.svg"
+                : "/images/logo.svg"
             }
             alt="Logo"
             width={140}
@@ -30,7 +32,7 @@ export function SiteHeader() {
         </Link>
 
         <nav className="flex flex-1 items-center md:justify-end">
-          <ModeToggle />
+          <ThemeToggle />
         </nav>
       </div>
       <div className="flex h-[60px] items-center justify-between gap-6">

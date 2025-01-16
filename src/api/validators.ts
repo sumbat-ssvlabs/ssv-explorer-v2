@@ -2,26 +2,31 @@
 
 import { endpoint } from "@/api"
 import { api } from "@/api/api-client"
-import { isUndefined, omitBy } from "lodash-es"
+import { merge, omitBy } from "lodash-es"
 
 import type { PaginatedValidatorsResponse, SearchValidator } from "@/types/api"
 import { type ValidatorsSearchSchema } from "@/lib/search-parsers/validators-search"
 import { stringifyBigints } from "@/lib/utils/bigint"
 import { unstable_cache } from "@/lib/utils/unstable-cache"
 
-export const getValidators = async (
+export const searchValidators = async (
   params: Partial<ValidatorsSearchSchema> &
     Pick<ValidatorsSearchSchema, "network">
 ) =>
   await unstable_cache(
     async () => {
-      const filtered = omitBy(params, isUndefined)
+      const filtered = omitBy(
+        merge({}, params),
+        (value) => value === undefined || value === null
+      )
       const searchParams = new URLSearchParams(
         filtered as unknown as Record<string, string>
       )
-      return api.get<PaginatedValidatorsResponse>(
+      console.log("searchParams:", searchParams.toString())
+      const response = await api.get<PaginatedValidatorsResponse>(
         endpoint(params.network, "validators", `?${searchParams}`)
       )
+      return response
     },
     [JSON.stringify(stringifyBigints(params))],
     {

@@ -1,3 +1,4 @@
+import { type ExtendedSortingState } from "@/types"
 import {
   createSearchParamsCache,
   parseAsArrayOf,
@@ -8,8 +9,9 @@ import {
 import { isAddress } from "viem"
 import { z } from "zod"
 
+import { type Operator } from "@/types/api"
 import { networkParser, paginationParser } from "@/lib/search-parsers"
-import { parseAsTuple } from "@/lib/utils/parsers"
+import { getSortingStateParser, parseAsTuple } from "@/lib/utils/parsers"
 
 const searchOptions: Options = {
   history: "replace",
@@ -84,10 +86,20 @@ export const operatorSearchFilters = {
     }),
 }
 
+export const defaultOperatorSort: ExtendedSortingState<Operator> = [
+  { id: "id", desc: true },
+]
+export const operatorSearchSort = {
+  sort: getSortingStateParser<Operator>()
+    .withDefault(defaultOperatorSort)
+    .withOptions(searchOptions),
+}
+
 export const operatorsSearchParamsCache = createSearchParamsCache({
   ...networkParser,
   ...paginationParser,
   ...operatorSearchFilters,
+  ...operatorSearchSort,
 })
 
 export type OperatorsSearchSchema = Awaited<

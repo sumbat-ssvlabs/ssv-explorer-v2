@@ -1,3 +1,4 @@
+import { type ExtendedSortingState } from "@/types"
 import {
   createSearchParamsCache,
   parseAsArrayOf,
@@ -7,7 +8,9 @@ import {
 import { isAddress } from "viem"
 import { z } from "zod"
 
+import { type Cluster } from "@/types/api"
 import { networkParser, paginationParser } from "@/lib/search-parsers"
+import { getSortingStateParser } from "@/lib/utils/parsers"
 
 const searchOptions: Options = {
   history: "replace",
@@ -27,10 +30,20 @@ export const clustersSearchFilters = {
   ),
 }
 
+export const defaultClusterSort: ExtendedSortingState<Cluster> = [
+  { id: "validatorCount", desc: true },
+]
+export const clusterSearchSort = {
+  sort: getSortingStateParser<Cluster>()
+    .withDefault(defaultClusterSort)
+    .withOptions(searchOptions),
+}
+
 export const clustersSearchParamsCache = createSearchParamsCache({
   ...networkParser,
   ...paginationParser,
   ...clustersSearchFilters,
+  ...clusterSearchSort,
 })
 
 export type ClustersSearchSchema = Awaited<

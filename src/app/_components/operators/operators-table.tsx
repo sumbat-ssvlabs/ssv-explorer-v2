@@ -45,6 +45,9 @@ export function OperatorsTable({ dataPromise: data }: OperatorsTableProps) {
     getRowId: (originalRow, index) => `${originalRow.id}-${index}`,
     shallow: false,
     clearOnDefault: true,
+    initialState: {
+      sorting: [{ id: "id", desc: false }],
+    },
     meta: {
       total: pagination.total,
       defaultColumns,

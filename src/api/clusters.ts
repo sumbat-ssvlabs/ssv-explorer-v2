@@ -21,7 +21,9 @@ export const searchClusters = async (
   await unstable_cache(
     async () => {
       const filtered = omitBy(
-        params,
+        merge({}, params, {
+          sort: params.sort ? JSON.stringify(params.sort) : null,
+        }),
         (value) => value === undefined || value === null
       )
 

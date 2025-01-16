@@ -17,6 +17,9 @@ const searchOptions: Options = {
 export const validatorsSearchFilters = {
   search: parseAsString.withDefault("").withOptions(searchOptions),
   id: parseAsArrayOf(z.number({ coerce: true })).withOptions(searchOptions),
+  operators: parseAsArrayOf(z.number({ coerce: true })).withOptions(
+    searchOptions
+  ),
 }
 
 export const validatorsSearchParamsCache = createSearchParamsCache({

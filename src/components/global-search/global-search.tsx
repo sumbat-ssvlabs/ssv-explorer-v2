@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/popover"
 import { Spinner } from "@/components/ui/spinner"
 
-import { ClustersGroup } from "./groups/clusters-group"
 import { OperatorsGroup } from "./groups/operators-group"
 import { ValidatorsGroup } from "./groups/validators-group"
 
@@ -56,9 +55,10 @@ export function GlobalSearch() {
   )
 
   const isLoading =
-    operatorsQuery.isLoading ||
-    validatorsQuery.isLoading ||
-    clustersQuery.isLoading
+    (operatorsQuery.isLoading ||
+      validatorsQuery.isLoading ||
+      clustersQuery.isLoading) &&
+    !hasAnyLoadedData
 
   const close = () => {
     inputRef.current?.blur()
@@ -105,22 +105,20 @@ export function GlobalSearch() {
                     asyncRoutePush.mutate(`/operator/${operator.id}`)
                   }}
                 />
-                <CommandSeparator />
-                <ValidatorsGroup
-                  query={validatorsQuery}
-                  onSelect={(group, validator) => {
-                    close()
-                    asyncRoutePush.mutate(`/validator/${validator.public_key}`)
-                  }}
-                />
-                <CommandSeparator />
-                <ClustersGroup
-                  query={clustersQuery}
-                  onSelect={(group, cluster) => {
-                    close()
-                    asyncRoutePush.mutate(`/cluster/${cluster.clusterId}`)
-                  }}
-                />
+                {validatorsQuery.data?.length && (
+                  <>
+                    <CommandSeparator />
+                    <ValidatorsGroup
+                      query={validatorsQuery}
+                      onSelect={(group, validator) => {
+                        close()
+                        asyncRoutePush.mutate(
+                          `/validator/${validator.public_key}`
+                        )
+                      }}
+                    />
+                  </>
+                )}
               </>
             )}
           </CommandList>

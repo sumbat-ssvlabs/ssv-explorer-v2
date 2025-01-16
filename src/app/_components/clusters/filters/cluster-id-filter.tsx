@@ -8,6 +8,7 @@ import { xor } from "lodash-es"
 import { Loader2, X } from "lucide-react"
 
 import { cn } from "@/lib/utils"
+import { shortenAddress } from "@/lib/utils/strings"
 import { useClustersSearchParams } from "@/hooks/search/use-clusters-search-params"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -29,6 +30,7 @@ export function ClusterIdFilter() {
     queryKey: ["clusters", "ids", search, network],
     queryFn: async () => {
       return searchClusters({
+        search,
         network,
         page: 1,
         perPage: 10,
@@ -37,7 +39,7 @@ export function ClusterIdFilter() {
     enabled: open,
   })
 
-  const filteredClusters = query.data?.clusters.filter((cluster) =>
+  const filteredClusters = query.data?.data.filter((cluster) =>
     cluster.clusterId.toLowerCase().includes(search.toLowerCase())
   )
 
@@ -57,11 +59,13 @@ export function ClusterIdFilter() {
       }}
     >
       <Command>
-        <CommandInput
-          placeholder="Search Cluster IDs"
-          value={search}
-          onValueChange={(value) => setSearch(value)}
-        />
+        <div className="p-2">
+          <CommandInput
+            placeholder="Search Cluster IDs"
+            value={search}
+            onValueChange={(value) => setSearch(value)}
+          />
+        </div>
         {Boolean(filters.clusterId?.length) && (
           <div className="flex flex-wrap gap-1 border-y border-gray-200 p-2">
             {filters.clusterId?.map((id) => (
@@ -77,7 +81,7 @@ export function ClusterIdFilter() {
                   }))
                 }
               >
-                <Text variant="caption-medium">{id}</Text>{" "}
+                <Text variant="caption-medium">{shortenAddress(id)}</Text>{" "}
                 <div className="flex size-4 items-center justify-center">
                   <X className="size-2.5" />
                 </div>
@@ -115,7 +119,7 @@ export function ClusterIdFilter() {
                   "flex-1 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 )}
               >
-                {cluster.clusterId}
+                {shortenAddress(cluster.clusterId)}
               </span>
             </CommandItem>
           ))}

@@ -42,7 +42,6 @@ export const searchOperators = async (
       const searchParams = new URLSearchParams(
         filtered as Record<string, string>
       )
-      console.log("searchParams:", searchParams)
       return api.get<OperatorsSearchResponse>(
         endpoint(params.network, "operators", `?${searchParams}`)
       )

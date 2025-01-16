@@ -3,6 +3,7 @@ import {
   createSearchParamsCache,
   parseAsArrayOf,
   parseAsBoolean,
+  parseAsString,
   type Options,
 } from "nuqs/server"
 import { isAddress } from "viem"
@@ -19,6 +20,7 @@ const searchOptions: Options = {
 }
 
 export const clustersSearchFilters = {
+  search: parseAsString.withOptions(searchOptions),
   clusterId: parseAsArrayOf(z.string()).withOptions(searchOptions),
   ownerAddress: parseAsArrayOf(z.string().refine(isAddress)).withOptions(
     searchOptions

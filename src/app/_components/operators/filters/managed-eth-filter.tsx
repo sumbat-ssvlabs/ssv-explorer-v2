@@ -1,71 +1,48 @@
 "use client"
 
-import { isEqual } from "lodash-es"
-
-import { operatorSearchFilters } from "@/lib/search-parsers/operator-search"
 import { useOperatorsSearchParams } from "@/hooks/search/use-operators-search-params"
-import { Input } from "@/components/ui/input"
-import { RangeSlider } from "@/components/ui/slider"
 import { FilterButton } from "@/components/filter/filter-button"
+import { RangeFilter } from "@/components/filter/range-filter"
 
+const defaultRange: [number, number] = [0, 25000]
 export function ManagedEthFilter() {
   const { filters, setFilters } = useOperatorsSearchParams()
 
-  const hasSelectedItems = !isEqual(
-    filters.managedEth,
-    operatorSearchFilters.managedEth.defaultValue
-  )
+  const hasSelectedItems = Boolean(filters.managedEth)
 
   return (
     <FilterButton
-      name="Managed ETH"
       isActive={hasSelectedItems}
+      name="Managed ETH"
+      popover={{
+        content: {
+          className: "w-[400px] max-w-full",
+        },
+      }}
       onClear={() =>
-        setFilters((prev) => ({
-          ...prev,
-          managedEth: operatorSearchFilters.managedEth.defaultValue,
-        }))
+        setFilters({
+          ...filters,
+          managedEth: null,
+        })
       }
     >
-      <div className="flex flex-col gap-4 p-4">
-        <div className="flex items-center justify-between gap-4">
-          <Input
-            type="number"
-            value={filters.managedEth?.[0]}
-            step={0.01}
-            onChange={(e) =>
-              setFilters({
-                ...filters,
-                managedEth: [
-                  +e.target.value,
-                  filters.managedEth?.[1] ?? +e.target.value,
-                ],
-              })
-            }
-          />
-          <Input
-            type="number"
-            step={0.01}
-            value={filters.managedEth?.[1]}
-            onChange={(e) =>
-              setFilters({
-                ...filters,
-                managedEth: [filters.managedEth?.[0], +e.target.value],
-              })
-            }
-          />
-        </div>
-        <RangeSlider
-          value={filters.managedEth}
-          onValueChange={(values) =>
-            setFilters({
-              ...filters,
-              managedEth: values as [number, number],
-            })
-          }
-          max={operatorSearchFilters.managedEth.defaultValue[1]}
-        />
-      </div>
+      <RangeFilter
+        name="Managed ETH"
+        searchRange={filters.managedEth}
+        apply={(range) =>
+          setFilters({
+            ...filters,
+            managedEth: range,
+          })
+        }
+        remove={() =>
+          setFilters({
+            ...filters,
+            managedEth: null,
+          })
+        }
+        defaultRange={defaultRange}
+      />
     </FilterButton>
   )
 }

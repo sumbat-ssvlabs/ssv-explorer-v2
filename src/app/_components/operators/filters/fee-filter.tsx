@@ -2,65 +2,65 @@
 
 import { isEqual } from "lodash-es"
 
-import { operatorSearchFilters } from "@/lib/search-parsers/operator-search"
 import { useOperatorsSearchParams } from "@/hooks/search/use-operators-search-params"
-import { Input } from "@/components/ui/input"
-import { RangeSlider } from "@/components/ui/slider"
+import { Text } from "@/components/ui/text"
 import { FilterButton } from "@/components/filter/filter-button"
+import { RangeFilter } from "@/components/filter/range-filter"
+
+const defaultRange = [0, 100] as [number, number]
 
 export function FeeFilter() {
   const { filters, setFilters } = useOperatorsSearchParams()
 
-  const hasSelectedItems = !isEqual(
-    filters.fee,
-    operatorSearchFilters.fee.defaultValue
-  )
+  const isActive = !isEqual(filters.fee, defaultRange) && Boolean(filters.fee)
+
+  const apply = (range: [number, number]) => {
+    const isCleared = isEqual(range, defaultRange)
+    setFilters((prev) => ({
+      ...prev,
+      fee: isCleared ? null : range,
+    }))
+  }
+
+  const remove = () => {
+    apply(defaultRange)
+  }
 
   return (
     <FilterButton
       name="Fee"
-      isActive={hasSelectedItems}
-      onClear={() =>
-        setFilters((prev) => ({
-          ...prev,
-          fee: operatorSearchFilters.fee.defaultValue,
-        }))
-      }
+      isActive={isActive}
+      onClear={remove}
+      popover={{
+        content: {
+          className: "w-[400px] max-w-full",
+        },
+      }}
     >
-      <div className="flex flex-col gap-4 p-4">
-        <div className="flex items-center justify-between gap-4">
-          <Input
-            type="number"
-            value={filters.fee[0]}
-            step={0.01}
-            onChange={(e) =>
-              setFilters({
-                ...filters,
-                fee: [+e.target.value, filters.fee[1]],
-              })
-            }
-          />
-          <Input
-            type="number"
-            step={0.01}
-            value={filters.fee[1]}
-            onChange={(e) =>
-              setFilters({
-                ...filters,
-                fee: [filters.fee[0], +e.target.value],
-              })
-            }
-          />
-        </div>
-        <RangeSlider
-          value={filters.fee}
-          max={operatorSearchFilters.fee.defaultValue[1]}
-          step={0.01}
-          onValueChange={(values) =>
-            setFilters({ ...filters, fee: values as [number, number] })
-          }
-        />
-      </div>
+      <RangeFilter
+        className="w-[400px] max-w-full"
+        name="Fee"
+        searchRange={filters.fee}
+        defaultRange={defaultRange}
+        apply={apply}
+        remove={remove}
+        inputs={{
+          start: {
+            rightSlot: (
+              <Text variant="body-3-medium" className="text-gray-500">
+                SSV
+              </Text>
+            ),
+          },
+          end: {
+            rightSlot: (
+              <Text variant="body-3-medium" className="text-gray-500">
+                SSV
+              </Text>
+            ),
+          },
+        }}
+      />
     </FilterButton>
   )
 }

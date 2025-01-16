@@ -28,18 +28,8 @@ export type Cluster<T extends (Operator | number)[] = Operator[]> = {
 }
 
 export type PaginatedClustersResponse = WithPagination<{
-  clusters: Cluster[]
-}>
-export type GetClustersResponse = {
   data: Cluster[]
-  meta: {
-    page: number
-    perPage: number
-    totalItems: number
-    totalPages: number
-    hasNextPage: boolean
-  }
-}
+}>
 
 export interface GetClusterResponse {
   type: "cluster"
@@ -47,5 +37,5 @@ export interface GetClusterResponse {
 }
 export interface GetClusterWithOperatorsDataResponse {
   type: "cluster"
-  cluster: Cluster | null
+  cluster: Cluster<number[]> | null
 }

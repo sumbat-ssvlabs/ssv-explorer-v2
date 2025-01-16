@@ -31,6 +31,7 @@ export function OwnerAddressFilter() {
     queryKey: ["clusters", "owner-address", search, network],
     queryFn: async () => {
       return searchClusters({
+        search: search,
         network,
         page: 1,
         perPage: 10,
@@ -38,7 +39,7 @@ export function OwnerAddressFilter() {
     },
     select: (data) => [
       ...new Set(
-        data.clusters
+        data.data
           .map((cluster) => cluster.ownerAddress)
           .filter((address): address is Address => Boolean(address))
       ),
@@ -62,11 +63,13 @@ export function OwnerAddressFilter() {
       }}
     >
       <Command>
-        <CommandInput
-          placeholder="Search Owner Address"
-          value={search}
-          onValueChange={(value) => setSearch(value)}
-        />
+        <div className="p-2">
+          <CommandInput
+            placeholder="Search Owner Address"
+            value={search}
+            onValueChange={(value) => setSearch(value)}
+          />
+        </div>
         {Boolean(filters.ownerAddress?.length) && (
           <div className="flex flex-wrap gap-1 border-y p-2">
             {filters.ownerAddress?.map((owner_address) => (

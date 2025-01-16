@@ -34,7 +34,7 @@ export const operatorSearchFilters = {
     [z.number({ coerce: true }), z.number({ coerce: true })],
     (values) => values.sort((a, b) => +a - +b)
   )
-    .withDefault([0, 100])
+    // .withDefault([0, 100])
     .withOptions({
       ...searchOptions,
       throttleMs: 500,
@@ -43,7 +43,7 @@ export const operatorSearchFilters = {
     [z.number({ coerce: true }), z.number({ coerce: true })],
     (values) => values.sort((a, b) => +a - +b)
   )
-    .withDefault([0, 1000])
+    // .withDefault([0, 1000])
     .withOptions({
       ...searchOptions,
       throttleMs: 500,
@@ -52,7 +52,7 @@ export const operatorSearchFilters = {
     [z.number({ coerce: true }), z.number({ coerce: true })],
     (values) => values.sort((a, b) => +a - +b)
   )
-    .withDefault([0, 25000])
+    // .withDefault([0, 25000])
     .withOptions({
       ...searchOptions,
       throttleMs: 500,

@@ -39,7 +39,7 @@ export const defaultColumns = {
 
 export const ClustersTable = withErrorBoundary(
   ({ dataPromise: data }: ClustersTableProps) => {
-    const { clusters, pagination } = use(data)
+    const { data: clusters, pagination } = use(data)
 
     const { table } = useDataTable({
       data: clusters,

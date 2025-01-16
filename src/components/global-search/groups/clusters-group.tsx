@@ -16,11 +16,15 @@ export function ClustersGroup({ query, onSelect }: ClustersGroupProps) {
 
   return (
     <CommandGroup>
-      <Text variant="body-3-medium" className="text-gray-500">
+      <Text
+        variant="caption-bold"
+        className="px-[14px] pb-2 pt-3 text-gray-500"
+      >
         Clusters
       </Text>
       {query.data?.map((cluster) => (
         <CommandItem
+          className="px-5 py-1"
           key={cluster.clusterId}
           onSelect={() => {
             onSelect("cluster", cluster)

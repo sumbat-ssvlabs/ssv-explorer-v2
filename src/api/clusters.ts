@@ -7,8 +7,7 @@ import { merge, omitBy } from "lodash-es"
 
 import type {
   Cluster,
-  GetClusterResponse,
-  GetClustersResponse,
+  GetClusterWithOperatorsDataResponse,
   PaginatedClustersResponse,
 } from "@/types/api"
 import { type ClustersSearchSchema } from "@/lib/search-parsers/clusters-search"
@@ -30,23 +29,10 @@ export const searchClusters = async (
       const searchParams = new URLSearchParams(
         filtered as unknown as Record<string, string>
       )
-      const a = endpoint(
-        params.network,
-        "clusters/explorer",
-        `?${searchParams}`
-      )
-      console.log("endpoint:", a)
 
-      const response = await api.get<GetClustersResponse>(a)
-      return {
-        clusters: response.data,
-        pagination: {
-          page: response.meta.page,
-          per_page: response.meta.perPage,
-          total: response.meta.totalItems,
-          pages: response.meta.totalPages,
-        },
-      } satisfies PaginatedClustersResponse
+      return await api.get<PaginatedClustersResponse>(
+        endpoint(params.network, "clusters/explorer", `?${searchParams}`)
+      )
     },
     [JSON.stringify(stringifyBigints(params))],
     {
@@ -60,11 +46,9 @@ export const getCluster = async (
 ): Promise<Cluster> =>
   await unstable_cache(
     async () => {
-      console.log("params.network:", params.network)
-      const response = await api.get<GetClusterResponse>(
-        endpoint(params.network, `clusters/${params.id}`)
-      )
-      console.log("response:", response)
+      const a = endpoint(params.network, `clusters/${params.id}`)
+      console.log("a:", a)
+      const response = await api.get<GetClusterWithOperatorsDataResponse>(a)
 
       if (!response.cluster) {
         throw new Error("Cluster not found")

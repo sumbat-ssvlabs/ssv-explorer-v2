@@ -35,16 +35,16 @@ export const searchOperators = async (
     async () => {
       const filtered = omitBy(
         merge({}, params, {
-          sort: params.sort ? JSON.stringify(params.sort) : null,
+          sort: /* params.sort ? serializeSortingState(params.sort) : */ null,
         }),
         (value) => value === undefined || value === null
       )
       const searchParams = new URLSearchParams(
         filtered as Record<string, string>
       )
-      return api.get<OperatorsSearchResponse>(
-        endpoint(params.network, "operators", `?${searchParams}`)
-      )
+      const search = endpoint(params.network, "operators", `?${searchParams}`)
+      console.log("search:", search)
+      return api.get<OperatorsSearchResponse>(search)
     },
     [JSON.stringify(stringifyBigints(params))],
     {

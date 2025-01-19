@@ -8,11 +8,11 @@ import { merge, omitBy } from "lodash-es"
 import type {
   Cluster,
   GetClusterResponse,
-  GetClustersResponse,
   PaginatedClustersResponse,
 } from "@/types/api"
 import { type ClustersSearchSchema } from "@/lib/search-parsers/clusters-search"
 import { stringifyBigints } from "@/lib/utils/bigint"
+import { serializeSortingState } from "@/lib/utils/parsers"
 import { unstable_cache } from "@/lib/utils/unstable-cache"
 
 export const searchClusters = async (
@@ -21,9 +21,10 @@ export const searchClusters = async (
   await unstable_cache(
     async () => {
       const filtered = omitBy(
-        merge({}, params, {
-          sort: params.sort ? JSON.stringify(params.sort) : null,
-        }),
+        {
+          ...params,
+          sort: params.sort ? serializeSortingState(params.sort) : undefined,
+        },
         (value) => value === undefined || value === null
       )
 
@@ -37,16 +38,7 @@ export const searchClusters = async (
       )
       console.log("endpoint:", a)
 
-      const response = await api.get<GetClustersResponse>(a)
-      return {
-        clusters: response.data,
-        pagination: {
-          page: response.meta.page,
-          per_page: response.meta.perPage,
-          total: response.meta.totalItems,
-          pages: response.meta.totalPages,
-        },
-      } satisfies PaginatedClustersResponse
+      return await api.get<PaginatedClustersResponse>(a)
     },
     [JSON.stringify(stringifyBigints(params))],
     {
@@ -60,18 +52,15 @@ export const getCluster = async (
 ): Promise<Cluster> =>
   await unstable_cache(
     async () => {
-      console.log("params.network:", params.network)
       const response = await api.get<GetClusterResponse>(
         endpoint(params.network, `clusters/${params.id}`)
       )
-      console.log("response:", response)
-
       if (!response.cluster) {
         throw new Error("Cluster not found")
       }
 
       const operators = await Promise.all(
-        response.cluster.operators.map((id) =>
+        response.cluster.operators.map(({ id }) =>
           getOperator({ id, network: params.network })
         )
       )

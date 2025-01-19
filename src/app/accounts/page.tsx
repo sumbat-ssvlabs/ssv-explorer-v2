@@ -14,10 +14,7 @@ interface IndexPageProps {
 
 export default async function IndexPage(props: IndexPageProps) {
   const search = accountsSearchParamsCache.parse(await props.searchParams)
-  console.log("search:", search)
-
   const accounts = getAccounts(search)
-  console.log("accounts:", accounts)
 
   return (
     <Shell className="gap-2">

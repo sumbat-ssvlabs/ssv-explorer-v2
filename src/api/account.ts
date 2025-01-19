@@ -26,7 +26,6 @@ export const getAccounts = async (
         endpoint(params.network, "accounts", `?${searchParams}`)
       )
 
-      console.log("data:", data)
       return {
         type: "accounts",
         accounts: data.data,

@@ -33,10 +33,9 @@ export const clustersSearchFilters = {
 export const defaultClusterSort: ExtendedSortingState<Cluster> = [
   { id: "validatorCount", desc: true },
 ]
+
 export const clusterSearchSort = {
-  sort: getSortingStateParser<Cluster>()
-    .withDefault(defaultClusterSort)
-    .withOptions(searchOptions),
+  sort: getSortingStateParser<Cluster>().withOptions(searchOptions),
 }
 
 export const clustersSearchParamsCache = createSearchParamsCache({

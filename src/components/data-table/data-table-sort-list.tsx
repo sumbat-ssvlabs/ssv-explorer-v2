@@ -17,8 +17,8 @@ import {
 import { useQueryState } from "nuqs"
 
 import { dataTableConfig } from "@/config/data-table"
-import { getSortingStateParser } from "@/lib/utils/parsers"
 import { cn, toSentenceCase } from "@/lib/utils"
+import { getSortingStateParser } from "@/lib/utils/parsers"
 import { useDebouncedCallback } from "@/hooks/use-debounced-callback"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -148,10 +148,10 @@ export function DataTableSortList<TData>({
       onValueChange={setSorting}
       overlay={
         <div className="flex items-center gap-2">
-          <div className="h-8 w-[11.25rem] rounded-sm bg-primary/10" />
-          <div className="h-8 w-24 rounded-sm bg-primary/10" />
-          <div className="size-8 shrink-0 rounded-sm bg-primary/10" />
-          <div className="size-8 shrink-0 rounded-sm bg-primary/10" />
+          <div className="bg-primary/10 h-8 w-[11.25rem] rounded-sm" />
+          <div className="bg-primary/10 h-8 w-24 rounded-sm" />
+          <div className="bg-primary/10 size-8 shrink-0 rounded-sm" />
+          <div className="bg-primary/10 size-8 shrink-0 rounded-sm" />
         </div>
       }
     >

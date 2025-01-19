@@ -37,7 +37,7 @@ export function ClusterIdFilter() {
     enabled: open,
   })
 
-  const filteredClusters = query.data?.clusters.filter((cluster) =>
+  const filteredClusters = query.data?.data.filter((cluster) =>
     cluster.clusterId.toLowerCase().includes(search.toLowerCase())
   )
 

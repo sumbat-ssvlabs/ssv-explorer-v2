@@ -1,6 +1,6 @@
-import type { ExtendedSortingState, Filter } from "@/types"
+import type { ExtendedColumnSort, Filter } from "@/types"
 import { type Row } from "@tanstack/react-table"
-import { createParser } from "nuqs/server"
+import { createParser, parseAsStringLiteral } from "nuqs/server"
 import { z } from "zod"
 
 import { dataTableConfig } from "@/config/data-table"
@@ -15,29 +15,37 @@ export const sortingItemSchema = z.object({
  * @param originalRow The original row data to validate sorting keys against.
  * @returns A parser for TanStack Table sorting state.
  */
+
+export const serializeSortingState = <T extends ExtendedColumnSort<never>[]>(
+  sorting: T
+) => sorting.map((sort) => `${sort.id}:${sort.desc ? "desc" : "asc"}`).join(",")
+
 export const getSortingStateParser = <TData>(
   originalRow?: Row<TData>["original"]
 ) => {
   const validKeys = originalRow ? new Set(Object.keys(originalRow)) : null
 
-  return createParser<ExtendedSortingState<TData>>({
+  return createParser<ExtendedColumnSort<TData>[]>({
     parse: (value) => {
       try {
-        const parsed = JSON.parse(value)
-        const result = z.array(sortingItemSchema).safeParse(parsed)
+        const [id, order] = value.split(":")
+        if (!id || !order) return null
+
+        const desc = order === "desc"
+
+        const result = z.array(sortingItemSchema).safeParse([{ id, desc }])
 
         if (!result.success) return null
 
         if (validKeys && result.data.some((item) => !validKeys.has(item.id))) {
           return null
         }
-
-        return result.data as ExtendedSortingState<TData>
+        return result.data as ExtendedColumnSort<TData>[]
       } catch {
         return null
       }
     },
-    serialize: (value) => JSON.stringify(value),
+    serialize: (value) => serializeSortingState(value),
     eq: (a, b) =>
       a.length === b.length &&
       a.every(
@@ -46,15 +54,6 @@ export const getSortingStateParser = <TData>(
       ),
   })
 }
-
-export const zStringNumber = z.string({ coerce: true }).transform((val) => {
-  const parsed = parseFloat(val)
-  if (isNaN(parsed)) {
-    throw new Error("Invalid number")
-  }
-  return parsed
-})
-
 export const parseAsTuple = <T extends [z.ZodTypeAny, ...z.ZodTypeAny[]]>(
   tuple: T,
   map: (values: string[]) => string[] = (values) => values
@@ -133,4 +132,14 @@ export const getFiltersStateParser = <T>(originalRow?: Row<T>["original"]) => {
           filter.operator === b[index]?.operator
       ),
   })
+}
+
+export const parseAsSorter = <T extends string>(sortableFields: T[]) => {
+  const orders = ["asc", "desc"] as const
+
+  const sortOptions = sortableFields.flatMap((field) =>
+    orders.map((order) => `${field}:${order}`)
+  ) as `${T}:${(typeof orders)[number]}`[]
+
+  return parseAsStringLiteral(sortOptions)
 }

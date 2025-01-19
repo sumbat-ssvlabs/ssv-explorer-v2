@@ -13,8 +13,6 @@ interface IndexPageProps {
 
 export default async function IndexPage(props: IndexPageProps) {
   const search = clustersSearchParamsCache.parse(await props.searchParams)
-  console.log("search:", search)
-
   const clusters = searchClusters(search)
 
   return (

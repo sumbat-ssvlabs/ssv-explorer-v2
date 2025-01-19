@@ -43,9 +43,7 @@ export const getDefaultClusterData = (
     cluster
   )
 
-export const formatClusterData = (
-  cluster?: Partial<Cluster<{ operators: number[] }>> | null
-) => ({
+export const formatClusterData = (cluster?: Partial<Cluster> | null) => ({
   active: cluster?.active ?? true,
   balance: BigInt(cluster?.balance ?? 0),
   index: BigInt(cluster?.index ?? 0),

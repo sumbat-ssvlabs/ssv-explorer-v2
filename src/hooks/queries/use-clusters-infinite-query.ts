@@ -18,7 +18,7 @@ export const useClustersInfiniteQuery = (
         perPage: params.perPage,
         search: params.search,
       }),
-    select: (data) => data.pages.flatMap((page) => page.clusters),
+    select: (data) => data.pages.flatMap((page) => page.data),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       const { page, pages } = lastPage.pagination

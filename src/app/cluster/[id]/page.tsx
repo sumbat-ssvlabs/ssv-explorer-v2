@@ -1,7 +1,11 @@
 import Link from "next/link"
 import { getCluster } from "@/api/clusters"
+import { searchValidators } from "@/api/validators"
 
-import { networkParserCache } from "@/lib/search-parsers"
+import {
+  validatorsSearchParamsCache,
+  type ValidatorsSearchSchema,
+} from "@/lib/search-parsers/validators-search"
 import { cn } from "@/lib/utils"
 import { remove0x, shortenAddress } from "@/lib/utils/strings"
 import { Button } from "@/components/ui/button"
@@ -12,7 +16,7 @@ import { Stat } from "@/components/ui/stat"
 import { Text } from "@/components/ui/text"
 import { OperatorCard } from "@/components/operators/operator-card"
 import { Shell } from "@/components/shell"
-import { OperatorsTable } from "@/app/_components/operators/operators-table"
+import { ValidatorsTable } from "@/app/_components/validators/validators-table"
 
 interface IndexPageProps {
   params: Promise<{ id: string }>
@@ -21,9 +25,23 @@ interface IndexPageProps {
 
 export default async function IndexPage(props: IndexPageProps) {
   const { id } = await props.params
-  const { network } = networkParserCache.parse(await props.searchParams)
+  const awaitedSearchParams = await props.searchParams
+  const searchParams = validatorsSearchParamsCache.parse(
+    awaitedSearchParams
+  ) as ValidatorsSearchSchema
 
-  const cluster = await getCluster({ id, network })
+  const validators = searchValidators({
+    ...searchParams,
+    clusterId: id,
+  })
+
+  const cluster = await getCluster({ id, network: searchParams.network }).catch(
+    (error) => {
+      console.error(error)
+      return null
+    }
+  )
+
   if (!cluster) {
     return <div>Cluster not found</div>
   }
@@ -96,19 +114,7 @@ export default async function IndexPage(props: IndexPageProps) {
         ))}
       </div>
       <Card>
-        <OperatorsTable
-          dataPromise={Promise.resolve({
-            operators: [],
-            pagination: {
-              page: 1,
-              pages: 100,
-              current_first: 1,
-              current_last: 100,
-              total: 100,
-              per_page: 100,
-            },
-          })}
-        />
+        <ValidatorsTable dataPromise={validators} />
       </Card>
     </Shell>
   )

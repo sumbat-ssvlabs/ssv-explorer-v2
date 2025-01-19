@@ -1,4 +1,8 @@
-import { createSearchParamsCache, parseAsInteger } from "nuqs/server"
+import {
+  createSearchParamsCache,
+  parseAsBoolean,
+  parseAsInteger,
+} from "nuqs/server"
 
 import { type ChainTuple } from "@/config/chains"
 import { parseAsNumberEnum } from "@/lib/utils/parsers"
@@ -15,4 +19,8 @@ export const networkParserCache = createSearchParamsCache(networkParser)
 export const paginationParser = {
   page: parseAsInteger.withDefault(1),
   perPage: parseAsInteger.withDefault(10),
+}
+
+export const enhancementParsers = {
+  fullOperatorData: parseAsBoolean.withDefault(true),
 }

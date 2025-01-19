@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { type ColumnDef } from "@tanstack/react-table"
 
-import { type SearchValidator } from "@/types/api"
+import { type Operator, type SearchValidator } from "@/types/api"
 import { add0x, remove0x, shortenAddress } from "@/lib/utils/strings"
 import { CopyBtn } from "@/components/ui/copy-btn"
 import { Text } from "@/components/ui/text"
@@ -11,7 +11,7 @@ import { DataTableColumnHeader } from "@/components/data-table/data-table-column
 import { OperatorAvatar } from "@/components/operators/operator-avatar"
 import { ValidatorStatusBadge } from "@/components/validators/validator-status-badge"
 
-export const validatorsTableColumns: ColumnDef<SearchValidator>[] = [
+export const validatorsTableColumns: ColumnDef<SearchValidator<Operator>>[] = [
   {
     accessorKey: "public_key",
     header: ({ column }) => (
@@ -22,11 +22,11 @@ export const validatorsTableColumns: ColumnDef<SearchValidator>[] = [
         <Text
           className="font-mono text-primary-500"
           as={Link}
-          href={`/validator/${row.original.public_key}`}
+          href={`/validator/${row.original.publicKey}`}
         >
-          <div>{shortenAddress(add0x(row.original.public_key))}</div>
+          <div>{shortenAddress(add0x(row.original.publicKey))}</div>
         </Text>
-        <CopyBtn className="text-gray-500" text={row.original.public_key} />
+        <CopyBtn className="text-gray-500" text={row.original.publicKey} />
       </div>
     ),
     enableSorting: false,
@@ -41,7 +41,7 @@ export const validatorsTableColumns: ColumnDef<SearchValidator>[] = [
         <Text
           className="font-mono text-primary-500"
           as={Link}
-          href={`/cluster/${row.original.public_key}`}
+          href={`/cluster/${row.original.cluster}`}
         >
           <div>{shortenAddress(remove0x(row.original.cluster))}</div>
         </Text>
@@ -60,11 +60,11 @@ export const validatorsTableColumns: ColumnDef<SearchValidator>[] = [
         <Text
           className="font-mono text-primary-500"
           as={Link}
-          href={`/account/${row.original.owner_address}`}
+          href={`/account/${row.original.ownerAddress}`}
         >
-          <div>{shortenAddress(row.original.owner_address)}</div>
+          <div>{shortenAddress(row.original.ownerAddress)}</div>
         </Text>
-        <CopyBtn className="text-gray-500" text={row.original.owner_address} />
+        <CopyBtn className="text-gray-500" text={row.original.ownerAddress} />
       </div>
     ),
     enableSorting: false,

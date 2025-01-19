@@ -113,7 +113,7 @@ export function GlobalSearch() {
                       onSelect={(group, validator) => {
                         close()
                         asyncRoutePush.mutate(
-                          `/validator/${validator.public_key}`
+                          `/validator/${validator.publicKey}`
                         )
                       }}
                     />

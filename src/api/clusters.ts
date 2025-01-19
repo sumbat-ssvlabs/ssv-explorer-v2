@@ -7,7 +7,7 @@ import { merge, omitBy } from "lodash-es"
 
 import type {
   Cluster,
-  GetClusterResponse,
+  GetClusterWithOperatorsDataResponse,
   PaginatedClustersResponse,
 } from "@/types/api"
 import { type ClustersSearchSchema } from "@/lib/search-parsers/clusters-search"
@@ -48,15 +48,15 @@ export const getCluster = async (
 ): Promise<Cluster> =>
   await unstable_cache(
     async () => {
-      const response = await api.get<GetClusterResponse>(
-        endpoint(params.network, `clusters/${params.id}`)
-      )
+      const rest = endpoint(params.network, `clusters/${params.id}`)
+      console.log("rest:", rest)
+      const response = await api.get<GetClusterWithOperatorsDataResponse>(rest)
       if (!response.cluster) {
         throw new Error("Cluster not found")
       }
 
       const operators = await Promise.all(
-        response.cluster.operators.map(({ id }) =>
+        response.cluster.operators.map((id) =>
           getOperator({ id, network: params.network })
         )
       )

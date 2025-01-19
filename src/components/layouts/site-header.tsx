@@ -1,34 +1,23 @@
+/* eslint-disable @next/next/no-img-element */
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
+import { Text } from "@/components/ui/text"
 import { GlobalSearch } from "@/components/global-search/global-search"
 import { ThemeToggle } from "@/components/layouts/mode-toggle"
-
-import { Text } from "../ui/text"
+import { Logo } from "@/components/logo"
 
 export function SiteHeader() {
   const pathname = usePathname()
-  const { resolvedTheme } = useTheme()
 
   return (
     <header className="container w-full backdrop-blur">
       <div className="flex h-[60px] items-center border-b border-gray-300 font-mono">
         <Link href="/" className="mr-2 flex items-center md:mr-6 md:space-x-2">
-          <Image
-            src={
-              resolvedTheme === "dark"
-                ? "/images/logo-dark.svg"
-                : "/images/logo.svg"
-            }
-            alt="Logo"
-            width={140}
-            height={28}
-          />
+          <Logo width={140} height={28} />
         </Link>
 
         <nav className="flex flex-1 items-center md:justify-end">
@@ -77,7 +66,7 @@ export function SiteHeader() {
           >
             Clusters
           </Text>
-          <Text
+          {/* <Text
             as={Link}
             variant="body-3-medium"
             href="/accounts"
@@ -86,15 +75,9 @@ export function SiteHeader() {
             })}
           >
             Accounts
-          </Text>
+          </Text> */}
         </div>
-        <GlobalSearch
-          commands={[
-            { value: "calendar", label: "Calendar" },
-            { value: "search-emoji", label: "Search Emoji" },
-            { value: "calculator", label: "Calculator" },
-          ]}
-        />
+        <GlobalSearch />
       </div>
     </header>
   )

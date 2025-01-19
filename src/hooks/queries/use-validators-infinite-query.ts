@@ -1,6 +1,7 @@
 import { searchValidators } from "@/api/validators"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
+import { type PaginatedValidatorsResponse } from "@/types/api"
 import { type ValidatorsSearchSchema } from "@/lib/search-parsers/validators-search"
 import { useNetworkQuery } from "@/hooks/search/use-network-query"
 
@@ -17,8 +18,9 @@ export const useValidatorsInfiniteQuery = (
         page: pageParam ?? 1,
         perPage: params.perPage,
         search: params.search,
-      }),
-    select: (data) => data.pages.flatMap((page) => page.validators),
+        fullOperatorData: false,
+      }) as unknown as Promise<PaginatedValidatorsResponse<string>>,
+    select: (data) => data.pages.flatMap((page) => page.data),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
       const { page, pages } = lastPage.pagination

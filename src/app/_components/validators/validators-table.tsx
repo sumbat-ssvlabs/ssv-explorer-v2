@@ -4,7 +4,7 @@ import { use } from "react"
 import { TableProvider } from "@/context/table-context"
 import { X } from "lucide-react"
 
-import { type PaginatedValidatorsResponse } from "@/types/api"
+import { type Operator, type PaginatedValidatorsResponse } from "@/types/api"
 import { useOperatorsSearchParams } from "@/hooks/search/use-operators-search-params"
 import { useDataTable } from "@/hooks/use-data-table"
 import { Button } from "@/components/ui/button"
@@ -17,30 +17,15 @@ import { Filters } from "@/app/_components/validators/filters/filters"
 import { validatorsTableColumns } from "./validators-table-columns"
 
 interface ValidatorsTableProps {
-  dataPromise: Promise<PaginatedValidatorsResponse>
+  dataPromise: Promise<PaginatedValidatorsResponse<Operator>>
   operatorId?: number
-}
-
-export const defaultColumns = {
-  name: true,
-  eth1_node_client: false,
-  fee: true,
-  location: false,
-  id: true,
-  owner_address: false,
-  eth2_node_client: false,
-  validators_count: false,
-  performance_24h: false,
-  performance_30d: true,
-  mev_relays: true,
-  status: true,
 }
 
 export function ValidatorsTable({ dataPromise: data }: ValidatorsTableProps) {
   const response = use(data)
 
   const { table } = useDataTable({
-    data: response.validators,
+    data: response.data,
     columns: validatorsTableColumns,
     pageCount: response.pagination.pages,
     getRowId: (originalRow, index) => `${originalRow.id}-${index}`,

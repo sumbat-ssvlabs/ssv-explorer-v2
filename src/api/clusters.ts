@@ -31,14 +31,10 @@ export const searchClusters = async (
       const searchParams = new URLSearchParams(
         filtered as unknown as Record<string, string>
       )
-      const a = endpoint(
-        params.network,
-        "clusters/explorer",
-        `?${searchParams}`
-      )
-      console.log("endpoint:", a)
 
-      return await api.get<PaginatedClustersResponse>(a)
+      return await api.get<PaginatedClustersResponse>(
+        endpoint(params.network, "clusters/explorer", `?${searchParams}`)
+      )
     },
     [JSON.stringify(stringifyBigints(params))],
     {

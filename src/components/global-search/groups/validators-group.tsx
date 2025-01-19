@@ -1,10 +1,10 @@
 import { type UseInfiniteQueryResult } from "@tanstack/react-query"
 
+import { type SearchValidator } from "@/types/api"
+import { shortenAddress } from "@/lib/utils/strings"
 import { Button } from "@/components/ui/button"
 import { CommandGroup, CommandItem } from "@/components/ui/command"
 import { Text } from "@/components/ui/text"
-import { shortenAddress } from "@/lib/utils/strings"
-import { type SearchValidator } from "@/types/api"
 
 interface ValidatorsGroupProps {
   query: UseInfiniteQueryResult<SearchValidator[], unknown>
@@ -16,11 +16,15 @@ export function ValidatorsGroup({ query, onSelect }: ValidatorsGroupProps) {
 
   return (
     <CommandGroup>
-      <Text variant="body-3-medium" className="text-gray-500">
+      <Text
+        variant="caption-bold"
+        className="px-[14px] pb-2 pt-3 text-gray-500"
+      >
         Validators
       </Text>
       {query.data?.map((validator) => (
         <CommandItem
+          className="px-5 py-3"
           key={validator.public_key}
           onSelect={() => {
             onSelect("validator", validator)

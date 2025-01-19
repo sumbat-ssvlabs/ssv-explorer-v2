@@ -33,7 +33,7 @@ export function StatusFilter() {
               onSelect={() => {
                 setFilters((prev) => ({
                   ...prev,
-                  status: false,
+                  status: null,
                 }))
               }}
             >

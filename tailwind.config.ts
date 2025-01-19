@@ -95,7 +95,7 @@ export default {
       },
       fontFamily: {
         sans: ["manrope", ...fontFamily.sans],
-        mono: ["roboto-mono", ...fontFamily.mono],
+        mono: ["Roboto Mono", ...fontFamily.mono],
       },
       keyframes: {
         "accordion-down": {

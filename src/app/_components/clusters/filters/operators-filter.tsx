@@ -7,7 +7,6 @@ import { CommandLoading } from "cmdk"
 import { xor } from "lodash-es"
 import { Loader2, X } from "lucide-react"
 
-import { cn } from "@/lib/utils"
 import { useClustersSearchParams } from "@/hooks/search/use-clusters-search-params"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -20,6 +19,7 @@ import {
 } from "@/components/ui/command"
 import { Text } from "@/components/ui/text"
 import { FilterButton } from "@/components/filter/filter-button"
+import { OperatorInfo } from "@/components/operators/operator-info"
 
 export function OperatorsFilter() {
   const [open, setOpen] = useState(false)
@@ -54,11 +54,13 @@ export function OperatorsFilter() {
       }}
     >
       <Command>
-        <CommandInput
-          placeholder="Search Operators"
-          value={search}
-          onValueChange={(value) => setSearch(value)}
-        />
+        <div className="p-2">
+          <CommandInput
+            placeholder="Search Operators"
+            value={search}
+            onValueChange={(value) => setSearch(value)}
+          />
+        </div>
         {Boolean(filters.operators?.length) && (
           <div className="flex flex-wrap gap-1 border-y border-gray-200 p-2">
             {filters.operators?.map((id) => (
@@ -94,7 +96,7 @@ export function OperatorsFilter() {
             <CommandItem
               key={operator.id}
               value={operator.id.toString()}
-              className="flex h-10 items-center space-x-2 px-2"
+              className="flex h-10 items-center space-x-2 px-2 py-1"
               onSelect={() => {
                 setFilters((prev) => ({
                   ...prev,
@@ -107,13 +109,10 @@ export function OperatorsFilter() {
                 checked={filters.operators?.includes(operator.id)}
                 className="mr-2"
               />
-              <span
-                className={cn(
-                  "flex-1 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                )}
-              >
-                {operator.name} ({operator.id})
-              </span>
+              <OperatorInfo
+                operator={operator}
+                className="pointer-events-none py-1"
+              />
             </CommandItem>
           ))}
         </CommandList>

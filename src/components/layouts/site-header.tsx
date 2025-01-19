@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 
 import { cn } from "@/lib/utils"
-import { GlobalSearch } from "@/components/global-search/gobal-search"
+import { GlobalSearch } from "@/components/global-search/global-search"
 import { ThemeToggle } from "@/components/layouts/mode-toggle"
 
 import { Text } from "../ui/text"

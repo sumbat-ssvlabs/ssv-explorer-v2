@@ -3,7 +3,7 @@ import { type SearchParams } from "@/types"
 
 import { Skeleton } from "@/components/ui/skeleton"
 import { Text } from "@/components/ui/text"
-import { GlobalSearch } from "@/components/global-search/gobal-search"
+import { GlobalSearch } from "@/components/global-search/global-search"
 import { Shell } from "@/components/shell"
 
 interface IndexPageProps {

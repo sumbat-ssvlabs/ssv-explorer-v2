@@ -1,7 +1,12 @@
 import Link from "next/link"
+import { searchDuties } from "@/api/duties"
 import { getValidator } from "@/api/validators"
+import { type SearchParams } from "nuqs"
 
-import { networkParserCache } from "@/lib/search-parsers"
+import {
+  dutiesSearchParamsCache,
+  type DutiesSearchSchema,
+} from "@/lib/search-parsers/duties-search"
 import { cn } from "@/lib/utils"
 import { shortenAddress } from "@/lib/utils/strings"
 import { Button } from "@/components/ui/button"
@@ -13,18 +18,28 @@ import { Stat } from "@/components/ui/stat"
 import { Text } from "@/components/ui/text"
 import { OperatorCard } from "@/components/operators/operator-card"
 import { Shell } from "@/components/shell"
-import { OperatorsTable } from "@/app/_components/operators/operators-table"
+import { DutiesTable } from "@/app/_components/duties/duties-table"
 
 interface IndexPageProps {
   params: Promise<{ publicKey: string }>
-  searchParams: Promise<{ network: string }>
+  searchParams: Promise<SearchParams>
 }
 
 export default async function IndexPage(props: IndexPageProps) {
   const { publicKey } = await props.params
-  const { network } = networkParserCache.parse(await props.searchParams)
+  const awaitedSearchParams = await props.searchParams
+  const searchParams = dutiesSearchParamsCache.parse(
+    awaitedSearchParams
+  ) as DutiesSearchSchema
 
-  const validator = await getValidator({ publicKey, network })
+  const duties = searchDuties({
+    ...searchParams,
+    validatorPublicKey: publicKey,
+  })
+  const validator = await getValidator({
+    publicKey,
+    network: searchParams.network,
+  })
 
   return (
     <Shell className="gap-6">
@@ -107,19 +122,7 @@ export default async function IndexPage(props: IndexPageProps) {
         ))}
       </div>
       <Card>
-        <OperatorsTable
-          dataPromise={Promise.resolve({
-            operators: [],
-            pagination: {
-              page: 1,
-              pages: 100,
-              current_first: 1,
-              current_last: 100,
-              total: 100,
-              per_page: 100,
-            },
-          })}
-        />
+        <DutiesTable dataPromise={duties} />
       </Card>
     </Shell>
   )

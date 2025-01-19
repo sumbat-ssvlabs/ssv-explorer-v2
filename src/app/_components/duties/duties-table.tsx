@@ -7,6 +7,7 @@ import { withErrorBoundary } from "react-error-boundary"
 import { type DutiesResponse } from "@/types/api/duties"
 import { defaultDutiesSort } from "@/lib/search-parsers/duties-search"
 import { useDataTable } from "@/hooks/use-data-table"
+import { Badge } from "@/components/ui/badge"
 import { Text } from "@/components/ui/text"
 import { DataTable } from "@/components/data-table/data-table"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
@@ -48,8 +49,11 @@ export const DutiesTable = withErrorBoundary(
     return (
       <>
         <TableProvider table={table}>
-          <div className="flex gap-2">
-            <Text variant="headline4">Duties</Text>
+          <div className="flex items-center gap-2">
+            <Text variant="headline4">Duties </Text>
+            <Badge variant="primary" size="sm">
+              {response.pagination.total}
+            </Badge>
             <div className="flex-1"></div>
             <DataTableViewOptions table={table} />
           </div>

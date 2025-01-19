@@ -9,7 +9,7 @@ export const Outline: FC<ComponentPropsWithRef<"div">> = ({
   return (
     <div
       className={cn(
-        "flex w-fit items-center gap-1 rounded-md border border-gray-200 px-2 py-[2px]",
+        "flex w-fit items-center gap-1 rounded-md border border-gray-200 px-2 py-[2px] dark:border-white/[0.03]",
         className
       )}
       {...props}

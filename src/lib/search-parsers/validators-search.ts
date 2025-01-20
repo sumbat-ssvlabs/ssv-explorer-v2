@@ -1,3 +1,4 @@
+import { type ExtendedSortingState } from "@/types"
 import {
   createSearchParamsCache,
   parseAsArrayOf,
@@ -6,11 +7,13 @@ import {
 } from "nuqs/server"
 import { z } from "zod"
 
+import { type Operator, type SearchValidator } from "@/types/api"
 import {
   enhancementParsers,
   networkParser,
   paginationParser,
 } from "@/lib/search-parsers"
+import { getSortingStateParser } from "@/lib/utils/parsers"
 
 const searchOptions: Options = {
   history: "replace",
@@ -27,13 +30,23 @@ export const validatorsSearchFilters = {
   ),
 }
 
+export const defaultValidatorSort: ExtendedSortingState<
+  SearchValidator<Operator>
+> = [{ id: "createdAt", desc: true }]
+
+export const validatorSearchSort = {
+  ordering: getSortingStateParser<SearchValidator<Operator>>()
+    .withOptions(searchOptions)
+    .withDefault(defaultValidatorSort),
+}
+
 export const validatorsSearchParamsCache = createSearchParamsCache({
   ...networkParser,
   ...paginationParser,
   ...validatorsSearchFilters,
   ...enhancementParsers,
+  ...validatorSearchSort,
 })
-
 export type ValidatorsSearchSchema = Awaited<
   ReturnType<typeof validatorsSearchParamsCache.parse>
 >

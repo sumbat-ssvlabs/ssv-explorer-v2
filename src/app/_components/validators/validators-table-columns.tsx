@@ -4,9 +4,11 @@ import Link from "next/link"
 import { type ColumnDef } from "@tanstack/react-table"
 
 import { type Operator, type SearchValidator } from "@/types/api"
+import { formatFullDate, getRelativeTime } from "@/lib/utils/date"
 import { add0x, remove0x, shortenAddress } from "@/lib/utils/strings"
 import { CopyBtn } from "@/components/ui/copy-btn"
 import { Text } from "@/components/ui/text"
+import { Tooltip } from "@/components/ui/tooltip"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { OperatorAvatar } from "@/components/operators/operator-avatar"
 import { ValidatorStatusBadge } from "@/components/validators/validator-status-badge"
@@ -97,5 +99,20 @@ export const validatorsTableColumns: ColumnDef<SearchValidator<Operator>>[] = [
       <ValidatorStatusBadge size="sm" status={row.original.status} />
     ),
     enableSorting: false,
+  },
+  {
+    accessorKey: "createdAt",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Created At" />
+    ),
+    cell: ({ row }) => {
+      const date = new Date(row.original.createdAt)
+      return (
+        <Tooltip asChild content={formatFullDate(date)}>
+          <Text className="w-fit text-gray-600">{getRelativeTime(date)}</Text>
+        </Tooltip>
+      )
+    },
+    enableSorting: true,
   },
 ]

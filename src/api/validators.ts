@@ -7,6 +7,7 @@ import { merge, omitBy } from "lodash-es"
 import type { PaginatedValidatorsResponse, Validator } from "@/types/api"
 import { type ValidatorsSearchSchema } from "@/lib/search-parsers/validators-search"
 import { stringifyBigints } from "@/lib/utils/bigint"
+import { serializeSortingState } from "@/lib/utils/parsers"
 import { unstable_cache } from "@/lib/utils/unstable-cache"
 
 export const searchValidators = async (
@@ -16,9 +17,15 @@ export const searchValidators = async (
   await unstable_cache(
     async () => {
       const filtered = omitBy(
-        merge({}, params),
+        merge({
+          ...params,
+          ordering: params.ordering
+            ? serializeSortingState(params.ordering)
+            : undefined,
+        }),
         (value) => value === undefined || value === null
       )
+
       const searchParams = new URLSearchParams(
         filtered as unknown as Record<string, string>
       )

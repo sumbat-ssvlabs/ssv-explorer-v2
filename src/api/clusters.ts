@@ -20,7 +20,6 @@ export const searchClusters = async (
 ): Promise<PaginatedClustersResponse> =>
   await unstable_cache(
     async () => {
-      console.log("params.ordering:", params.ordering)
       const filtered = omitBy(
         {
           ...params,

@@ -2,11 +2,12 @@
 
 import { endpoint } from "@/api"
 import { api } from "@/api/api-client"
-import { merge, omitBy } from "lodash-es"
+import { omitBy } from "lodash-es"
 
 import type { Country, Operator, OperatorsSearchResponse } from "@/types/api"
 import { type OperatorsSearchSchema } from "@/lib/search-parsers/operator-search"
 import { stringifyBigints } from "@/lib/utils/bigint"
+import { serializeSortingState } from "@/lib/utils/parsers"
 import { unstable_cache } from "@/lib/utils/unstable-cache"
 
 export type OrderBy =
@@ -34,9 +35,12 @@ export const searchOperators = async (
   await unstable_cache(
     async () => {
       const filtered = omitBy(
-        merge({}, params, {
-          sort: /* params.sort ? serializeSortingState(params.sort) : */ null,
-        }),
+        {
+          ...params,
+          ordering: params.ordering
+            ? serializeSortingState(params.ordering)
+            : null,
+        },
         (value) => value === undefined || value === null
       )
       const searchParams = new URLSearchParams(

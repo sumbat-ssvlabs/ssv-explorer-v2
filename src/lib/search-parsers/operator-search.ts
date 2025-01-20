@@ -90,7 +90,7 @@ export const defaultOperatorSort: ExtendedSortingState<Operator> = [
   { id: "id", desc: true },
 ]
 export const operatorSearchSort = {
-  sort: getSortingStateParser<Operator>()
+  ordering: getSortingStateParser<Operator>()
     .withDefault(defaultOperatorSort)
     .withOptions(searchOptions),
 }

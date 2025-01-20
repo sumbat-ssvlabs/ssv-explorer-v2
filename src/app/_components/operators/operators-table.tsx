@@ -41,6 +41,7 @@ export const OperatorsTable = withErrorBoundary(
     const { operators, pagination } = use(data)
 
     const { table } = useDataTable({
+      name: "operators-table",
       data: operators,
       columns: operatorsTableColumns,
       pageCount: pagination.pages,

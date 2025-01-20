@@ -29,7 +29,9 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Name" />
     ),
-    cell: ({ row }) => <OperatorInfo operator={row.original} />,
+    cell: ({ row }) => (
+      <OperatorInfo variant="minimal" operator={row.original} />
+    ),
     enableSorting: false,
   },
   {
@@ -146,3 +148,11 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     },
   },
 ]
+
+export const operatorsTablePreviewColumns = operatorsTableColumns.filter(
+  (column) =>
+    ["name", "owner_address", "performance.24h", "status"].includes(
+      // @ts-expect-error accessorKey is not defined in the type
+      column.accessorKey
+    )
+)

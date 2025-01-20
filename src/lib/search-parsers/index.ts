@@ -21,6 +21,11 @@ export const paginationParser = {
   perPage: parseAsInteger.withDefault(10),
 }
 
+export const overviewParserCache = createSearchParamsCache({
+  ...networkParser,
+  ...paginationParser,
+})
+
 export const enhancementParsers = {
   fullOperatorData: parseAsBoolean.withDefault(true),
 }

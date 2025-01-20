@@ -135,9 +135,12 @@ interface UseDataTableProps<TData>
     // Extend to make the sorting id typesafe
     sorting?: ExtendedSortingState<TData>
   }
+
+  name: string
 }
 
 export function useDataTable<TData>({
+  name,
   pageCount = -1,
   filterFields = [],
   enableAdvancedFilter = false,
@@ -178,9 +181,11 @@ export function useDataTable<TData>({
   )
   const [columnVisibility, setColumnVisibility] =
     useLocalStorage<VisibilityState>(
-      "columns",
+      `${name}-columns-visibility`,
       initialState?.columnVisibility ?? {}
     )
+  console.log("initialState?.columnVisibility:", initialState?.columnVisibility)
+  console.log("columnVisibility:", columnVisibility)
 
   const [page, setPage] = useQueryState(
     "page",

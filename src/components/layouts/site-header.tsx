@@ -12,6 +12,7 @@ import { Logo } from "@/components/logo"
 
 export function SiteHeader() {
   const pathname = usePathname()
+  const isOverview = pathname.startsWith("/overview")
 
   return (
     <header className="container w-full backdrop-blur">
@@ -77,7 +78,7 @@ export function SiteHeader() {
             Accounts
           </Text> */}
         </div>
-        <GlobalSearch />
+        {!isOverview && <GlobalSearch className="w-[600px] max-w-full" />}
       </div>
     </header>
   )

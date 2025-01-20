@@ -15,7 +15,7 @@ import { ValidatorStatusBadge } from "@/components/validators/validator-status-b
 
 export const validatorsTableColumns: ColumnDef<SearchValidator<Operator>>[] = [
   {
-    accessorKey: "public_key",
+    accessorKey: "publicKey",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Public Key" />
     ),
@@ -53,7 +53,7 @@ export const validatorsTableColumns: ColumnDef<SearchValidator<Operator>>[] = [
     enableSorting: false,
   },
   {
-    accessorKey: "owner_address",
+    accessorKey: "ownerAddress",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Owner Address" />
     ),
@@ -116,3 +116,9 @@ export const validatorsTableColumns: ColumnDef<SearchValidator<Operator>>[] = [
     enableSorting: true,
   },
 ]
+
+export const validatorsTablePreviewColumns = validatorsTableColumns.filter(
+  (column) =>
+    // @ts-expect-error accessorKey is not defined in the type
+    ["publicKey", "ownerAddress", "status"].includes(column.accessorKey)
+)

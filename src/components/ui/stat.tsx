@@ -1,5 +1,6 @@
 import type { ComponentPropsWithRef, FC, ReactNode } from "react"
 import { Slot } from "@radix-ui/react-slot"
+import { isString } from "lodash-es"
 import { FaInfoCircle } from "react-icons/fa"
 
 import { cn } from "@/lib/utils"
@@ -10,6 +11,7 @@ export type StatProps = {
   title: string
   content: ReactNode
   tooltip?: ReactNode
+  subContent?: ReactNode
 }
 
 type StatFC = FC<
@@ -21,19 +23,31 @@ export const Stat: StatFC = ({
   title,
   tooltip,
   content,
+  subContent,
   ...props
 }) => {
+  const ContentComponent = isString(content) ? Text : Slot
+  const SubContentComponent = isString(subContent) ? Text : Slot
   return (
-    <div className={cn(className)} {...props}>
-      <Tooltip content={tooltip}>
-        <div className="flex items-center gap-1">
-          <Text variant="caption-medium" className="text-gray-500">
-            {title}
-          </Text>
-          {tooltip && <FaInfoCircle className="size-3 text-gray-500" />}
-        </div>
-      </Tooltip>
-      <Slot className="text-xl font-bold">{content}</Slot>
+    <div className={cn(className, "gap-2")} {...props}>
+      <div>
+        <Tooltip content={tooltip}>
+          <div className="flex items-center gap-1">
+            <Text variant="caption-medium" className="text-gray-500">
+              {title}
+            </Text>
+            {tooltip && <FaInfoCircle className="size-3 text-gray-500" />}
+          </div>
+        </Tooltip>
+        <ContentComponent className="text-xl font-bold">
+          {content}
+        </ContentComponent>
+      </div>
+      {subContent && (
+        <SubContentComponent variant="caption-medium" className="text-gray-500">
+          {subContent}
+        </SubContentComponent>
+      )}
     </div>
   )
 }

@@ -1,7 +1,9 @@
 "use client"
 
 import * as React from "react"
+import { cva, type VariantProps } from "class-variance-authority"
 
+import { cn } from "@/lib/utils"
 import { useAsyncRoutePush } from "@/hooks/next/use-async-route-push"
 import { useClustersInfiniteQuery } from "@/hooks/queries/use-clusters-infinite-query"
 import { useOperatorsInfiniteQuery } from "@/hooks/queries/use-operators-infinite-query"
@@ -20,11 +22,27 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { Spinner } from "@/components/ui/spinner"
+import { textVariants } from "@/components/ui/text"
 
 import { OperatorsGroup } from "./groups/operators-group"
 import { ValidatorsGroup } from "./groups/validators-group"
 
-export function GlobalSearch() {
+export const globalSearchVariants = cva("rounded-xl bg-background", {
+  variants: {
+    size: {
+      md: "h-10 p-0 px-4",
+      lg: "h-[60px] p-0 px-4",
+    },
+  },
+  defaultVariants: {
+    size: "md",
+  },
+})
+
+type Props = VariantProps<typeof globalSearchVariants> &
+  React.ComponentProps<typeof Command>
+
+export const GlobalSearch: React.FC<Props> = ({ size, ...props }) => {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
   const [isFocused, setIsFocused] = React.useState(false)
@@ -55,10 +73,9 @@ export function GlobalSearch() {
   )
 
   const isLoading =
-    (operatorsQuery.isLoading ||
-      validatorsQuery.isLoading ||
-      clustersQuery.isLoading) &&
-    !hasAnyLoadedData
+    operatorsQuery.isLoading ||
+    validatorsQuery.isLoading ||
+    clustersQuery.isLoading
 
   const close = () => {
     inputRef.current?.blur()
@@ -71,15 +88,19 @@ export function GlobalSearch() {
       onOpenChange={setOpen}
     >
       <Command
-        className="flex max-w-[600px] flex-col gap-6 p-2"
         shouldFilter={false}
+        {...props}
+        className={cn(props.className, "h-fit")}
       >
         <PopoverTrigger className="rounded-xl">
           <CommandInput
             ref={inputRef}
             placeholder="Search operator ID or name, validator public key, cluster ID or account address"
             value={value}
-            className="p-0 px-4"
+            className={globalSearchVariants({
+              size,
+              className: textVariants({ variant: "body-3-medium" }),
+            })}
             onValueChange={(value) => setValue(value)}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}

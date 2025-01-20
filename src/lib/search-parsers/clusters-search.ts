@@ -41,7 +41,9 @@ export const defaultClusterSort: ExtendedSortingState<Cluster> = [
 ]
 
 export const clusterSearchSort = {
-  ordering: getSortingStateParser<Cluster>().withOptions(searchOptions),
+  ordering: getSortingStateParser<Cluster>()
+    .withOptions(searchOptions)
+    .withDefault(defaultClusterSort),
 }
 
 export const clustersSearchParamsCache = createSearchParamsCache({

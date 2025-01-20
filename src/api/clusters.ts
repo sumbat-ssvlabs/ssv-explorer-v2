@@ -23,7 +23,9 @@ export const searchClusters = async (
       const filtered = omitBy(
         {
           ...params,
-          sort: params.sort ? serializeSortingState(params.sort) : undefined,
+          ordering: params.ordering
+            ? serializeSortingState(params.ordering)
+            : undefined,
         },
         (value) => value === undefined || value === null
       )

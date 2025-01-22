@@ -9,9 +9,10 @@ import {
 import { isAddress } from "viem"
 import { z } from "zod"
 
-import { type Operator } from "@/types/api"
 import { networkParser, paginationParser } from "@/lib/search-parsers"
 import { getSortingStateParser, parseAsTuple } from "@/lib/utils/parsers"
+
+import { type OperatorSortingKeys } from "../../types/api/operator"
 
 const searchOptions: Options = {
   history: "replace",
@@ -66,8 +67,11 @@ export const operatorSearchFilters = {
   verified: parseAsStringEnum(["all", "verified", "unverified"]).withOptions(
     searchOptions
   ),
-  performance_24h: parseAsTuple(
-    [z.number({ coerce: true }), z.number({ coerce: true })],
+  performance24h: parseAsTuple(
+    [
+      z.number({ coerce: true }).transform((v) => Math.round(v)),
+      z.number({ coerce: true }).transform((v) => Math.round(v)),
+    ],
     (values) => values.sort((a, b) => +a - +b)
   )
     .withDefault([0, 100])
@@ -75,8 +79,11 @@ export const operatorSearchFilters = {
       ...searchOptions,
       throttleMs: 500,
     }),
-  performance_30d: parseAsTuple(
-    [z.number({ coerce: true }), z.number({ coerce: true })],
+  performance30d: parseAsTuple(
+    [
+      z.number({ coerce: true }).transform((v) => Math.round(v)),
+      z.number({ coerce: true }).transform((v) => Math.round(v)),
+    ],
     (values) => values.sort((a, b) => +a - +b)
   )
     .withDefault([0, 100])
@@ -86,11 +93,11 @@ export const operatorSearchFilters = {
     }),
 }
 
-export const defaultOperatorSort: ExtendedSortingState<Operator> = [
+export const defaultOperatorSort: ExtendedSortingState<OperatorSortingKeys> = [
   { id: "id", desc: true },
 ]
 export const operatorSearchSort = {
-  ordering: getSortingStateParser<Operator>()
+  ordering: getSortingStateParser<OperatorSortingKeys>()
     .withDefault(defaultOperatorSort)
     .withOptions(searchOptions),
 }

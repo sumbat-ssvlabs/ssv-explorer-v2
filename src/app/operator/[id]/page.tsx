@@ -40,6 +40,7 @@ export default async function IndexPage(props: IndexPageProps) {
             network: networkSearch.network,
             id: +id,
           })
+          if (!operator) return <div>Operator not found</div>
           return (
             <div className="flex flex-col gap-6">
               <Card>
@@ -53,10 +54,10 @@ export default async function IndexPage(props: IndexPageProps) {
                     <div className="flex items-center gap-2">
                       <Text variant="headline4">{operator.name}</Text>
                       <div className="flex items-center gap-[6px]">
-                        {operator.is_private && (
+                        {operator.isPrivate && (
                           <MdOutlineLock className="size-[18px] min-w-[18px]" />
                         )}
-                        {operator.verified_operator && (
+                        {operator.type === "verified_operator" && (
                           <Image
                             width={18}
                             height={18}
@@ -87,12 +88,12 @@ export default async function IndexPage(props: IndexPageProps) {
                         <Button
                           as={Link}
                           className="font-mono text-sm font-medium"
-                          href={`/account/${operator.owner_address}`}
+                          href={`/account/${operator.ownerAddress}`}
                           variant="link"
                         >
-                          {shortenAddress(operator.owner_address)}
+                          {shortenAddress(operator.ownerAddress)}
                         </Button>
-                        <CopyBtn text={operator.owner_address} />
+                        <CopyBtn text={operator.ownerAddress} />
                       </Outline>
                       <Outline>
                         <Text
@@ -105,9 +106,9 @@ export default async function IndexPage(props: IndexPageProps) {
                           variant="body-3-medium"
                           className="max-w-28 overflow-hidden text-ellipsis font-mono"
                         >
-                          {operator.public_key}
+                          {operator.publicKey}
                         </Text>
-                        <CopyBtn text={operator.public_key} />
+                        <CopyBtn text={operator.publicKey} />
                       </Outline>
                     </div>
                   </div>
@@ -144,7 +145,7 @@ export default async function IndexPage(props: IndexPageProps) {
                     className="flex-1"
                     title="Validators"
                     tooltip="Whatsup?"
-                    content={<Text>{operator.validators_count}</Text>}
+                    content={<Text>{operator.validatorsCount}</Text>}
                   />
                 </div>
               </Card>

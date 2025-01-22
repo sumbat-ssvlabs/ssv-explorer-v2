@@ -2,6 +2,7 @@ import React from "react"
 import { searchClusters } from "@/api/clusters"
 import { type SearchParams } from "@/types"
 
+import { type Operator } from "@/types/api"
 import { clustersSearchParamsCache } from "@/lib/search-parsers/clusters-search"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Shell } from "@/components/shell"
@@ -13,7 +14,7 @@ interface IndexPageProps {
 
 export default async function IndexPage(props: IndexPageProps) {
   const search = clustersSearchParamsCache.parse(await props.searchParams)
-  const clusters = searchClusters(search)
+  const clusters = searchClusters<Operator[]>(search)
 
   return (
     <Shell className="gap-2">

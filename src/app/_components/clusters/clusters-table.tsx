@@ -5,7 +5,7 @@ import { TableProvider } from "@/context/table-context"
 import { X } from "lucide-react"
 import { withErrorBoundary } from "react-error-boundary"
 
-import { type PaginatedClustersResponse } from "@/types/api"
+import { type Operator, type PaginatedClustersResponse } from "@/types/api"
 import { defaultClusterSort } from "@/lib/search-parsers/clusters-search"
 import { useClustersSearchParams } from "@/hooks/search/use-clusters-search-params"
 import { useDataTable } from "@/hooks/use-data-table"
@@ -19,7 +19,7 @@ import { Filters } from "@/app/_components/clusters/filters/filters"
 import { clustersTableColumns } from "./clusters-table-columns"
 
 interface ClustersTableProps {
-  dataPromise: Promise<PaginatedClustersResponse>
+  dataPromise: Promise<PaginatedClustersResponse<Operator[]>>
 }
 
 export const defaultColumns = {
@@ -42,6 +42,7 @@ export const ClustersTable = withErrorBoundary(
     const { data: clusters, pagination } = use(data)
 
     const { table } = useDataTable({
+      name: "clusters",
       data: clusters,
       columns: clustersTableColumns,
       pageCount: pagination.pages,

@@ -60,30 +60,30 @@ export type OperatorMetadataKeys = Extract<
   | "name"
   | "logo"
   | "description"
-  | "setup_provider"
-  | "mev_relays"
+  | "setupProvider"
+  | "mevRelays"
   | "location"
-  | "eth1_node_client"
-  | "eth2_node_client"
-  | "website_url"
-  | "twitter_url"
-  | "linkedin_url"
-  | "dkg_address"
+  | "eth1NodeClient"
+  | "eth2NodeClient"
+  | "websiteUrl"
+  | "twitterUrl"
+  | "linkedinUrl"
+  | "dkgAddress"
 >
 
 export enum OperatorMetadataFields {
   OperatorName = "name",
   OperatorImage = "logo",
   Description = "description",
-  SetupProvider = "setup_provider",
-  MevRelays = "mev_relays",
+  SetupProvider = "setupProvider",
+  MevRelays = "mevRelays",
   Location = "location",
-  ExecutionClient = "eth1_node_client",
-  ConsensusClient = "eth2_node_client",
-  WebsiteUrl = "website_url",
-  TwitterUrl = "twitter_url",
-  LinkedinUrl = "linkedin_url",
-  DkgAddress = "dkg_address",
+  ExecutionClient = "eth1NodeClient",
+  ConsensusClient = "eth2NodeClient",
+  WebsiteUrl = "websiteUrl",
+  TwitterUrl = "twitterUrl",
+  LinkedinUrl = "linkedinUrl",
+  DkgAddress = "dkgAddress",
 }
 
 export const SORTED_OPERATOR_METADATA_FIELDS: OperatorMetadataKeys[] = [
@@ -115,25 +115,25 @@ export const getOperatorIds = <T extends { id: number }[]>(operators: T) => {
 export const createDefaultOperator = (
   operator: Partial<Operator> & { id: number }
 ): Operator => ({
-  id_str: operator.id.toString(),
-  declared_fee: "0",
-  previous_fee: "0",
+  idStr: operator.id.toString(),
+  declaredFee: "0",
+  previousFee: "0",
   fee: "0",
-  public_key: "",
-  owner_address: "",
-  address_whitelist: "",
-  is_private: false,
-  whitelisting_contract: "",
+  publicKey: "",
+  ownerAddress: "",
+  addressWhitelist: "",
+  isPrivate: false,
+  whitelistingContract: "",
   location: "",
-  setup_provider: "",
-  eth1_node_client: "",
-  eth2_node_client: "",
-  mev_relays: "",
+  setupProvider: "",
+  eth1NodeClient: "",
+  eth2NodeClient: "",
+  mevRelays: "",
   description: "",
-  website_url: "",
-  twitter_url: "",
-  linkedin_url: "",
-  dkg_address: "",
+  websiteUrl: "",
+  twitterUrl: "",
+  linkedinUrl: "",
+  dkgAddress: "",
   logo: "",
   type: "operator",
   name: `Operator ${operator.id}`,
@@ -141,15 +141,13 @@ export const createDefaultOperator = (
     "24h": 0,
     "30d": 0,
   },
-  is_valid: true,
-  is_deleted: false,
-  is_active: 0,
+  isValid: true,
+  isDeleted: false,
+  isActive: 0,
   status: "No validators",
-  validators_count: 0,
+  validatorsCount: 0,
   version: "v4",
   network: "holesky",
-  whitelist_addresses: [],
-  updated_at: 0,
   ...operator,
 })
 

@@ -4,7 +4,7 @@ import { endpoint } from "@/api"
 import { api } from "@/api/api-client"
 import { omitBy } from "lodash-es"
 
-import type { Country, Operator, OperatorsSearchResponse } from "@/types/api"
+import type { Country, OperatorsSearchResponse } from "@/types/api"
 import { type OperatorsSearchSchema } from "@/lib/search-parsers/operator-search"
 import { stringifyBigints } from "@/lib/utils/bigint"
 import { serializeSortingState } from "@/lib/utils/parsers"
@@ -43,10 +43,15 @@ export const searchOperators = async (
         },
         (value) => value === undefined || value === null
       )
+      console.log("filtered:", filtered)
       const searchParams = new URLSearchParams(
         filtered as Record<string, string>
       )
-      const search = endpoint(params.network, "operators", `?${searchParams}`)
+      const search = endpoint(
+        params.network,
+        "operators/explorer",
+        `?${searchParams}`
+      )
       console.log("search:", search)
       return api.get<OperatorsSearchResponse>(search)
     },
@@ -76,15 +81,10 @@ export interface OperatorMetadata {
 export const getOperator = async (
   params: Pick<OperatorsSearchSchema, "network"> & { id: number }
 ) => {
-  return await unstable_cache(
-    async () =>
-      api.get<Operator>(endpoint(params.network, "operators", params.id)),
-    [params.network.toString(), params.id.toString()],
-    {
-      revalidate: 30,
-      tags: ["operators", params.id.toString()],
-    }
-  )()
+  return searchOperators({
+    network: params.network,
+    id: [params.id],
+  }).then((res) => res?.data[0])
 }
 
 export const getOperatorLocations = async (chain: number) => {

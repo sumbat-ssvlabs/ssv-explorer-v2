@@ -19,7 +19,7 @@ interface OperatorsTableProps {
 
 export const OperatorsTablePreview = withErrorBoundary(
   ({ dataPromise: data }: OperatorsTableProps) => {
-    const { operators, pagination } = use(data)
+    const { data: operators, pagination } = use(data)
 
     const { table } = useDataTable({
       name: "operators-table-preview",

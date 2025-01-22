@@ -92,7 +92,7 @@ export function OperatorsFilter() {
           ) : (
             <CommandEmpty>This list is empty.</CommandEmpty>
           )}
-          {query.data?.operators.map((operator) => (
+          {query.data?.data.map((operator) => (
             <CommandItem
               key={operator.id}
               value={operator.id.toString()}

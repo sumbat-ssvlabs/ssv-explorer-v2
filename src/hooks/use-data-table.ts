@@ -36,7 +36,11 @@ import { useDebouncedCallback } from "@/hooks/use-debounced-callback"
 
 interface UseDataTableProps<TData>
   extends Omit<
-      TableOptions<TData>,
+      TableOptions<TData> & {
+        meta: {
+          total: number
+        }
+      },
       | "state"
       | "pageCount"
       | "getCoreRowModel"

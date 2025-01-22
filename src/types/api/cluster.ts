@@ -27,15 +27,11 @@ export type Cluster<T extends (Operator | number)[] = Operator[]> = {
   operators: T
 }
 
-export type PaginatedClustersResponse = WithPagination<{
-  data: Cluster[]
+export type PaginatedClustersResponse<
+  T extends (Operator | number)[] = number[],
+> = WithPagination<{
+  data: Cluster<T>[]
 }>
 
-export interface GetClusterResponse {
-  type: "cluster"
-  cluster: Cluster | null
-}
-export interface GetClusterWithOperatorsDataResponse {
-  type: "cluster"
-  cluster: Cluster<number[]> | null
-}
+export type GetClusterResponse<T extends (Operator | number)[] = number[]> =
+  Cluster<T>

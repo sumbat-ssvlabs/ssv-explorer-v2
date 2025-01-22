@@ -38,7 +38,7 @@ export const defaultColumns = {
 
 export const OperatorsTable = withErrorBoundary(
   ({ dataPromise: data }: OperatorsTableProps) => {
-    const { operators, pagination } = use(data)
+    const { data: operators, pagination } = use(data)
 
     const { table } = useDataTable({
       name: "operators-table",

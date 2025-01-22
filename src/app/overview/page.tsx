@@ -22,11 +22,12 @@ export default async function IndexPage(props: IndexPageProps) {
   const search = await overviewParserCache.parse(props.searchParams)
   const operators = await searchOperators({
     ...search,
-    ordering: [{ id: "performance", desc: false }],
+    ordering: [{ id: "performance30d", desc: true }],
   }).catch((error) => {
     console.error("Error fetching operators:", error)
     return null
   })
+
   const validators = await searchValidators({
     ...search,
     ordering: [{ id: "createdAt", desc: false }],

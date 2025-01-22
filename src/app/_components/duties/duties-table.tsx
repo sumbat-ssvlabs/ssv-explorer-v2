@@ -32,6 +32,7 @@ export const DutiesTable = withErrorBoundary(
     const response = use(data)
 
     const { table } = useDataTable({
+      name: "duties",
       data: response.duties,
       columns: dutiesTableColumns,
       pageCount: response.pagination.pages,

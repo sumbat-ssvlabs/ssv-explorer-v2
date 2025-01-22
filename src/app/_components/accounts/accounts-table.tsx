@@ -32,6 +32,7 @@ export function AccountsTable({ dataPromise: data }: AccountsTableProps) {
   const { enabledFilters, clearFilters } = useAccountsSearchParams()
 
   const { table } = useDataTable({
+    name: "accounts",
     data: accounts,
     columns: accountsTableColumns,
     pageCount: pagination.pages,

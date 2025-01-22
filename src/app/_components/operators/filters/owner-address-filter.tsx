@@ -39,9 +39,7 @@ export function OwnerAddressFilter() {
       })
     },
     select: (data) => [
-      ...new Set(
-        data.operators.map((operator) => operator.owner_address as Address)
-      ),
+      ...new Set(data.data.map((operator) => operator.ownerAddress as Address)),
     ],
     enabled: open && isAddress(search),
   })

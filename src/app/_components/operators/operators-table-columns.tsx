@@ -35,12 +35,12 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     enableSorting: false,
   },
   {
-    accessorKey: "owner_address",
+    accessorKey: "ownerAddress",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Owner Address" />
     ),
     cell: ({ row }) => {
-      const ownerAddress = row.original.owner_address
+      const ownerAddress = row.original.ownerAddress
       return (
         <div className="flex gap-1">
           <Button asChild variant="link">
@@ -97,7 +97,7 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     cell: ({ row }) => <div>{row.getValue("validators_count")}</div>,
   },
   {
-    accessorKey: "performance.24h",
+    accessorKey: "performance24h",
     header: ({ column }) => (
       <DataTableColumnHeader
         className="justify-end"
@@ -115,7 +115,7 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     },
   },
   {
-    accessorKey: "performance.30d",
+    accessorKey: "performance30d",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="30d" />
     ),
@@ -129,12 +129,12 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     },
   },
   {
-    accessorKey: "mev_relays",
+    accessorKey: "mevRelays",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="MEV Relays" />
     ),
     cell: ({ row }) => {
-      return <MevRelaysDisplay mevRelays={row.original.mev_relays} />
+      return <MevRelaysDisplay mevRelays={row.original.mevRelays} />
     },
   },
   {
@@ -149,10 +149,11 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
   },
 ]
 
-export const operatorsTablePreviewColumns = operatorsTableColumns.filter(
-  (column) =>
-    ["name", "owner_address", "performance.24h", "status"].includes(
+export const operatorsTablePreviewColumns = operatorsTableColumns
+  .filter((column) =>
+    ["name", "ownerAddress", "performance24h", "status"].includes(
       // @ts-expect-error accessorKey is not defined in the type
       column.accessorKey
     )
-)
+  )
+  .map((c) => ({ ...c, enableSorting: false }))

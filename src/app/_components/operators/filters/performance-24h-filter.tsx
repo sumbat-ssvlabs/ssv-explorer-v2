@@ -12,8 +12,8 @@ export function Performance24hFilter() {
   const { filters, setFilters } = useOperatorsSearchParams()
 
   const hasSelectedItems = !isEqual(
-    filters.performance_24h,
-    operatorSearchFilters.performance_24h.defaultValue
+    filters.performance24h,
+    operatorSearchFilters.performance24h.defaultValue
   )
 
   return (
@@ -23,7 +23,7 @@ export function Performance24hFilter() {
       onClear={() =>
         setFilters((prev) => ({
           ...prev,
-          performance_24h: operatorSearchFilters.performance_24h.defaultValue,
+          performance24h: operatorSearchFilters.performance24h.defaultValue,
         }))
       }
     >
@@ -31,35 +31,35 @@ export function Performance24hFilter() {
         <div className="flex items-center justify-between gap-4">
           <Input
             type="number"
-            value={filters.performance_24h[0]}
+            value={filters.performance24h[0]}
             step={0.01}
             onChange={(e) =>
               setFilters({
                 ...filters,
-                performance_24h: [+e.target.value, filters.performance_24h[1]],
+                performance24h: [+e.target.value, filters.performance24h[1]],
               })
             }
           />
           <Input
             type="number"
             step={0.01}
-            value={filters.performance_24h[1]}
+            value={filters.performance24h[1]}
             onChange={(e) =>
               setFilters({
                 ...filters,
-                performance_24h: [filters.performance_24h[0], +e.target.value],
+                performance24h: [filters.performance24h[0], +e.target.value],
               })
             }
           />
         </div>
         <RangeSlider
-          value={filters.performance_24h}
-          max={operatorSearchFilters.performance_24h.defaultValue[1]}
+          value={filters.performance24h}
+          max={operatorSearchFilters.performance24h.defaultValue[1]}
           step={0.01}
           onValueChange={(values) =>
             setFilters({
               ...filters,
-              performance_24h: values as [number, number],
+              performance24h: values as [number, number],
             })
           }
         />

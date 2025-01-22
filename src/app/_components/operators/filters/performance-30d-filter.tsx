@@ -12,8 +12,8 @@ export function Performance30dFilter() {
   const { filters, setFilters } = useOperatorsSearchParams()
 
   const hasSelectedItems = !isEqual(
-    filters.performance_30d,
-    operatorSearchFilters.performance_30d.defaultValue
+    filters.performance30d,
+    operatorSearchFilters.performance30d.defaultValue
   )
 
   return (
@@ -23,7 +23,7 @@ export function Performance30dFilter() {
       onClear={() =>
         setFilters({
           ...filters,
-          performance_30d: operatorSearchFilters.performance_30d.defaultValue,
+          performance30d: operatorSearchFilters.performance30d.defaultValue,
         })
       }
     >
@@ -31,35 +31,35 @@ export function Performance30dFilter() {
         <div className="flex items-center justify-between gap-4">
           <Input
             type="number"
-            value={filters.performance_30d[0]}
+            value={filters.performance30d[0]}
             step={0.01}
             onChange={(e) =>
               setFilters({
                 ...filters,
-                performance_30d: [+e.target.value, filters.performance_30d[1]],
+                performance30d: [+e.target.value, filters.performance30d[1]],
               })
             }
           />
           <Input
             type="number"
             step={0.01}
-            value={filters.performance_30d[1]}
+            value={filters.performance30d[1]}
             onChange={(e) =>
               setFilters({
                 ...filters,
-                performance_30d: [filters.performance_30d[0], +e.target.value],
+                performance30d: [filters.performance30d[0], +e.target.value],
               })
             }
           />
         </div>
         <RangeSlider
-          value={filters.performance_30d}
-          max={operatorSearchFilters.performance_30d.defaultValue[1]}
+          value={filters.performance30d}
+          max={operatorSearchFilters.performance30d.defaultValue[1]}
           step={0.01}
           onValueChange={(values) =>
             setFilters({
               ...filters,
-              performance_30d: values as [number, number],
+              performance30d: values as [number, number],
             })
           }
         />

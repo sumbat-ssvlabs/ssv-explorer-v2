@@ -64,7 +64,7 @@ export function NameFilter() {
             <CommandEmpty>This list is empty.</CommandEmpty>
           )}
           <CommandGroup>
-            {query.data?.operators.map((operator) => (
+            {query.data?.data.map((operator) => (
               <CommandItem
                 key={operator.id}
                 value={operator.name}

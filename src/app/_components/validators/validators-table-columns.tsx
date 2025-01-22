@@ -82,7 +82,7 @@ export const validatorsTableColumns: ColumnDef<SearchValidator<Operator>>[] = [
           <Link href={`/operator/${operator.id}`} key={operator.id}>
             <OperatorAvatar
               src={operator.logo}
-              isPrivate={operator.is_private}
+              isPrivate={operator.isPrivate}
             />
           </Link>
         ))}

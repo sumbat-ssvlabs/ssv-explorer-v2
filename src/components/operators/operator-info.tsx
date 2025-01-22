@@ -10,10 +10,7 @@ import { OperatorAvatar } from "@/components/operators/operator-avatar"
 
 export type OperatorInfoProps = {
   variant?: "minimal" | "full"
-  operator: Pick<
-    Operator,
-    "id" | "name" | "logo" | "is_private" | "verified_operator"
-  >
+  operator: Pick<Operator, "id" | "name" | "logo" | "isPrivate" | "type">
 }
 
 type OperatorInfoFC = FC<
@@ -36,8 +33,8 @@ export const OperatorInfo: OperatorInfoFC = ({
             <Link href={`/operator/${operator.id}`}>{operator.name}</Link>
           </Button>
           <div className="flex items-center gap-1">
-            {operator.is_private && <MdOutlineLock className="size-[14px]" />}
-            {operator.verified_operator && (
+            {operator.isPrivate && <MdOutlineLock className="size-[14px]" />}
+            {operator.type === "verified_operator" && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 className="size-[14px]"

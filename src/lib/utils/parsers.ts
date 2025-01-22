@@ -56,12 +56,12 @@ export const getSortingStateParser = <TData>(
 }
 export const parseAsTuple = <T extends [z.ZodTypeAny, ...z.ZodTypeAny[]]>(
   tuple: T,
-  map: (values: string[]) => string[] = (values) => values
+  preParse: (values: string[]) => string[] = (values) => values
 ) => {
   return createParser({
     parse: (value) => {
       try {
-        const values = map(value.split(",").slice(0, tuple.length))
+        const values = preParse(value.split(",").slice(0, tuple.length))
         return z.tuple(tuple).parse(values)
       } catch {
         return null

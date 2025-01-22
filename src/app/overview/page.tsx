@@ -1,6 +1,6 @@
 import React from "react"
 import { searchOperators } from "@/api/operator"
-import { getSSVNetworkDetails } from "@/api/ssv"
+import { getSSVRates } from "@/api/ssv"
 import { searchValidators } from "@/api/validators"
 import { type SearchParams } from "@/types"
 
@@ -21,7 +21,7 @@ interface IndexPageProps {
 
 export default async function IndexPage(props: IndexPageProps) {
   const search = await overviewParserCache.parse(props.searchParams)
-  const ssvNetworkDetails = await getSSVNetworkDetails()
+  const ssvNetworkDetails = await getSSVRates()
   const operators = await searchOperators({
     ...search,
     ordering: [{ id: "performance30d", desc: true }],

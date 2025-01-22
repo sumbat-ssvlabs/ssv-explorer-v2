@@ -10,7 +10,7 @@ interface Response {
   operators: number
   validators: number
 }
-export const getSSVNetworkDetails = async () =>
+export const getSSVRates = async () =>
   await unstable_cache(
     async () => {
       return await api

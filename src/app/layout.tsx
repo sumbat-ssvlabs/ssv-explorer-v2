@@ -17,8 +17,12 @@ import { Toaster } from "@/components/ui/toaster"
 
 import { Providers } from "./_providers/providers"
 
-interface RootLayoutProps {
+export interface RootLayoutProps {
   children: React.ReactNode
+  params: Promise<{
+    page: string
+    route: string
+  }>
 }
 
 export const metadata: Metadata = {
@@ -73,7 +77,7 @@ export const viewport: Viewport = {
   ],
 }
 
-export default async function RootLayout({ children }: RootLayoutProps) {
+export default async function RootLayout(props: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head />
@@ -88,9 +92,9 @@ export default async function RootLayout({ children }: RootLayoutProps) {
         <Suspense>
           <Providers>
             <div className="relative flex min-h-screen flex-col">
-              <SiteHeader />
+              <SiteHeader {...props} />
               <main className="flex-1">
-                <Suspense>{children}</Suspense>
+                <Suspense>{props.children}</Suspense>
               </main>
             </div>
             <TailwindIndicator />

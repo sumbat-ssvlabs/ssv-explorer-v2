@@ -1,37 +1,43 @@
-import { formatUnits } from "viem";
+import { formatUnits } from "viem"
+
+export const currencyFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 2,
+})
 
 export const numberFormatter = new Intl.NumberFormat("en-US", {
   useGrouping: true,
   maximumFractionDigits: 2,
-});
+})
 
 export const _percentageFormatter = new Intl.NumberFormat("en-US", {
   style: "percent",
   maximumFractionDigits: 2,
-});
+})
 
 export const percentageFormatter = {
   format: (value?: number) => {
-    if (!value) return "N/A";
-    return _percentageFormatter.format(value / 100);
+    if (!value) return "N/A"
+    return _percentageFormatter.format(value / 100)
   },
-};
+}
 
 export const bigintFormatter = new Intl.NumberFormat("en-US", {
   useGrouping: false,
   maximumFractionDigits: 7,
-});
+})
 
 export const ethFormatter = new Intl.NumberFormat("en-US", {
   useGrouping: true,
   maximumFractionDigits: 4,
-});
+})
 
 export const formatSSV = (num: bigint, decimals = 18) =>
-  ethFormatter.format(+formatUnits(num, decimals));
+  ethFormatter.format(+formatUnits(num, decimals))
 
 export const formatBigintInput = (num: bigint, decimals = 18) =>
-  bigintFormatter.format(+formatUnits(num, decimals));
+  bigintFormatter.format(+formatUnits(num, decimals))
 
 const units = {
   seconds: 1000,
@@ -41,12 +47,12 @@ const units = {
   weeks: 604800000,
   months: 2629746000,
   years: 31556952000,
-} as const;
+} as const
 
 export const ms = (value: number, unit: keyof typeof units): number => {
-  return value * units[unit];
-};
+  return value * units[unit]
+}
 
 export const sortNumbers = <T extends bigint | number>(numbers: T[]): T[] => {
-  return [...numbers].sort((a, b) => Number(a) - Number(b));
-};
+  return [...numbers].sort((a, b) => Number(a) - Number(b))
+}

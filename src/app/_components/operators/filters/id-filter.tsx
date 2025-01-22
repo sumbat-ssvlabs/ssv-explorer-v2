@@ -54,11 +54,13 @@ export function IdFilter() {
       }}
     >
       <Command>
-        <CommandInput
-          placeholder="Search Ids"
-          value={search}
-          onValueChange={(value) => setSearch(value)}
-        />
+        <div className="p-2 pb-0">
+          <CommandInput
+            placeholder="Search Ids"
+            value={search}
+            onValueChange={(value) => setSearch(value)}
+          />
+        </div>
 
         {Boolean(filters.id?.length) && (
           <div className="flex flex-wrap gap-1 border-y border-gray-200 p-2">

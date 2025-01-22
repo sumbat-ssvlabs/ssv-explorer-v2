@@ -1,18 +1,21 @@
-"use client"
-
 /* eslint-disable @next/next/no-img-element */
 import { type ComponentProps, type FC } from "react"
-import { useTheme } from "next-themes"
 
 export const Logo: FC<ComponentProps<"img">> = (props) => {
-  const { resolvedTheme } = useTheme()
   return (
-    <img
-      src={
-        resolvedTheme === "dark" ? "/images/logo-dark.svg" : "/images/logo.svg"
-      }
-      alt="Logo"
-      {...props}
-    />
+    <>
+      <img
+        src="/images/logo.svg"
+        alt="Logo"
+        className="dark:hidden"
+        {...props}
+      />
+      <img
+        src="/images/logo-dark.svg"
+        alt="Logo"
+        className="hidden dark:block"
+        {...props}
+      />
+    </>
   )
 }

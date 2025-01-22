@@ -28,9 +28,9 @@ export const operatorSearchFilters = {
     searchOptions
   ),
   location: parseAsArrayOf(z.string()).withOptions(searchOptions),
-  eth1: parseAsArrayOf(z.string()).withOptions(searchOptions),
-  eth2: parseAsArrayOf(z.string()).withOptions(searchOptions),
-  mev: parseAsArrayOf(z.string()).withOptions(searchOptions),
+  eth1: parseAsArrayOf(z.string()).withDefault([]).withOptions(searchOptions),
+  eth2: parseAsArrayOf(z.string()).withDefault([]).withOptions(searchOptions),
+  mev: parseAsArrayOf(z.string()).withDefault([]).withOptions(searchOptions),
   fee: parseAsTuple(
     [z.number({ coerce: true }), z.number({ coerce: true })],
     (values) => values.sort((a, b) => +a - +b)

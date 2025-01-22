@@ -60,11 +60,13 @@ export function OwnerAddressFilter() {
       }}
     >
       <Command>
-        <CommandInput
-          placeholder="Search Owner Address"
-          value={search}
-          onValueChange={(value) => setSearch(value)}
-        />
+        <div className="p-2 pb-0">
+          <CommandInput
+            placeholder="Search addresses"
+            value={search}
+            onValueChange={(value) => setSearch(value)}
+          />
+        </div>
         {Boolean(filters.owner?.length) && (
           <div className="flex flex-wrap gap-1 border-y p-2">
             {filters.owner?.map((owner_address) => (

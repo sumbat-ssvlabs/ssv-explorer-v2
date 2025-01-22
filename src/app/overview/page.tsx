@@ -1,5 +1,6 @@
 import React from "react"
 import { searchOperators } from "@/api/operator"
+import { getSSVNetworkDetails } from "@/api/ssv"
 import { searchValidators } from "@/api/validators"
 import { type SearchParams } from "@/types"
 
@@ -8,7 +9,7 @@ import { numberFormatter } from "@/lib/utils/number"
 import { Card } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Stat } from "@/components/ui/stat"
-import { Span, Text } from "@/components/ui/text"
+import { Text } from "@/components/ui/text"
 import { GlobalSearch } from "@/components/global-search/global-search"
 import { Shell } from "@/components/shell"
 import { OperatorsTablePreview } from "@/app/_components/operators/operators-table-peview"
@@ -20,6 +21,7 @@ interface IndexPageProps {
 
 export default async function IndexPage(props: IndexPageProps) {
   const search = await overviewParserCache.parse(props.searchParams)
+  const ssvNetworkDetails = await getSSVNetworkDetails()
   const operators = await searchOperators({
     ...search,
     ordering: [{ id: "performance30d", desc: true }],
@@ -51,34 +53,19 @@ export default async function IndexPage(props: IndexPageProps) {
             className="flex-1"
             title="Validators"
             tooltip="Ravid im sorry bro"
-            content={numberFormatter.format(validators.pagination.total)}
-            subContent={
-              <Span variant="caption-medium" className="text-gray-500">
-                $1,234,567
-              </Span>
-            }
+            content={numberFormatter.format(ssvNetworkDetails.validators)}
           />
           <Stat
             className="flex-1"
             title="Operators"
             tooltip="They didnt gave me a tooltip content for this one"
-            content={numberFormatter.format(operators.pagination.total)}
-            subContent={
-              <Span variant="caption-medium" className="text-gray-500">
-                $1,234,567
-              </Span>
-            }
+            content={numberFormatter.format(ssvNetworkDetails.operators)}
           />
           <Stat
             className="flex-1"
             title="ETH Staked"
             tooltip="Tell them to give me a tooltip content for this one"
-            content="2,118,656 ETH"
-            subContent={
-              <Span variant="caption-medium" className="text-gray-500">
-                $1,234,567
-              </Span>
-            }
+            content={`${numberFormatter.format(ssvNetworkDetails.staked_eth)} ETH`}
           />
         </Card>
         <div className="flex max-w-full gap-6 overflow-hidden">

@@ -22,6 +22,7 @@ import { FilterButton } from "@/components/filter/filter-button"
 
 export function LocationFilter() {
   const [open, setOpen] = useState(false)
+  const [search, setSearch] = useState("")
   const { network, filters, setFilters } = useOperatorsSearchParams()
   const query = useQuery({
     queryKey: ["operators", "locations", network],
@@ -42,7 +43,13 @@ export function LocationFilter() {
       }}
     >
       <Command>
-        <CommandInput placeholder="Search Locations" />
+        <div className="p-2 pb-0">
+          <CommandInput
+            placeholder="Search locations"
+            value={search}
+            onValueChange={(value) => setSearch(value)}
+          />
+        </div>
         <CommandList className="max-h-[300px] overflow-y-auto">
           {query.isPending ? (
             <CommandLoading className="flex items-center justify-center p-4">

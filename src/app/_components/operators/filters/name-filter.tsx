@@ -50,11 +50,13 @@ export function NameFilter() {
       }}
     >
       <Command>
-        <CommandInput
-          placeholder="Search Names"
-          value={search}
-          onValueChange={(value) => setSearch(value)}
-        />
+        <div className="p-2 pb-0">
+          <CommandInput
+            placeholder="Search names"
+            value={search}
+            onValueChange={(value) => setSearch(value)}
+          />
+        </div>
         <CommandList className="max-h-none overflow-y-auto">
           {query.isPending ? (
             <CommandLoading className="flex items-center justify-center p-4">

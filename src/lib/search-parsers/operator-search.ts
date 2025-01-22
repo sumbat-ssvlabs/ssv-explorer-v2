@@ -1,7 +1,9 @@
 import { type ExtendedSortingState } from "@/types"
 import {
   createSearchParamsCache,
+  createSerializer,
   parseAsArrayOf,
+  parseAsBoolean,
   parseAsString,
   parseAsStringEnum,
   type Options,
@@ -22,11 +24,13 @@ const searchOptions: Options = {
 
 export const operatorSearchFilters = {
   search: parseAsString.withDefault("").withOptions(searchOptions),
-  id: parseAsArrayOf(z.number({ coerce: true })).withOptions(searchOptions),
-  name: parseAsArrayOf(z.string()).withOptions(searchOptions),
-  owner: parseAsArrayOf(z.string().refine(isAddress)).withOptions(
-    searchOptions
-  ),
+  id: parseAsArrayOf(z.number({ coerce: true }))
+    .withDefault([])
+    .withOptions(searchOptions),
+  name: parseAsArrayOf(z.string()).withDefault([]).withOptions(searchOptions),
+  ownerAddress: parseAsArrayOf(z.string().refine(isAddress))
+    .withDefault([])
+    .withOptions(searchOptions),
   location: parseAsArrayOf(z.string()).withOptions(searchOptions),
   eth1: parseAsArrayOf(z.string()).withDefault([]).withOptions(searchOptions),
   eth2: parseAsArrayOf(z.string()).withDefault([]).withOptions(searchOptions),
@@ -35,16 +39,16 @@ export const operatorSearchFilters = {
     [z.number({ coerce: true }), z.number({ coerce: true })],
     (values) => values.sort((a, b) => +a - +b)
   )
-    // .withDefault([0, 100])
+    .withDefault([0, 100])
     .withOptions({
       ...searchOptions,
       throttleMs: 500,
     }),
-  validators: parseAsTuple(
+  validatorsCount: parseAsTuple(
     [z.number({ coerce: true }), z.number({ coerce: true })],
     (values) => values.sort((a, b) => +a - +b)
   )
-    // .withDefault([0, 1000])
+    .withDefault([0, 1000])
     .withOptions({
       ...searchOptions,
       throttleMs: 500,
@@ -53,20 +57,23 @@ export const operatorSearchFilters = {
     [z.number({ coerce: true }), z.number({ coerce: true })],
     (values) => values.sort((a, b) => +a - +b)
   )
-    // .withDefault([0, 25000])
+    .withDefault([0, 25000])
     .withOptions({
       ...searchOptions,
       throttleMs: 500,
     }),
   status: parseAsArrayOf(
     z.enum(["active", "inactive", "no validators", "invalid"])
-  ).withOptions(searchOptions),
-  visibility: parseAsStringEnum(["all", "private", "public"]).withOptions(
-    searchOptions
-  ),
-  verified: parseAsStringEnum(["all", "verified", "unverified"]).withOptions(
-    searchOptions
-  ),
+  )
+    .withDefault([])
+    .withOptions(searchOptions),
+  isPrivate: parseAsBoolean.withOptions(searchOptions),
+  type: parseAsStringEnum([
+    "verified_operator",
+    "dapp_node",
+    "operator",
+  ]).withOptions(searchOptions),
+
   performance24h: parseAsTuple(
     [
       z.number({ coerce: true }).transform((v) => Math.round(v)),
@@ -103,6 +110,13 @@ export const operatorSearchSort = {
 }
 
 export const operatorsSearchParamsCache = createSearchParamsCache({
+  ...networkParser,
+  ...paginationParser,
+  ...operatorSearchFilters,
+  ...operatorSearchSort,
+})
+
+export const operatorSearchParamsSerializer = createSerializer({
   ...networkParser,
   ...paginationParser,
   ...operatorSearchFilters,

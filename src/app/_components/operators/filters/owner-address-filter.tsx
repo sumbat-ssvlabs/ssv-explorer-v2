@@ -47,8 +47,8 @@ export function OwnerAddressFilter() {
   return (
     <FilterButton
       name="Owner Address"
-      activeFiltersCount={filters.owner?.length ?? 0}
-      onClear={() => setFilters((prev) => ({ ...prev, owner: [] }))}
+      activeFiltersCount={filters.ownerAddress?.length ?? 0}
+      onClear={() => setFilters((prev) => ({ ...prev, ownerAddress: [] }))}
       popover={{
         root: {
           open,
@@ -67,9 +67,9 @@ export function OwnerAddressFilter() {
             onValueChange={(value) => setSearch(value)}
           />
         </div>
-        {Boolean(filters.owner?.length) && (
+        {Boolean(filters.ownerAddress?.length) && (
           <div className="flex flex-wrap gap-1 border-y p-2">
-            {filters.owner?.map((owner_address) => (
+            {filters.ownerAddress?.map((owner_address) => (
               <Button
                 size="sm"
                 key={owner_address}
@@ -78,7 +78,7 @@ export function OwnerAddressFilter() {
                 onClick={() =>
                   setFilters((prev) => ({
                     ...prev,
-                    owner: xor(prev.owner, [owner_address]),
+                    ownerAddress: xor(prev.ownerAddress, [owner_address]),
                   }))
                 }
               >
@@ -94,7 +94,7 @@ export function OwnerAddressFilter() {
         )}
         <CommandList
           className={cn("max-h-none overflow-y-auto", {
-            "pt-0": !filters.owner?.length,
+            "pt-0": !filters.ownerAddress?.length,
           })}
         >
           {query.isLoading ? (
@@ -113,7 +113,7 @@ export function OwnerAddressFilter() {
                 onSelect={() => {
                   setFilters((prev) => ({
                     ...prev,
-                    owner: xor(prev.owner, [owner_address]),
+                    ownerAddress: xor(prev.ownerAddress, [owner_address]),
                   }))
                 }}
               >

@@ -12,7 +12,7 @@ import { Text } from "@/components/ui/text"
 import { DataTable } from "@/components/data-table/data-table"
 import { DataTableMenuButton } from "@/components/data-table/data-table-filters-button"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
-import { Filters } from "@/app/_components/operators/filters/filters"
+import { OperatorsFilters } from "@/app/_components/operators/filters/operator-filters"
 
 import { accountsTableColumns } from "./accounts-table-columns"
 
@@ -66,7 +66,7 @@ export function AccountsTable({ dataPromise: data }: AccountsTableProps) {
           )}
           <DataTableViewOptions table={table} />
         </div>
-        <Filters />
+        <OperatorsFilters />
         <DataTable table={table} />
       </TableProvider>
     </>

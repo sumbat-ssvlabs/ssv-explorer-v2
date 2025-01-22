@@ -9,7 +9,7 @@ const defaultRange: [number, number] = [0, 20000]
 export function ValidatorsFilter() {
   const { filters, setFilters } = useOperatorsSearchParams()
 
-  const hasSelectedItems = Boolean(filters.validators)
+  const hasSelectedItems = Boolean(filters.validatorsCount)
 
   return (
     <FilterButton
@@ -23,23 +23,23 @@ export function ValidatorsFilter() {
       onClear={() =>
         setFilters({
           ...filters,
-          validators: null,
+          validatorsCount: null,
         })
       }
     >
       <RangeFilter
         name="Validators"
-        searchRange={filters.validators}
+        searchRange={filters.validatorsCount}
         apply={(range) =>
           setFilters({
             ...filters,
-            validators: range,
+            validatorsCount: range,
           })
         }
         remove={() =>
           setFilters({
             ...filters,
-            validators: null,
+            validatorsCount: null,
           })
         }
         defaultRange={defaultRange}

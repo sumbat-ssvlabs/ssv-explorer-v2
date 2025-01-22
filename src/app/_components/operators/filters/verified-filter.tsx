@@ -16,11 +16,11 @@ export function VerifiedFilter() {
   return (
     <FilterButton
       name="Verified"
-      isActive={filters.verified !== null}
+      isActive={filters.type !== null}
       onClear={() =>
         setFilters((prev) => ({
           ...prev,
-          verified: null,
+          type: null,
         }))
       }
     >
@@ -33,12 +33,12 @@ export function VerifiedFilter() {
               onSelect={() => {
                 setFilters((prev) => ({
                   ...prev,
-                  verified: null,
+                  type: null,
                 }))
               }}
             >
               <RadioGroupItem
-                checked={!filters.verified}
+                checked={!filters.type}
                 id="all"
                 value="all"
                 className="mr-2"
@@ -57,7 +57,7 @@ export function VerifiedFilter() {
               }}
             >
               <RadioGroupItem
-                checked={filters.verified === "verified"}
+                checked={filters.type === "verified_operator"}
                 id="verified"
                 value="verified"
                 className="mr-2"
@@ -76,7 +76,7 @@ export function VerifiedFilter() {
               }}
             >
               <RadioGroupItem
-                checked={filters.verified === "unverified"}
+                checked={filters.type === "operator"}
                 id="unverified"
                 value="unverified"
                 className="mr-2"

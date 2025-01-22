@@ -2,12 +2,13 @@
 
 import { endpoint } from "@/api"
 import { api } from "@/api/api-client"
-import { omitBy } from "lodash-es"
 
 import type { Country, OperatorsSearchResponse } from "@/types/api"
-import { type OperatorsSearchSchema } from "@/lib/search-parsers/operator-search"
+import {
+  operatorSearchParamsSerializer,
+  type OperatorsSearchSchema,
+} from "@/lib/search-parsers/operator-search"
 import { stringifyBigints } from "@/lib/utils/bigint"
-import { serializeSortingState } from "@/lib/utils/parsers"
 import { unstable_cache } from "@/lib/utils/unstable-cache"
 
 export type OrderBy =
@@ -34,23 +35,11 @@ export const searchOperators = async (
 ) =>
   await unstable_cache(
     async () => {
-      const filtered = omitBy(
-        {
-          ...params,
-          ordering: params.ordering
-            ? serializeSortingState(params.ordering)
-            : null,
-        },
-        (value) => value === undefined || value === null
-      )
-      console.log("filtered:", filtered)
-      const searchParams = new URLSearchParams(
-        filtered as Record<string, string>
-      )
+      const searchParams = operatorSearchParamsSerializer(params)
       const search = endpoint(
         params.network,
         "operators/explorer",
-        `?${searchParams}`
+        searchParams
       )
       console.log("search:", search)
       return api.get<OperatorsSearchResponse>(search)

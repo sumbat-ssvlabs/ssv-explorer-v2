@@ -1,7 +1,10 @@
 import { useTable } from "@/context/table-context"
+import { X } from "lucide-react"
 import { Collapse } from "react-collapse"
 
 import { cn } from "@/lib/utils"
+import { useOperatorsSearchParams } from "@/hooks/search/use-operators-search-params"
+import { FilterButton } from "@/components/filter/filter-button"
 
 import { Eth1ClientFilter } from "./eth1-client-filter"
 import { Eth2ClientFilter } from "./eth2-client-filter"
@@ -16,10 +19,12 @@ import { Performance30dFilter } from "./performance-30d-filter"
 import { StatusFilter } from "./status-filter"
 import { ValidatorsFilter } from "./validators-filter"
 import { VerifiedFilter } from "./verified-filter"
-import { VisibilityFilter } from "./visibility-filter"
+import { IsPrivateFilter } from "./visibility-filter"
 
-export const Filters = () => {
+export const OperatorsFilters = () => {
   const { isFiltersOpen } = useTable()
+  const { enabledFilters, clearFilters } = useOperatorsSearchParams()
+
   return (
     <Collapse isOpened={isFiltersOpen}>
       <div
@@ -45,7 +50,13 @@ export const Filters = () => {
         <Performance30dFilter />
         <StatusFilter />
         <VerifiedFilter />
-        <VisibilityFilter />
+        <IsPrivateFilter />
+        {enabledFilters.count > 0 && (
+          <FilterButton name="Clear" onClick={clearFilters}>
+            <X className="size-4" />
+            Clear
+          </FilterButton>
+        )}
       </div>
     </Collapse>
   )

@@ -65,19 +65,19 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     enableSorting: false,
   },
   {
-    accessorKey: "eth1_node_client",
+    accessorKey: "eth1NodeClient",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Eth1 Node Client" />
     ),
-    cell: ({ row }) => <div>{row.getValue("eth1_node_client")}</div>,
+    cell: ({ row }) => <div>{row.getValue("eth1NodeClient")}</div>,
     enableSorting: false,
   },
   {
-    accessorKey: "eth2_node_client",
+    accessorKey: "eth2NodeClient",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Eth2 Node Client" />
     ),
-    cell: ({ row }) => <div>{row.getValue("eth2_node_client")}</div>,
+    cell: ({ row }) => <div>{row.getValue("eth2NodeClient")}</div>,
     enableSorting: false,
   },
   {
@@ -90,11 +90,11 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     ),
   },
   {
-    accessorKey: "validators_count",
+    accessorKey: "validatorsCount",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Validators Count" />
     ),
-    cell: ({ row }) => <div>{row.getValue("validators_count")}</div>,
+    cell: ({ row }) => <div>{row.getValue("validatorsCount")}</div>,
   },
   {
     accessorKey: "performance24h",

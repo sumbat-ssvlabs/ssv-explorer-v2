@@ -10,17 +10,17 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { FilterButton } from "@/components/filter/filter-button"
 
-export function VisibilityFilter() {
+export function IsPrivateFilter() {
   const { filters, setFilters } = useOperatorsSearchParams()
 
   return (
     <FilterButton
       name="Private"
-      isActive={filters.visibility !== null}
+      isActive={filters.isPrivate !== null}
       onClear={() =>
         setFilters((prev) => ({
           ...prev,
-          visibility: null,
+          isPrivate: null,
         }))
       }
     >
@@ -33,12 +33,12 @@ export function VisibilityFilter() {
               onSelect={() => {
                 setFilters((prev) => ({
                   ...prev,
-                  visibility: null,
+                  isPrivate: null,
                 }))
               }}
             >
               <RadioGroupItem
-                checked={!filters.visibility}
+                checked={filters.isPrivate === null}
                 id="all"
                 value="all"
                 className="mr-2"
@@ -52,12 +52,12 @@ export function VisibilityFilter() {
               onSelect={() => {
                 setFilters((prev) => ({
                   ...prev,
-                  visibility: "private",
+                  isPrivate: true,
                 }))
               }}
             >
               <RadioGroupItem
-                checked={filters.visibility === "private"}
+                checked={filters.isPrivate === true}
                 id="private"
                 value="private"
                 className="mr-2"
@@ -71,12 +71,12 @@ export function VisibilityFilter() {
               onSelect={() => {
                 setFilters((prev) => ({
                   ...prev,
-                  visibility: "public",
+                  isPrivate: false,
                 }))
               }}
             >
               <RadioGroupItem
-                checked={filters.visibility === "public"}
+                checked={filters.isPrivate === false}
                 id="public"
                 value="public"
                 className="mr-2"

@@ -2,18 +2,16 @@
 
 import { use } from "react"
 import { TableProvider } from "@/context/table-context"
-import { X } from "lucide-react"
 import { withErrorBoundary } from "react-error-boundary"
 
 import { type OperatorsSearchResponse } from "@/types/api"
 import { useOperatorsSearchParams } from "@/hooks/search/use-operators-search-params"
 import { useDataTable } from "@/hooks/use-data-table"
-import { Button } from "@/components/ui/button"
 import { Text } from "@/components/ui/text"
 import { DataTable } from "@/components/data-table/data-table"
 import { DataTableMenuButton } from "@/components/data-table/data-table-filters-button"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
-import { Filters } from "@/app/_components/operators/filters/filters"
+import { OperatorsFilters } from "@/app/_components/operators/filters/operator-filters"
 
 import { operatorsTableColumns } from "./operators-table-columns"
 
@@ -53,7 +51,6 @@ export const OperatorsTable = withErrorBoundary(
       },
       meta: {
         total: pagination.total,
-        defaultColumns,
       },
     })
 
@@ -64,25 +61,11 @@ export const OperatorsTable = withErrorBoundary(
         <TableProvider table={table}>
           <div className="flex gap-2">
             <Text variant="headline4">Operators</Text>
-
             <div className="flex-1"></div>
             <DataTableMenuButton enabledFilters={enabledFilters} />
-            {enabledFilters.count > 0 && (
-              <Button
-                aria-label="Toggle columns"
-                variant="outline"
-                role="combobox"
-                size="sm"
-                className="ml-auto flex h-8"
-                onClick={clearFilters}
-              >
-                <X className="size-4" />
-                Clear
-              </Button>
-            )}
             <DataTableViewOptions table={table} />
           </div>
-          <Filters />
+          <OperatorsFilters />
           <DataTable table={table} />
         </TableProvider>
       </>

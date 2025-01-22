@@ -92,7 +92,7 @@ export default async function RootLayout(props: RootLayoutProps) {
         <Suspense>
           <Providers>
             <div className="relative flex min-h-screen flex-col">
-              <SiteHeader {...props} />
+              <SiteHeader />
               <main className="flex-1">
                 <Suspense>{props.children}</Suspense>
               </main>

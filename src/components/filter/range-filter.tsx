@@ -17,8 +17,8 @@ type RangeFilterProps = {
   defaultRange: [number, number]
   searchRange: [number, number] | null
   inputs?: Partial<{
-    start: InputProps
-    end: InputProps
+    start: InputProps & { step?: number }
+    end: InputProps & { step?: number }
   }>
   apply: (range: [number, number]) => void
   remove: () => void
@@ -61,6 +61,7 @@ export const RangeFilter: FC<
               inputs?.start?.className
             )}
             type="number"
+            min={0}
             value={range[0]}
             onChange={(e) => {
               const newStart = +e.target.value
@@ -69,6 +70,7 @@ export const RangeFilter: FC<
           />
           <Input
             step={0.01}
+            min={0}
             {...inputs?.end}
             type="number"
             className={cn("h-8 max-w-[160px] text-sm", inputs?.end?.className)}
@@ -83,7 +85,7 @@ export const RangeFilter: FC<
           className="py-1"
           value={range}
           max={defaultRange[1]}
-          step={0.01}
+          step={inputs?.start?.step ?? 0.01}
           onValueChange={(values) => setRange(values as [number, number])}
         />
       </div>

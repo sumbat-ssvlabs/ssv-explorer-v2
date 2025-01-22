@@ -57,7 +57,7 @@ export const operatorSearchFilters = {
     [z.number({ coerce: true }), z.number({ coerce: true })],
     (values) => values.sort((a, b) => +a - +b)
   )
-    .withDefault([0, 25000])
+    .withDefault([0, 0])
     .withOptions({
       ...searchOptions,
       throttleMs: 500,

@@ -128,7 +128,7 @@ export const OperatorMetaData: OperatorMetaDataFC = ({
         </div>
         <Button
           variant="ghost"
-          className="h-auto min-h-0 py-1 text-primary-500 hover:bg-transparent"
+          className="h-6 min-h-0 text-primary-500 hover:bg-transparent"
           onClick={() => setShouldShowMore(!shouldShowMore)}
         >
           <Text variant="body-3-medium">

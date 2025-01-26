@@ -53,7 +53,7 @@ export const OperatorMetaData: OperatorMetaDataFC = ({
                 <Text variant="caption-medium" className="text-gray-500">
                   Location:
                 </Text>
-                <Text variant="body-3-medium">
+                <Text variant="body-3-medium" className="max-w-xs truncate">
                   {operator.location || "N/A"}
                 </Text>
               </Outline>
@@ -73,7 +73,7 @@ export const OperatorMetaData: OperatorMetaDataFC = ({
                   {operator.eth2NodeClient || "N/A"}
                 </Text>
               </Outline>
-              <Outline className="h-6">
+              <Outline className="h-6 text-xl">
                 <Text variant="caption-medium" className="text-gray-500">
                   MEV Relays:
                 </Text>

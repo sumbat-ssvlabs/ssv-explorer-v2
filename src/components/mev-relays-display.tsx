@@ -43,7 +43,7 @@ export const MevRelaysDisplay: MevRelaysDisplayFC = ({
             <div
               key={mev}
               className={cn(
-                "flex size-[14px] items-center justify-center rounded-sm border border-transparent bg-gray-200",
+                "flex size-[0.875em] items-center justify-center rounded-sm border border-transparent bg-gray-200",
                 {
                   "border-primary-500 bg-primary-50": isSelected,
                   "opacity-60": !isSelected,
@@ -52,7 +52,7 @@ export const MevRelaysDisplay: MevRelaysDisplayFC = ({
             >
               <img
                 src={`/images/mevs/${logo}${dark ? "-dark" : ""}.svg`}
-                className={cn("size-[8px]")}
+                className={cn("size-[0.5em]")}
                 alt={mev}
               />
             </div>

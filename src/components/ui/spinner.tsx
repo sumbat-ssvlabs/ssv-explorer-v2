@@ -5,7 +5,7 @@ import { CgSpinner } from "react-icons/cg"
 
 import { cn } from "@/lib/utils"
 
-export const spinnerVariants = cva("text-primary-500 animate-spin", {
+export const spinnerVariants = cva("animate-spin text-primary-500", {
   variants: {
     size: {
       default: "size-6",

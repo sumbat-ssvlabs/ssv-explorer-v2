@@ -1,9 +1,7 @@
-import React from "react"
 import { searchValidators } from "@/api/validators"
 import { type SearchParams } from "@/types"
 
 import { validatorsSearchParamsCache } from "@/lib/search-parsers/validators-search-parsers"
-import { Skeleton } from "@/components/ui/skeleton"
 import { Shell } from "@/components/shell"
 import { ValidatorsTable } from "@/app/_components/validators/validators-table"
 
@@ -17,10 +15,7 @@ export default async function IndexPage(props: IndexPageProps) {
 
   return (
     <Shell className="gap-2">
-      <React.Suspense fallback={<Skeleton className="h-7 w-52" />}>
-        {/* <pre>{JSON.stringify(stringifyBigints(search), null, 2)}</pre> */}
-        <ValidatorsTable dataPromise={validators} />
-      </React.Suspense>
+      <ValidatorsTable dataPromise={validators} />
     </Shell>
   )
 }

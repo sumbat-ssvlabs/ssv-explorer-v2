@@ -12,6 +12,7 @@ import "@fontsource/roboto-mono"
 
 import { Suspense } from "react"
 import type { Metadata, Viewport } from "next"
+import { Slot } from "@radix-ui/react-slot"
 
 import { Toaster } from "@/components/ui/toaster"
 
@@ -93,9 +94,7 @@ export default async function RootLayout(props: RootLayoutProps) {
           <Providers>
             <div className="relative flex min-h-screen flex-col">
               <SiteHeader />
-              <main className="flex-1">
-                <Suspense>{props.children}</Suspense>
-              </main>
+              <Slot className="flex-1">{props.children}</Slot>
             </div>
             <TailwindIndicator />
           </Providers>

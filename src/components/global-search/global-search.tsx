@@ -99,7 +99,10 @@ export const GlobalSearch: React.FC<Props> = ({ size, ...props }) => {
             value={value}
             className={globalSearchVariants({
               size,
-              className: textVariants({ variant: "body-3-medium" }),
+              className: textVariants({
+                variant: "body-3-medium",
+                className: "border border-gray-300 bg-gray-50",
+              }),
             })}
             onValueChange={(value) => setValue(value)}
             onFocus={() => setIsFocused(true)}

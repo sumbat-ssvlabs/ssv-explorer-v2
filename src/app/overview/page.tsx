@@ -1,4 +1,3 @@
-import React from "react"
 import { searchOperators } from "@/api/operator"
 import { getSSVRates } from "@/api/ssv"
 import { searchValidators } from "@/api/validators"
@@ -7,7 +6,6 @@ import { type SearchParams } from "@/types"
 import { overviewParserCache } from "@/lib/search-parsers"
 import { numberFormatter } from "@/lib/utils/number"
 import { Card } from "@/components/ui/card"
-import { Skeleton } from "@/components/ui/skeleton"
 import { Stat } from "@/components/ui/stat"
 import { Text } from "@/components/ui/text"
 import { GlobalSearch } from "@/components/global-search/global-search"
@@ -41,38 +39,35 @@ export default async function IndexPage(props: IndexPageProps) {
   if (!operators || !validators) {
     return <div>Error fetching operators or validators</div>
   }
-  console.log("validators:", validators.pagination)
 
   return (
     <Shell className="gap-6">
-      <React.Suspense fallback={<Skeleton className="h-7 w-52" />}>
-        <Text variant="headline4">Discover the SSV Network</Text>
-        <GlobalSearch size="lg" />
-        <Card className="flex flex-row">
-          <Stat
-            className="flex-1"
-            title="Validators"
-            tooltip="Ravid im sorry bro"
-            content={numberFormatter.format(ssvNetworkDetails.validators)}
-          />
-          <Stat
-            className="flex-1"
-            title="Operators"
-            tooltip="They didnt gave me a tooltip content for this one"
-            content={numberFormatter.format(ssvNetworkDetails.operators)}
-          />
-          <Stat
-            className="flex-1"
-            title="ETH Staked"
-            tooltip="Tell them to give me a tooltip content for this one"
-            content={`${numberFormatter.format(ssvNetworkDetails.staked_eth)} ETH`}
-          />
-        </Card>
-        <div className="flex max-w-full gap-6 overflow-hidden">
-          <OperatorsTablePreview dataPromise={Promise.resolve(operators)} />
-          <ValidatorsTablePreview dataPromise={Promise.resolve(validators)} />
-        </div>
-      </React.Suspense>
+      <Text variant="headline4">Discover the SSV Network</Text>
+      <GlobalSearch size="lg" />
+      <Card className="flex flex-row">
+        <Stat
+          className="flex-1"
+          title="Validators"
+          tooltip="Ravid im sorry bro"
+          content={numberFormatter.format(ssvNetworkDetails.validators)}
+        />
+        <Stat
+          className="flex-1"
+          title="Operators"
+          tooltip="They didnt gave me a tooltip content for this one"
+          content={numberFormatter.format(ssvNetworkDetails.operators)}
+        />
+        <Stat
+          className="flex-1"
+          title="ETH Staked"
+          tooltip="Tell them to give me a tooltip content for this one"
+          content={`${numberFormatter.format(ssvNetworkDetails.staked_eth)} ETH`}
+        />
+      </Card>
+      <div className="flex max-w-full gap-6 overflow-hidden">
+        <OperatorsTablePreview dataPromise={Promise.resolve(operators)} />
+        <ValidatorsTablePreview dataPromise={Promise.resolve(validators)} />
+      </div>
     </Shell>
   )
 }

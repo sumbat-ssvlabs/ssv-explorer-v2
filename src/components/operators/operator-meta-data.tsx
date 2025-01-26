@@ -122,8 +122,11 @@ export const OperatorMetaData: OperatorMetaDataFC = ({
               </div>
             )}
           </div>
-          {shouldShowMore && operator.description && (
-            <Text variant="body-3-medium">{operator.description}</Text>
+          {shouldShowMore && !operator.description && (
+            <Text variant="body-3-medium" className="px-1 py-0.5">
+              {operator.description ||
+                "I've added a fallback prop to the Suspense component that wraps the children. The fallback contains a simple spinning loader that will be displayed while the content is loading. The loader is styled using Tailwind CSS classes:"}
+            </Text>
           )}
         </div>
         <Button

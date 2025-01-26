@@ -113,9 +113,10 @@ export default async function IndexPage(props: IndexPageProps) {
                         <CopyBtn text={operator.publicKey} />
                       </Outline>
                     </div>
-                    <OperatorMetaData operator={operator} />
                   </div>
                 </div>
+                <OperatorMetaData operator={operator} />
+
                 <div className="flex items-center gap-6 align-sub">
                   <Stat
                     className="flex-1"

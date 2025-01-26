@@ -5,7 +5,7 @@ import { searchValidators } from "@/api/validators"
 import {
   validatorsSearchParamsCache,
   type ValidatorsSearchSchema,
-} from "@/lib/search-parsers/validators-search"
+} from "@/lib/search-parsers/validators-search-parsers"
 import { cn } from "@/lib/utils"
 import { remove0x, shortenAddress } from "@/lib/utils/strings"
 import { Button } from "@/components/ui/button"

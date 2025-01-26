@@ -25,6 +25,7 @@ export function IdFilter() {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState<string>("")
   const { network, filters, setFilters } = useOperatorsSearchParams()
+
   const query = useQuery({
     queryKey: ["operators", "ids", search, network],
     queryFn: async () => {
@@ -53,7 +54,7 @@ export function IdFilter() {
         },
       }}
     >
-      <Command>
+      <Command shouldFilter={false}>
         <div className="p-2 pb-0">
           <CommandInput
             placeholder="Search Ids"

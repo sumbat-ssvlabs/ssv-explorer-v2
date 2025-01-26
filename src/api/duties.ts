@@ -5,7 +5,7 @@ import { api } from "@/api/api-client"
 import { omitBy } from "lodash-es"
 
 import { type DutiesResponse } from "@/types/api/duties"
-import { type DutiesSearchSchema } from "@/lib/search-parsers/duties-search"
+import { type DutiesSearchSchema } from "@/lib/search-parsers/duties-search-parsers"
 import { stringifyBigints } from "@/lib/utils/bigint"
 import { serializeSortingState } from "@/lib/utils/parsers"
 import { unstable_cache } from "@/lib/utils/unstable-cache"

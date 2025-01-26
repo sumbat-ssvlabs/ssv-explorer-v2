@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react"
 import { isEqual } from "lodash-es"
 import { useQueryStates } from "nuqs"
 
-import { accountsSearchFilters } from "@/lib/search-parsers/accounts-search"
+import { accountsSearchFilters } from "@/lib/search-parsers/accounts-search-parsers"
 
 export const useAccountFiltersQuery = () => {
   const [filters, setFilters] = useQueryStates(accountsSearchFilters)

@@ -5,7 +5,8 @@ import { searchValidators } from "@/api/validators"
 import { MdOutlineLock } from "react-icons/md"
 
 import { networkParserCache } from "@/lib/search-parsers"
-import { validatorsSearchParamsCache } from "@/lib/search-parsers/validators-search"
+import { validatorsSearchParamsCache } from "@/lib/search-parsers/validators-search-parsers"
+import { cn } from "@/lib/utils"
 import { shortenAddress } from "@/lib/utils/strings"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -13,7 +14,6 @@ import { CopyBtn } from "@/components/ui/copy-btn"
 import { Outline } from "@/components/ui/outline"
 import { Stat } from "@/components/ui/stat"
 import { Text } from "@/components/ui/text"
-import PerformanceChart from "@/components/operators/charts/performance-chart"
 import { OperatorAvatar } from "@/components/operators/operator-avatar"
 import { PerformanceText } from "@/components/operators/performance-text"
 import { Shell } from "@/components/shell"
@@ -40,6 +40,7 @@ export default async function IndexPage(props: IndexPageProps) {
             network: networkSearch.network,
             id: +id,
           })
+          console.log("operator:", operator)
           if (!operator) return <div>Operator not found</div>
           return (
             <div className="flex flex-col gap-6">
@@ -119,7 +120,15 @@ export default async function IndexPage(props: IndexPageProps) {
                     title="Status"
                     tooltip="Whatsup?"
                     content={
-                      <Text className="text-success-700">
+                      <Text
+                        className={cn({
+                          "text-success-700": operator.status === "Active",
+                          "text-gray-500": operator.status === "No validators",
+                          "text-error-500":
+                            operator.status === "Inactive" ||
+                            operator.status === "Removed",
+                        })}
+                      >
                         {operator.status}
                       </Text>
                     }
@@ -149,7 +158,7 @@ export default async function IndexPage(props: IndexPageProps) {
                   />
                 </div>
               </Card>
-              <div className="flex gap-6 [&>*]:flex-1">
+              {/* <div className="flex gap-6 [&>*]:flex-1">
                 <Card>
                   <Text variant="caption-medium" className="text-gray-500">
                     Avg. Performance
@@ -166,7 +175,7 @@ export default async function IndexPage(props: IndexPageProps) {
                     <PerformanceChart />
                   </div>
                 </Card>
-              </div>
+              </div> */}
               <Card>
                 <ValidatorsTable dataPromise={validators} />
               </Card>

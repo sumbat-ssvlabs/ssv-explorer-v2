@@ -5,7 +5,7 @@ import { api } from "@/api/api-client"
 import { merge, omitBy } from "lodash-es"
 
 import type { PaginatedValidatorsResponse, Validator } from "@/types/api"
-import { type ValidatorsSearchSchema } from "@/lib/search-parsers/validators-search"
+import { type ValidatorsSearchSchema } from "@/lib/search-parsers/validators-search-parsers"
 import { stringifyBigints } from "@/lib/utils/bigint"
 import { serializeSortingState } from "@/lib/utils/parsers"
 import { unstable_cache } from "@/lib/utils/unstable-cache"
@@ -29,14 +29,12 @@ export const searchValidators = async (
       const searchParams = new URLSearchParams(
         filtered as unknown as Record<string, string>
       )
-      const rest = endpoint(
+      const url = endpoint(
         params.network,
         "validators/explorer",
         `?${searchParams}`
       )
-      console.log("rest:", rest)
-      const response = await api.get<PaginatedValidatorsResponse>(rest)
-      console.log("response:", response)
+      const response = await api.get<PaginatedValidatorsResponse>(url)
       return response
     },
     [JSON.stringify(stringifyBigints(params))],

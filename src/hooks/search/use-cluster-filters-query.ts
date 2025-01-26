@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react"
 import { isEqual } from "lodash-es"
 import { useQueryStates } from "nuqs"
 
-import { clustersSearchFilters } from "@/lib/search-parsers/clusters-search"
+import { clustersSearchFilters } from "@/lib/search-parsers/clusters-search-parsers"
 
 export const useClusterFiltersQuery = () => {
   const [filters, setFilters] = useQueryStates(clustersSearchFilters)

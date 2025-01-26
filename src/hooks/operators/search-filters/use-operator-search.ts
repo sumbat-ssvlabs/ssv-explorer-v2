@@ -3,7 +3,7 @@ import { useTable } from "@/context/table-context"
 import { useQueryState } from "nuqs"
 
 import { type Operator } from "@/types/api"
-import { operatorSearchFilters } from "@/lib/search-parsers/operator-search"
+import { operatorSearchFilters } from "@/lib/search-parsers/operator-search-parsers"
 
 export const useOperatorSearch = () => {
   const { table } = useTable<Operator>()

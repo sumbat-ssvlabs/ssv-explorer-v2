@@ -28,7 +28,7 @@ export interface Operator {
   isValid: boolean
   isDeleted: boolean
   isActive: number
-  status: string
+  status: "No validators" | "Active" | "Inactive" | "Removed"
   validatorsCount: number
   version: string
   network: string

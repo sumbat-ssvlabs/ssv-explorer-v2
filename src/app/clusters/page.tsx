@@ -3,7 +3,7 @@ import { searchClusters } from "@/api/clusters"
 import { type SearchParams } from "@/types"
 
 import { type Operator } from "@/types/api"
-import { clustersSearchParamsCache } from "@/lib/search-parsers/clusters-search"
+import { clustersSearchParamsCache } from "@/lib/search-parsers/clusters-search-parsers"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Shell } from "@/components/shell"
 import { ClustersTable } from "@/app/_components/clusters/clusters-table"

@@ -2,7 +2,7 @@ import React from "react"
 import { searchValidators } from "@/api/validators"
 import { type SearchParams } from "@/types"
 
-import { validatorsSearchParamsCache } from "@/lib/search-parsers/validators-search"
+import { validatorsSearchParamsCache } from "@/lib/search-parsers/validators-search-parsers"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Shell } from "@/components/shell"
 import { ValidatorsTable } from "@/app/_components/validators/validators-table"

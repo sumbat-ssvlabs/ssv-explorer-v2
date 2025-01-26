@@ -6,7 +6,7 @@ import { type SearchParams } from "nuqs"
 import {
   dutiesSearchParamsCache,
   type DutiesSearchSchema,
-} from "@/lib/search-parsers/duties-search"
+} from "@/lib/search-parsers/duties-search-parsers"
 import { cn } from "@/lib/utils"
 import { shortenAddress } from "@/lib/utils/strings"
 import { Button } from "@/components/ui/button"

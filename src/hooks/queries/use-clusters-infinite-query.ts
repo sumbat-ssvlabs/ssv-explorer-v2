@@ -1,7 +1,7 @@
 import { searchClusters } from "@/api/clusters"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
-import { type ClustersSearchSchema } from "@/lib/search-parsers/clusters-search"
+import { type ClustersSearchSchema } from "@/lib/search-parsers/clusters-search-parsers"
 import { useNetworkQuery } from "@/hooks/search/use-network-query"
 
 export const useClustersInfiniteQuery = (

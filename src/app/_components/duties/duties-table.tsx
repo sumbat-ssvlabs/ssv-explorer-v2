@@ -5,7 +5,7 @@ import { TableProvider } from "@/context/table-context"
 import { withErrorBoundary } from "react-error-boundary"
 
 import { type DutiesResponse } from "@/types/api/duties"
-import { defaultDutiesSort } from "@/lib/search-parsers/duties-search"
+import { defaultDutiesSort } from "@/lib/search-parsers/duties-search-parsers"
 import { useDataTable } from "@/hooks/use-data-table"
 import { Badge } from "@/components/ui/badge"
 import { Text } from "@/components/ui/text"

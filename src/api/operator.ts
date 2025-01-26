@@ -7,7 +7,7 @@ import type { Country, OperatorsSearchResponse } from "@/types/api"
 import {
   operatorSearchParamsSerializer,
   type OperatorsSearchSchema,
-} from "@/lib/search-parsers/operator-search"
+} from "@/lib/search-parsers/operator-search-parsers"
 import { stringifyBigints } from "@/lib/utils/bigint"
 import { unstable_cache } from "@/lib/utils/unstable-cache"
 
@@ -36,13 +36,9 @@ export const searchOperators = async (
   await unstable_cache(
     async () => {
       const searchParams = operatorSearchParamsSerializer(params)
-      const search = endpoint(
-        params.network,
-        "operators/explorer",
-        searchParams
-      )
-      console.log("search:", search)
-      return api.get<OperatorsSearchResponse>(search)
+      const url = endpoint(params.network, "operators/explorer", searchParams)
+      console.log("search:", url)
+      return api.get<OperatorsSearchResponse>(url)
     },
     [JSON.stringify(stringifyBigints(params))],
     {

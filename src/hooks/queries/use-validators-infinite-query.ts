@@ -2,7 +2,7 @@ import { searchValidators } from "@/api/validators"
 import { useInfiniteQuery } from "@tanstack/react-query"
 
 import { type PaginatedValidatorsResponse } from "@/types/api"
-import { type ValidatorsSearchSchema } from "@/lib/search-parsers/validators-search"
+import { type ValidatorsSearchSchema } from "@/lib/search-parsers/validators-search-parsers"
 import { useNetworkQuery } from "@/hooks/search/use-network-query"
 
 export const useValidatorsInfiniteQuery = (

@@ -6,7 +6,7 @@ import { X } from "lucide-react"
 import { withErrorBoundary } from "react-error-boundary"
 
 import { type Operator, type PaginatedClustersResponse } from "@/types/api"
-import { defaultClusterSort } from "@/lib/search-parsers/clusters-search"
+import { defaultClusterSort } from "@/lib/search-parsers/clusters-search-parsers"
 import { useClustersSearchParams } from "@/hooks/search/use-clusters-search-params"
 import { useDataTable } from "@/hooks/use-data-table"
 import { Button } from "@/components/ui/button"

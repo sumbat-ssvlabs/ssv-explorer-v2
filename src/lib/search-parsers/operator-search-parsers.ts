@@ -12,6 +12,7 @@ import { isAddress } from "viem"
 import { z } from "zod"
 
 import { networkParser, paginationParser } from "@/lib/search-parsers"
+import { getBlockFee } from "@/lib/utils/operator"
 import { getSortingStateParser, parseAsTuple } from "@/lib/utils/parsers"
 
 import { type OperatorSortingKeys } from "../../types/api/operator"
@@ -36,7 +37,14 @@ export const operatorSearchFilters = {
   eth2: parseAsArrayOf(z.string()).withDefault([]).withOptions(searchOptions),
   mev: parseAsArrayOf(z.string()).withDefault([]).withOptions(searchOptions),
   fee: parseAsTuple(
-    [z.number({ coerce: true }), z.number({ coerce: true })],
+    [
+      z
+        .number({ coerce: true })
+        .transform((v) => getBlockFee(v)) as unknown as z.ZodNumber,
+      z
+        .number({ coerce: true })
+        .transform((v) => getBlockFee(v)) as unknown as z.ZodNumber,
+    ],
     (values) => values.sort((a, b) => +a - +b)
   )
     .withDefault([0, 100])

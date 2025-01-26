@@ -1,7 +1,7 @@
 import { searchOperators } from "@/api/operator"
 import { keepPreviousData, useInfiniteQuery } from "@tanstack/react-query"
 
-import { type OperatorsSearchSchema } from "@/lib/search-parsers/operator-search"
+import { type OperatorsSearchSchema } from "@/lib/search-parsers/operator-search-parsers"
 import { useNetworkQuery } from "@/hooks/search/use-network-query"
 
 export const useOperatorsInfiniteQuery = (

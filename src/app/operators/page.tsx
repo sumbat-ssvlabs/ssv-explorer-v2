@@ -2,7 +2,7 @@ import React from "react"
 import { searchOperators } from "@/api/operator"
 import { type SearchParams } from "@/types"
 
-import { operatorsSearchParamsCache } from "@/lib/search-parsers/operator-search"
+import { operatorsSearchParamsCache } from "@/lib/search-parsers/operator-search-parsers"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Shell } from "@/components/shell"
 
@@ -14,8 +14,6 @@ interface IndexPageProps {
 
 export default async function IndexPage(props: IndexPageProps) {
   const search = operatorsSearchParamsCache.parse(await props.searchParams)
-  console.log("search:", search)
-
   const operators = searchOperators(search)
   return (
     <Shell className="gap-2">

@@ -6,7 +6,7 @@ import { X } from "lucide-react"
 import { withErrorBoundary } from "react-error-boundary"
 
 import { type Operator, type PaginatedValidatorsResponse } from "@/types/api"
-import { defaultValidatorSort } from "@/lib/search-parsers/validators-search"
+import { defaultValidatorSort } from "@/lib/search-parsers/validators-search-parsers"
 import { useOperatorsSearchParams } from "@/hooks/search/use-operators-search-params"
 import { useDataTable } from "@/hooks/use-data-table"
 import { Button } from "@/components/ui/button"

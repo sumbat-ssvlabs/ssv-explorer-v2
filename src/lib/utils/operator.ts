@@ -1,7 +1,8 @@
-import { formatUnits } from "viem"
+import { formatUnits, parseEther } from "viem"
 
 import type { Operator } from "@/types/api"
 import { globals } from "@/config/globals"
+import { roundOperatorFee } from "@/lib/utils/bigint"
 import { ethFormatter, sortNumbers } from "@/lib/utils/number"
 
 type GetYearlyFeeOpts = {
@@ -18,6 +19,12 @@ export function getYearlyFee(
   if (opts?.format)
     return ethFormatter.format(+formatUnits(yearlyFee, 18)) + " SSV"
   return yearlyFee
+}
+
+export function getBlockFee(yearlyFee: number): string {
+  return roundOperatorFee(
+    parseEther(yearlyFee.toString()) / BigInt(globals.BLOCKS_PER_YEAR)
+  ).toString()
 }
 
 export const getMevRelaysAmount = (mev?: string) =>

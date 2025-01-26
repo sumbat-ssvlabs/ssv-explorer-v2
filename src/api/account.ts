@@ -8,7 +8,7 @@ import type {
   FilteredAccountsResponse,
   PaginatedAccountsResponse,
 } from "@/types/api/account"
-import { type ClustersSearchSchema } from "@/lib/search-parsers/clusters-search"
+import { type ClustersSearchSchema } from "@/lib/search-parsers/clusters-search-parsers"
 import { stringifyBigints } from "@/lib/utils/bigint"
 import { unstable_cache } from "@/lib/utils/unstable-cache"
 

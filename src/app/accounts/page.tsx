@@ -2,7 +2,7 @@ import React from "react"
 import { getAccounts } from "@/api/account"
 import { type SearchParams } from "@/types"
 
-import { accountsSearchParamsCache } from "@/lib/search-parsers/accounts-search"
+import { accountsSearchParamsCache } from "@/lib/search-parsers/accounts-search-parsers"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Shell } from "@/components/shell"
 

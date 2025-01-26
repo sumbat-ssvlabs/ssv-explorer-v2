@@ -6,7 +6,7 @@ import { TableProvider } from "@/context/table-context"
 import { withErrorBoundary } from "react-error-boundary"
 
 import { type Operator, type PaginatedValidatorsResponse } from "@/types/api"
-import { defaultValidatorSort } from "@/lib/search-parsers/validators-search"
+import { defaultValidatorSort } from "@/lib/search-parsers/validators-search-parsers"
 import { useDataTable } from "@/hooks/use-data-table"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"

@@ -9,6 +9,7 @@ import { Text } from "@/components/ui/text"
 import { GlobalSearch } from "@/components/global-search/global-search"
 import { ThemeToggle } from "@/components/layouts/mode-toggle"
 import { Logo } from "@/components/logo"
+import { NetworkSwitcher } from "@/components/network-switcher"
 
 export function SiteHeader() {
   const pathname = usePathname()
@@ -21,7 +22,8 @@ export function SiteHeader() {
           <Logo width={140} height={28} />
         </Link>
 
-        <nav className="flex flex-1 items-center md:justify-end">
+        <nav className="flex flex-1 items-center gap-2 md:justify-end">
+          <NetworkSwitcher />
           <ThemeToggle />
         </nav>
       </div>

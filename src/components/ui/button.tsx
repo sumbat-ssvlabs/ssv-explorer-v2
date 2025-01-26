@@ -11,6 +11,7 @@ export const buttonVariants = cva(
   {
     variants: {
       variant: {
+        light: "bg-gray-100",
         "table-menu": "bg-gray-100 text-primary-500",
         default:
           "bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700",
@@ -32,6 +33,8 @@ export const buttonVariants = cva(
         wallet:
           "bg-[#F9FBFC] text-gray-900 hover:bg-[#F2F6FA] dark:bg-[#062031] dark:hover:bg-[#011627]",
         error: "",
+        light:
+          "bg-gray-50 text-foreground hover:bg-gray-50 hover:opacity-80 active:bg-gray-100",
       },
       size: {
         default: "text-md h-10 px-4 py-2 font-medium",

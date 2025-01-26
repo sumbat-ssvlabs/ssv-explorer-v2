@@ -15,6 +15,7 @@ import { Outline } from "@/components/ui/outline"
 import { Stat } from "@/components/ui/stat"
 import { Text } from "@/components/ui/text"
 import { OperatorAvatar } from "@/components/operators/operator-avatar"
+import { OperatorMetaData } from "@/components/operators/operator-meta-data"
 import { PerformanceText } from "@/components/operators/performance-text"
 import { Shell } from "@/components/shell"
 import { ValidatorsTable } from "@/app/_components/validators/validators-table"
@@ -51,7 +52,7 @@ export default async function IndexPage(props: IndexPageProps) {
                     variant="unstyled"
                     src={operator.logo}
                   />
-                  <div className="flex flex-col gap-[12px]">
+                  <div className="flex w-full flex-col gap-[12px]">
                     <div className="flex items-center gap-2">
                       <Text variant="headline4">{operator.name}</Text>
                       <div className="flex items-center gap-[6px]">
@@ -112,6 +113,7 @@ export default async function IndexPage(props: IndexPageProps) {
                         <CopyBtn text={operator.publicKey} />
                       </Outline>
                     </div>
+                    <OperatorMetaData operator={operator} />
                   </div>
                 </div>
                 <div className="flex items-center gap-6 align-sub">

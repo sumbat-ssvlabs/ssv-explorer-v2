@@ -22,7 +22,7 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
       <DataTableColumnHeader column={column} title="Id" />
     ),
     cell: ({ row }) => <div className="w-4">{row.getValue("id")}</div>,
-    enableSorting: false,
+    // enableSorting: false,
   },
   {
     accessorKey: "name",

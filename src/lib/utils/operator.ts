@@ -30,35 +30,54 @@ export function getBlockFee(yearlyFee: number): string {
 export const getMevRelaysAmount = (mev?: string) =>
   mev ? mev.split(",").filter((item: string) => item).length : 0
 
-export const MEV_RELAYS = {
-  AESTUS: "Aestus",
-  AGNOSTIC: "Agnostic Gnosis",
-  BLOXROUTE_MAX_PROFIT: "bloXroute Max Profit",
-  BLOXROUTE_REGULATED: "bloXroute Regulated",
-  EDEN: "Eden Network",
-  FLASHBOTS: "Flashbots",
-  MANIFOLD: "Manifold",
-  TITAN: "Titan Relay",
-  ULTRA_SOUND: "Ultra Sound",
-}
+export const MEV_RELAYS_VALUES = [
+  "Aestus",
+  "Agnostic Gnosis",
+  "bloXroute Max Profit",
+  "bloXroute Regulated",
+  "Eden Network",
+  "Flashbots",
+  "Manifold",
+  "Titan Relay",
+  "Ultra Sound",
+] as const
+
+export type MevRelay = (typeof MEV_RELAYS_VALUES)[number]
+
+export const MEV_RELAYS_MAP = {
+  AESTUS: MEV_RELAYS_VALUES[0],
+  AGNOSTIC: MEV_RELAYS_VALUES[1],
+  BLOXROUTE_MAX_PROFIT: MEV_RELAYS_VALUES[2],
+  BLOXROUTE_REGULATED: MEV_RELAYS_VALUES[3],
+  EDEN: MEV_RELAYS_VALUES[4],
+  FLASHBOTS: MEV_RELAYS_VALUES[5],
+  MANIFOLD: MEV_RELAYS_VALUES[6],
+  TITAN: MEV_RELAYS_VALUES[7],
+  ULTRA_SOUND: MEV_RELAYS_VALUES[8],
+} as const
+
+export const MEV_RELAY_QUERY_VALUES = Object.values(MEV_RELAYS_MAP)
 
 export const MEV_RELAYS_LOGOS = {
-  [MEV_RELAYS.AESTUS]: "Aestus",
-  [MEV_RELAYS.AGNOSTIC]: "agnostic",
-  [MEV_RELAYS.BLOXROUTE_MAX_PROFIT]: "blox-route",
-  [MEV_RELAYS.BLOXROUTE_REGULATED]: "blox-route",
-  [MEV_RELAYS.EDEN]: "eden",
-  [MEV_RELAYS.TITAN]: "titan",
-  [MEV_RELAYS.FLASHBOTS]: "Flashbots",
-  [MEV_RELAYS.MANIFOLD]: "manifold",
-  [MEV_RELAYS.ULTRA_SOUND]: "ultraSound",
+  [MEV_RELAYS_MAP.AESTUS]: "Aestus",
+  [MEV_RELAYS_MAP.AGNOSTIC]: "agnostic",
+  [MEV_RELAYS_MAP.BLOXROUTE_MAX_PROFIT]: "blox-route",
+  [MEV_RELAYS_MAP.BLOXROUTE_REGULATED]: "blox-route",
+  [MEV_RELAYS_MAP.EDEN]: "eden",
+  [MEV_RELAYS_MAP.TITAN]: "titan",
+  [MEV_RELAYS_MAP.FLASHBOTS]: "Flashbots",
+  [MEV_RELAYS_MAP.MANIFOLD]: "manifold",
+  [MEV_RELAYS_MAP.ULTRA_SOUND]: "ultraSound",
 }
 
 export const getMevRelaysOptions = (mevRelays: string[]) => {
-  return mevRelays.includes(MEV_RELAYS.EDEN)
-    ? Object.values(MEV_RELAYS).map((value) => ({ value: value, label: value }))
-    : Object.values(MEV_RELAYS)
-        .filter((mevRelay: string) => mevRelay !== MEV_RELAYS.EDEN)
+  return mevRelays.includes(MEV_RELAYS_MAP.EDEN)
+    ? Object.values(MEV_RELAYS_MAP).map((value) => ({
+        value: value,
+        label: value,
+      }))
+    : Object.values(MEV_RELAYS_MAP)
+        .filter((mevRelay: string) => mevRelay !== MEV_RELAYS_MAP.EDEN)
         .map((value) => ({ value: value, label: value }))
 }
 

@@ -5,13 +5,13 @@ import { Collapse } from "react-collapse"
 import { cn } from "@/lib/utils"
 import { useOperatorsSearchParams } from "@/hooks/search/use-operators-search-params"
 import { FilterButton } from "@/components/filter/filter-button"
+import { MevRelaysFilter } from "@/app/_components/operators/filters/mev-relays-filter"
 
 import { Eth1ClientFilter } from "./eth1-client-filter"
 import { Eth2ClientFilter } from "./eth2-client-filter"
 import { FeeFilter } from "./fee-filter"
 import { IdFilter } from "./id-filter"
 import { LocationFilter } from "./location-filter"
-import { ManagedEthFilter } from "./managed-eth-filter"
 import { NameFilter } from "./name-filter"
 import { OwnerAddressFilter } from "./owner-address-filter"
 import { Performance24hFilter } from "./performance-24h-filter"
@@ -44,8 +44,9 @@ export const OperatorsFilters = () => {
         <Eth1ClientFilter />
         <Eth2ClientFilter />
         <FeeFilter />
+        <MevRelaysFilter />
         <ValidatorsFilter />
-        <ManagedEthFilter />
+        {/* <ManagedEthFilter /> */}
         <Performance24hFilter />
         <Performance30dFilter />
         <StatusFilter />

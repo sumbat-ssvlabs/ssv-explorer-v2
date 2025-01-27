@@ -54,7 +54,7 @@ export const OperatorsTable = withErrorBoundary(
       },
     })
 
-    const { enabledFilters, clearFilters } = useOperatorsSearchParams()
+    const { enabledFilters } = useOperatorsSearchParams()
 
     return (
       <>

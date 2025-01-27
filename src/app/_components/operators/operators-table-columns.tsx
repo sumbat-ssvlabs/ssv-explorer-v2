@@ -100,7 +100,7 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     accessorKey: "performance24h",
     header: ({ column }) => (
       <DataTableColumnHeader
-        className="justify-end"
+        className="justify-end text-right"
         column={column}
         title="24h"
       />
@@ -108,23 +108,31 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     cell: ({ row }) => {
       const performance = row.original.performance["24h"]
       return (
-        <OperatorPerformanceTooltip>
-          <PerformanceText className="text-right" performance={performance} />
-        </OperatorPerformanceTooltip>
+        <div className="flex items-center justify-end">
+          <OperatorPerformanceTooltip>
+            <PerformanceText className="text-right" performance={performance} />
+          </OperatorPerformanceTooltip>
+        </div>
       )
     },
   },
   {
     accessorKey: "performance30d",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="30d" />
+      <DataTableColumnHeader
+        column={column}
+        title="30d"
+        className="justify-end text-right"
+      />
     ),
     cell: ({ row }) => {
       const performance = row.original.performance["30d"]
       return (
-        <OperatorPerformanceTooltip>
-          <PerformanceText className="text-right" performance={performance} />
-        </OperatorPerformanceTooltip>
+        <div className="flex items-center justify-end">
+          <OperatorPerformanceTooltip>
+            <PerformanceText className="text-right" performance={performance} />
+          </OperatorPerformanceTooltip>
+        </div>
       )
     },
   },
@@ -136,6 +144,7 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
     cell: ({ row }) => {
       return <MevRelaysDisplay mevRelays={row.original.mevRelays} />
     },
+    enableSorting: false,
   },
   {
     accessorKey: "status",

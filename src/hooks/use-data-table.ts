@@ -188,8 +188,6 @@ export function useDataTable<TData>({
       `${name}-columns-visibility`,
       initialState?.columnVisibility ?? {}
     )
-  console.log("initialState?.columnVisibility:", initialState?.columnVisibility)
-  console.log("columnVisibility:", columnVisibility)
 
   const [page, setPage] = useQueryState(
     "page",

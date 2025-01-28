@@ -8,8 +8,8 @@ import { Badge, type BadgeVariants } from "@/components/ui/badge"
 type ValidatorStatus = Validator["status"]
 
 const variants: Record<ValidatorStatus, BadgeVariants["variant"]> = {
-  active: "success",
-  inactive: "error",
+  Active: "success",
+  Inactive: "error",
 }
 
 export type ValidatorStatusBadgeProps = {
@@ -33,7 +33,7 @@ export const ValidatorStatusBadge: ValidatorStatusBadgeFC = ({
     <Badge
       className={cn(className)}
       {...props}
-      variant={getBadgeVariant(status.toLowerCase())}
+      variant={getBadgeVariant(status)}
     >
       {status}
     </Badge>

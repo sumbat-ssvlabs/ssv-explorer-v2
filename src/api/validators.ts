@@ -52,7 +52,6 @@ export const getValidator = async (
   await unstable_cache(
     async () => {
       const rest = endpoint(params.network, `validators/${params.publicKey}`)
-      console.log("rest:", rest)
       return api.get<Validator>(rest)
     },
     [JSON.stringify(stringifyBigints(params))],

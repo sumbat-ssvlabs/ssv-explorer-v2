@@ -8,11 +8,12 @@ import { type DutiesResponse } from "@/types/api/duties"
 import { type DutiesSearchSchema } from "@/lib/search-parsers/duties-search-parsers"
 import { stringifyBigints } from "@/lib/utils/bigint"
 import { serializeSortingState } from "@/lib/utils/parsers"
+import { remove0x } from "@/lib/utils/strings"
 import { unstable_cache } from "@/lib/utils/unstable-cache"
 
 export const searchDuties = async (
   params: Partial<DutiesSearchSchema> &
-    Pick<DutiesSearchSchema, "network" | "validatorPublicKey">
+    Required<Pick<DutiesSearchSchema, "network" | "validatorPublicKey">>
 ): Promise<DutiesResponse> =>
   await unstable_cache(
     async () => {
@@ -31,7 +32,7 @@ export const searchDuties = async (
       return await api.get<DutiesResponse>(
         endpoint(
           params.network,
-          `duties/${params.validatorPublicKey}`,
+          `duties/${remove0x(params.validatorPublicKey || "")}`,
           `?${searchParams}`
         )
       )

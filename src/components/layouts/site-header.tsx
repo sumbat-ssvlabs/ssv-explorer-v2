@@ -5,6 +5,8 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 import { cn } from "@/lib/utils"
+import { currencyFormatter } from "@/lib/utils/number"
+import { useSSVRates } from "@/hooks/use-ssv-rates"
 import { Text } from "@/components/ui/text"
 import { GlobalSearch } from "@/components/global-search/global-search"
 import { ThemeToggle } from "@/components/layouts/mode-toggle"
@@ -14,6 +16,7 @@ import { NetworkSwitcher } from "@/components/network-switcher"
 export function SiteHeader() {
   const pathname = usePathname()
   const isOverview = pathname.startsWith("/overview")
+  const { data: rates } = useSSVRates()
 
   return (
     <header className="container w-full backdrop-blur">
@@ -23,6 +26,12 @@ export function SiteHeader() {
         </Link>
 
         <nav className="flex flex-1 items-center gap-2 md:justify-end">
+          <Text variant="caption-medium" className="font-sans">
+            <span className="text-gray-500">SSV Price: </span>
+            <span className="text-primary-500">
+              {currencyFormatter.format(rates?.ssv ?? 0)}
+            </span>
+          </Text>
           <NetworkSwitcher />
           <ThemeToggle />
         </nav>

@@ -1,7 +1,7 @@
 import { unstable_cache } from "next/cache"
 import { api } from "@/api/api-client"
 
-interface Response {
+export interface SSVRates {
   apr: number
   boost: number
   timestamp: string
@@ -14,7 +14,7 @@ export const getSSVRates = async () =>
   await unstable_cache(
     async () => {
       return await api
-        .get<Response>("https://ssv-price-8c98717db454.herokuapp.com/data")
+        .get<SSVRates>("https://ssv-price-8c98717db454.herokuapp.com/data")
         .then((res) => ({
           ...res,
           staked_eth: res.validators * 32,

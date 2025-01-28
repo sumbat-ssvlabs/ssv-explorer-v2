@@ -26,7 +26,7 @@ export function SiteHeader() {
         </Link>
 
         <nav className="flex flex-1 items-center gap-2 md:justify-end">
-          <Text variant="caption-medium" className="font-sans">
+          <Text variant="caption-medium" className="px-3 font-sans">
             <span className="text-gray-500">SSV Price: </span>
             <span className="text-primary-500">
               {currencyFormatter.format(rates?.ssv ?? 0)}

@@ -10,7 +10,11 @@ import { isAddress } from "viem"
 import { z } from "zod"
 
 import { type Cluster } from "@/types/api"
-import { networkParser, paginationParser } from "@/lib/search-parsers"
+import {
+  enhancementParsers,
+  networkParser,
+  paginationParser,
+} from "@/lib/search-parsers"
 import { getSortingStateParser, parseAsTuple } from "@/lib/utils/parsers"
 
 const searchOptions: Options = {
@@ -51,6 +55,7 @@ export const clustersSearchParamsCache = createSearchParamsCache({
   ...paginationParser,
   ...clustersSearchFilters,
   ...clusterSearchSort,
+  ...enhancementParsers,
 })
 
 export type ClustersSearchSchema = Awaited<

@@ -4,7 +4,7 @@ import { endpoint } from "@/api"
 import { api } from "@/api/api-client"
 import { merge, omitBy } from "lodash-es"
 
-import type { PaginatedValidatorsResponse, Validator } from "@/types/api"
+import type { PaginatedValidatorsResponse } from "@/types/api"
 import { type ValidatorsSearchSchema } from "@/lib/search-parsers/validators-search-parsers"
 import { stringifyBigints } from "@/lib/utils/bigint"
 import { serializeSortingState } from "@/lib/utils/parsers"
@@ -51,8 +51,16 @@ export const getValidator = async (
 ) =>
   await unstable_cache(
     async () => {
-      const rest = endpoint(params.network, `validators/${params.publicKey}`)
-      return api.get<Validator>(rest)
+      const response = await searchValidators({
+        network: params.network,
+        publicKey: [params.publicKey],
+        perPage: 1,
+        fullOperatorData: true,
+      })
+      if (!response.data[0]) {
+        throw new Error("Validator not found")
+      }
+      return response.data[0]
     },
     [JSON.stringify(stringifyBigints(params))],
     {

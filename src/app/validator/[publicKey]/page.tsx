@@ -60,13 +60,13 @@ export default async function IndexPage(props: IndexPageProps) {
             </Text>
             <Button
               as={Link}
-              href={`/account/${validator.owner_address}`}
+              href={`/account/${validator.ownerAddress}`}
               variant="link"
               className="font-mono text-sm"
             >
-              {shortenAddress(validator.owner_address)}
+              {shortenAddress(validator.ownerAddress)}
             </Button>
-            <CopyBtn text={validator.owner_address} />
+            <CopyBtn text={validator.ownerAddress} />
           </Outline>
           <Outline>
             <Text variant="caption-medium" className="text-gray-500">
@@ -99,7 +99,7 @@ export default async function IndexPage(props: IndexPageProps) {
             tooltip="Whatsup?"
             content={
               <Text className="text-success-700">
-                {validator.validator_info.activation_epoch}
+                {validator.validatorInfo.activation_epoch}
               </Text>
             }
           />
@@ -108,10 +108,11 @@ export default async function IndexPage(props: IndexPageProps) {
             className="flex-1"
             title="Validators"
             tooltip="Whatsup?"
-            content={<Text>{validator.validator_info.status}</Text>}
+            content={<Text>{validator.validatorInfo.status}</Text>}
           />
         </div>
       </Card>
+
       <div
         className={cn("flex flex-wrap justify-center gap-6 [&>*]:min-w-32", {
           "[&>*]:flex-1": validator.operators.length < 8,

@@ -24,15 +24,16 @@ export const OperatorCard: OperatorCardFC = ({
   operator,
   ...props
 }) => {
+  console.log("operator:", operator)
   return (
     <div
       className={cn(
-        className,
         "flex flex-col items-center gap-3 rounded-2xl border px-5 py-6",
         {
           "border-transparent bg-gray-50": operator.isActive === 1,
           "border-error-200 bg-error-50": operator.isActive === 0,
-        }
+        },
+        className
       )}
       {...props}
     >

@@ -47,12 +47,12 @@ export const getCluster = async (
 ) =>
   await unstable_cache(
     async () => {
-      const rest = endpoint(
-        params.network,
-        `clusters/explorer?id=${params.id}&fullOperatorData=true`
-      )
-      const response =
-        await api.get<PaginatedClustersResponse<Operator[]>>(rest)
+      const response = await searchClusters<Operator[]>({
+        network: params.network,
+        clusterId: [params.id],
+        perPage: 1,
+        fullOperatorData: true,
+      })
       if (!response.data[0]) {
         throw new Error("Cluster not found")
       }

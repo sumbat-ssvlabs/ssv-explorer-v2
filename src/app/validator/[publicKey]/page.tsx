@@ -87,29 +87,19 @@ export default async function IndexPage(props: IndexPageProps) {
           <Stat
             className="flex-1"
             title="Status"
-            tooltip="Whatsup?"
             content={
-              <Text className="text-success-700">{validator.status}</Text>
-            }
-          />
-          <div className="h-full border-r border-gray-500" />
-          <Stat
-            className="flex-1"
-            title="Performance (1D | 1M)"
-            tooltip="Whatsup?"
-            content={
-              <Text className="text-success-700">
-                {validator.validatorInfo.activation_epoch}
+              <Text
+                className={cn({
+                  "text-success-700": validator.status === "Active",
+                  "text-error-500": validator.status === "Inactive",
+                })}
+              >
+                {validator.status}
               </Text>
             }
           />
           <div className="h-full border-r border-gray-500" />
-          <Stat
-            className="flex-1"
-            title="Validators"
-            tooltip="Whatsup?"
-            content={<Text>{validator.validatorInfo.status}</Text>}
-          />
+          <Stat className="flex-1" title="ETH Balance" content={32 + " ETH"} />
         </div>
       </Card>
 

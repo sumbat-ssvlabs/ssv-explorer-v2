@@ -20,7 +20,7 @@ import { type OperatorSortingKeys } from "../../types/api/operator"
 const searchOptions: Options = {
   history: "replace",
   shallow: false,
-  clearOnDefault: true,
+  clearOnDefault: false,
 }
 
 export const operatorSearchFilters = {
@@ -99,7 +99,7 @@ export const operatorSearchFilters = {
 }
 
 export const defaultOperatorSort: ExtendedSortingState<OperatorSortingKeys> = [
-  { id: "performance30d", desc: false },
+  { id: "id", desc: true },
 ]
 export const operatorSearchSort = {
   ordering: getSortingStateParser<OperatorSortingKeys>()
@@ -114,12 +114,17 @@ export const operatorsSearchParamsCache = createSearchParamsCache({
   ...operatorSearchSort,
 })
 
-export const operatorSearchParamsSerializer = createSerializer({
-  ...networkParser,
-  ...paginationParser,
-  ...operatorSearchFilters,
-  ...operatorSearchSort,
-})
+export const operatorSearchParamsSerializer = createSerializer(
+  {
+    ...networkParser,
+    ...paginationParser,
+    ...operatorSearchFilters,
+    ...operatorSearchSort,
+  },
+  {
+    clearOnDefault: false,
+  }
+)
 
 export type OperatorsSearchSchema = Awaited<
   ReturnType<typeof operatorsSearchParamsCache.parse>

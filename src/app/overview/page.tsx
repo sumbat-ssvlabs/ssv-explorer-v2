@@ -4,6 +4,8 @@ import { searchValidators } from "@/api/validators"
 import { type SearchParams } from "@/types"
 
 import { overviewParserCache } from "@/lib/search-parsers"
+import { defaultOperatorSort } from "@/lib/search-parsers/operator-search-parsers"
+import { defaultValidatorSort } from "@/lib/search-parsers/validators-search-parsers"
 import { numberFormatter } from "@/lib/utils/number"
 import { Card } from "@/components/ui/card"
 import { Stat } from "@/components/ui/stat"
@@ -22,7 +24,7 @@ export default async function IndexPage(props: IndexPageProps) {
   const ssvNetworkDetails = await getSSVRates()
   const operators = await searchOperators({
     ...search,
-    ordering: [{ id: "performance30d", desc: true }],
+    ordering: defaultOperatorSort,
   }).catch((error) => {
     console.error("Error fetching operators:", error)
     return null
@@ -30,7 +32,7 @@ export default async function IndexPage(props: IndexPageProps) {
 
   const validators = await searchValidators({
     ...search,
-    ordering: [{ id: "createdAt", desc: false }],
+    ordering: defaultValidatorSort,
   }).catch((error) => {
     console.error("Error fetching validators:", error)
     return null

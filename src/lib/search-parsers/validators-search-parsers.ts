@@ -49,6 +49,7 @@ export const validatorsSearchParamsCache = createSearchParamsCache({
   ...enhancementParsers,
   ...validatorSearchSort,
 })
+
 export type ValidatorsSearchSchema = Awaited<
   ReturnType<typeof validatorsSearchParamsCache.parse>
 >

@@ -7,6 +7,7 @@ import {
   type ValidatorsSearchSchema,
 } from "@/lib/search-parsers/validators-search-parsers"
 import { cn } from "@/lib/utils"
+import { formatSSV, numberFormatter } from "@/lib/utils/number"
 import { remove0x, shortenAddress } from "@/lib/utils/strings"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -32,7 +33,7 @@ export default async function IndexPage(props: IndexPageProps) {
 
   const validators = searchValidators({
     ...searchParams,
-    clusterId: id,
+    clusterId: [id],
   })
 
   const cluster = await getCluster({ id, network: searchParams.network }).catch(
@@ -78,29 +79,22 @@ export default async function IndexPage(props: IndexPageProps) {
         <div className="flex items-center gap-6 align-sub">
           <Stat
             className="flex-1"
-            title="Status"
-            tooltip="Whatsup?"
-            content={
-              <Text className="text-success-700">
-                {cluster.active ? "Active" : "Inactive"}
-              </Text>
-            }
-          />
-          <div className="h-full border-r border-gray-500" />
-          <Stat
-            className="flex-1"
-            title="Performance (1D | 1M)"
-            tooltip="Whatsup?"
-            content={
-              <Text className="text-success-700">{cluster.blockNumber}</Text>
-            }
-          />
-          <div className="h-full border-r border-gray-500" />
-          <Stat
-            className="flex-1"
             title="Validators"
-            tooltip="Whatsup?"
-            content={<Text>{cluster.active ? "Active" : "Inactive"}</Text>}
+            content={numberFormatter.format(cluster.validatorCount)}
+          />
+          <div className="h-full border-r border-gray-500" />
+          <Stat
+            className="flex-1"
+            title="Cluster Balance"
+            content={formatSSV(BigInt(cluster.balance)) + " SSV"}
+          />
+          <div className="h-full border-r border-gray-500" />
+          <Stat
+            className="flex-1"
+            title="Total ETH"
+            content={
+              numberFormatter.format(cluster.validatorCount * 32) + " ETH"
+            }
           />
         </div>
       </Card>

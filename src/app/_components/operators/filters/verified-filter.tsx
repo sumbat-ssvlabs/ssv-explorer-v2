@@ -52,7 +52,7 @@ export function VerifiedFilter() {
               onSelect={() => {
                 setFilters((prev) => ({
                   ...prev,
-                  verified: "verified",
+                  type: "verified_operator",
                 }))
               }}
             >
@@ -71,7 +71,7 @@ export function VerifiedFilter() {
               onSelect={() => {
                 setFilters((prev) => ({
                   ...prev,
-                  verified: "unverified",
+                  type: "operator",
                 }))
               }}
             >

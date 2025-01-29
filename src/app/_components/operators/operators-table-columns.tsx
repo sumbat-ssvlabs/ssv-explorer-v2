@@ -15,7 +15,7 @@ import { OperatorPerformanceTooltip } from "@/components/operators/operator-perf
 import { OperatorStatusBadge } from "@/components/operators/operator-status-badge"
 import { PerformanceText } from "@/components/operators/performance-text"
 
-export const operatorsTableColumns: ColumnDef<Operator>[] = [
+export const operatorsTableColumns = [
   {
     accessorKey: "id",
     header: ({ column }) => (
@@ -156,12 +156,33 @@ export const operatorsTableColumns: ColumnDef<Operator>[] = [
       return <OperatorStatusBadge size="sm" status={status} />
     },
   },
+] satisfies ColumnDef<Operator>[]
+
+export type OperatorColumnsAccessorKeys =
+  (typeof operatorsTableColumns)[number]["accessorKey"]
+
+export const operatorsTableDefaultColumnsKeys: OperatorColumnsAccessorKeys[] = [
+  "id",
+  "name",
+  "ownerAddress",
+  "fee",
+  "validatorsCount",
+  "performance24h",
+  "status",
 ]
+export const operatorsTableDefaultColumns = operatorsTableColumns.reduce(
+  (acc, col) => {
+    acc[col.accessorKey] = operatorsTableDefaultColumnsKeys.includes(
+      col.accessorKey
+    )
+    return acc
+  },
+  {} as Record<OperatorColumnsAccessorKeys, boolean>
+)
 
 export const operatorsTablePreviewColumns = operatorsTableColumns
   .filter((column) =>
     ["name", "ownerAddress", "performance24h", "status"].includes(
-      // @ts-expect-error accessorKey is not defined in the type
       column.accessorKey
     )
   )

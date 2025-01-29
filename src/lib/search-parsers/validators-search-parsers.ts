@@ -5,6 +5,7 @@ import {
   parseAsString,
   type Options,
 } from "nuqs/server"
+import { isAddress } from "viem"
 import { z } from "zod"
 
 import { type Operator, type SearchValidator } from "@/types/api"
@@ -22,9 +23,10 @@ const searchOptions: Options = {
 }
 
 export const validatorsSearchFilters = {
-  search: parseAsString.withDefault("").withOptions(searchOptions),
-  id: parseAsArrayOf(z.number({ coerce: true })).withOptions(searchOptions),
-  clusterId: parseAsString.withDefault("").withOptions(searchOptions),
+  search: parseAsString.withOptions(searchOptions),
+  publicKey: parseAsArrayOf(z.string()).withOptions(searchOptions),
+  clusterId: parseAsArrayOf(z.string()).withOptions(searchOptions),
+  ownerAddress: parseAsArrayOf(z.string().refine(isAddress)).withDefault([]),
   operators: parseAsArrayOf(z.number({ coerce: true })).withOptions(
     searchOptions
   ),

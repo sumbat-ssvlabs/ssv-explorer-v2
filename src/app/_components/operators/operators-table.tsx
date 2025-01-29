@@ -11,27 +11,15 @@ import { Text } from "@/components/ui/text"
 import { DataTable } from "@/components/data-table/data-table"
 import { DataTableMenuButton } from "@/components/data-table/data-table-filters-button"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
-import { OperatorsFilters } from "@/app/_components/operators/filters/operator-filters"
+import { OperatorTableFilters } from "@/app/_components/operators/filters/operator-table-filters"
 
-import { operatorsTableColumns } from "./operators-table-columns"
+import {
+  operatorsTableColumns,
+  operatorsTableDefaultColumns,
+} from "./operators-table-columns"
 
 interface OperatorsTableProps {
   dataPromise: Promise<OperatorsSearchResponse>
-}
-
-export const defaultColumns = {
-  name: true,
-  eth1_node_client: false,
-  fee: true,
-  location: false,
-  id: true,
-  owner_address: false,
-  eth2_node_client: false,
-  validators_count: false,
-  performance_24h: false,
-  performance_30d: true,
-  mev_relays: true,
-  status: true,
 }
 
 export const OperatorsTable = withErrorBoundary(
@@ -48,9 +36,11 @@ export const OperatorsTable = withErrorBoundary(
       clearOnDefault: true,
       initialState: {
         sorting: [{ id: "id", desc: false }],
+        columnVisibility: operatorsTableDefaultColumns,
       },
       meta: {
         total: pagination.total,
+        defaultColumns: operatorsTableDefaultColumns,
       },
     })
 
@@ -65,7 +55,7 @@ export const OperatorsTable = withErrorBoundary(
             <DataTableMenuButton enabledFilters={enabledFilters} />
             <DataTableViewOptions table={table} />
           </div>
-          <OperatorsFilters />
+          <OperatorTableFilters />
           <DataTable table={table} />
         </TableProvider>
       </>

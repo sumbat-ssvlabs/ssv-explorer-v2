@@ -1,10 +1,10 @@
 import { useTable } from "@/context/table-context"
-import { X } from "lucide-react"
 import { Collapse } from "react-collapse"
 
 import { cn } from "@/lib/utils"
 import { useOperatorsSearchParams } from "@/hooks/search/use-operators-search-params"
-import { FilterButton } from "@/components/filter/filter-button"
+import { Button } from "@/components/ui/button"
+import { textVariants } from "@/components/ui/text"
 import { MevRelaysFilter } from "@/app/_components/operators/filters/mev-relays-filter"
 
 import { Eth1ClientFilter } from "./eth1-client-filter"
@@ -20,7 +20,7 @@ import { ValidatorsFilter } from "./validators-filter"
 import { VerifiedFilter } from "./verified-filter"
 import { IsPrivateFilter } from "./visibility-filter"
 
-export const OperatorsFilters = () => {
+export const OperatorTableFilters = () => {
   const { isFiltersOpen } = useTable()
   const { enabledFilters, clearFilters } = useOperatorsSearchParams()
 
@@ -52,10 +52,17 @@ export const OperatorsFilters = () => {
         <VerifiedFilter />
         <IsPrivateFilter />
         {enabledFilters.count > 0 && (
-          <FilterButton name="Clear" onClick={clearFilters}>
-            <X className="size-4" />
-            Clear
-          </FilterButton>
+          <Button
+            variant="ghost"
+            name="Clear"
+            className={textVariants({
+              variant: "body-3-medium",
+              className: "text-primary-500",
+            })}
+            onClick={clearFilters}
+          >
+            Clear All
+          </Button>
         )}
       </div>
     </Collapse>

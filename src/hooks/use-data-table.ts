@@ -39,6 +39,7 @@ interface UseDataTableProps<TData>
       TableOptions<TData> & {
         meta: {
           total: number
+          defaultColumns?: Record<string, boolean>
         }
       },
       | "state"
@@ -143,7 +144,7 @@ interface UseDataTableProps<TData>
   name: string
 }
 
-export function useDataTable<TData>({
+export function useDataTable<TData, TColumns>({
   name,
   pageCount = -1,
   filterFields = [],

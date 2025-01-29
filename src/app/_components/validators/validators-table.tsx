@@ -2,19 +2,17 @@
 
 import { use } from "react"
 import { TableProvider } from "@/context/table-context"
-import { X } from "lucide-react"
 import { withErrorBoundary } from "react-error-boundary"
 
 import { type Operator, type PaginatedValidatorsResponse } from "@/types/api"
 import { defaultValidatorSort } from "@/lib/search-parsers/validators-search-parsers"
-import { useOperatorsSearchParams } from "@/hooks/search/use-operators-search-params"
+import { useValidatorsSearchParams } from "@/hooks/search/use-validators-search-params"
 import { useDataTable } from "@/hooks/use-data-table"
-import { Button } from "@/components/ui/button"
 import { Text } from "@/components/ui/text"
 import { DataTable } from "@/components/data-table/data-table"
 import { DataTableMenuButton } from "@/components/data-table/data-table-filters-button"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
-import { Filters } from "@/app/_components/validators/filters/filters"
+import { ValidatorTableFilters } from "@/app/_components/validators/filters/validator-table-filters"
 
 import { validatorsTableColumns } from "./validators-table-columns"
 
@@ -42,7 +40,7 @@ export const ValidatorsTable = withErrorBoundary(
       },
     })
 
-    const { enabledFilters, clearFilters } = useOperatorsSearchParams()
+    const { enabledFilters, clearFilters } = useValidatorsSearchParams()
 
     return (
       <>
@@ -51,22 +49,9 @@ export const ValidatorsTable = withErrorBoundary(
             <Text variant="headline4">Validators</Text>
             <div className="flex-1"></div>
             <DataTableMenuButton enabledFilters={enabledFilters} />
-            {enabledFilters.count > 0 && (
-              <Button
-                aria-label="Toggle columns"
-                variant="outline"
-                role="combobox"
-                size="sm"
-                className="ml-auto flex h-8"
-                onClick={clearFilters}
-              >
-                <X className="size-4" />
-                Clear
-              </Button>
-            )}
             <DataTableViewOptions table={table} />
           </div>
-          <Filters />
+          <ValidatorTableFilters />
           <DataTable table={table} />
         </TableProvider>
       </>

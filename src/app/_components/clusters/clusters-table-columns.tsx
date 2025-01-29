@@ -11,7 +11,7 @@ import { Text } from "@/components/ui/text"
 import { DataTableColumnHeader } from "@/components/data-table/data-table-column-header"
 import { OperatorAvatar } from "@/components/operators/operator-avatar"
 
-export const clustersTableColumns: ColumnDef<Cluster>[] = [
+export const clustersTableColumns = [
   {
     accessorKey: "clusterId",
     header: ({ column }) => (
@@ -93,4 +93,26 @@ export const clustersTableColumns: ColumnDef<Cluster>[] = [
     ),
     cell: ({ row }) => <div>{row.original.active ? "Yes" : "No"}</div>,
   },
+] satisfies ColumnDef<Cluster>[]
+
+export type ClusterColumnsAccessorKeys =
+  (typeof clustersTableColumns)[number]["accessorKey"]
+
+export const clustersTableDefaultColumnsKeys: ClusterColumnsAccessorKeys[] = [
+  "clusterId",
+  "ownerAddress",
+  "operators",
+  "validatorCount",
+  "balance",
+  "active",
 ]
+
+export const clustersTableDefaultColumns = clustersTableColumns.reduce(
+  (acc, col) => {
+    acc[col.accessorKey] = clustersTableDefaultColumnsKeys.includes(
+      col.accessorKey
+    )
+    return acc
+  },
+  {} as Record<ClusterColumnsAccessorKeys, boolean>
+)

@@ -2,39 +2,25 @@
 
 import { use } from "react"
 import { TableProvider } from "@/context/table-context"
-import { X } from "lucide-react"
 import { withErrorBoundary } from "react-error-boundary"
 
 import { type Operator, type PaginatedClustersResponse } from "@/types/api"
 import { defaultClusterSort } from "@/lib/search-parsers/clusters-search-parsers"
 import { useClustersSearchParams } from "@/hooks/search/use-clusters-search-params"
 import { useDataTable } from "@/hooks/use-data-table"
-import { Button } from "@/components/ui/button"
 import { Text } from "@/components/ui/text"
 import { DataTable } from "@/components/data-table/data-table"
 import { DataTableMenuButton } from "@/components/data-table/data-table-filters-button"
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options"
-import { Filters } from "@/app/_components/clusters/filters/filters"
+import { ClusterTableFilters } from "@/app/_components/clusters/filters/cluster-table-filters"
 
-import { clustersTableColumns } from "./clusters-table-columns"
+import {
+  clustersTableColumns,
+  clustersTableDefaultColumns,
+} from "./clusters-table-columns"
 
 interface ClustersTableProps {
   dataPromise: Promise<PaginatedClustersResponse<Operator[]>>
-}
-
-export const defaultColumns = {
-  name: true,
-  eth1_node_client: false,
-  fee: true,
-  location: false,
-  id: true,
-  owner_address: false,
-  eth2_node_client: false,
-  clusters_count: false,
-  performance_24h: false,
-  performance_30d: true,
-  mev_relays: true,
-  status: true,
 }
 
 export const ClustersTable = withErrorBoundary(
@@ -51,13 +37,15 @@ export const ClustersTable = withErrorBoundary(
       clearOnDefault: true,
       initialState: {
         sorting: defaultClusterSort,
+        columnVisibility: clustersTableDefaultColumns,
       },
       meta: {
         total: pagination.total,
+        defaultColumns: clustersTableDefaultColumns,
       },
     })
 
-    const { enabledFilters, clearFilters } = useClustersSearchParams()
+    const { enabledFilters } = useClustersSearchParams()
 
     return (
       <>
@@ -66,22 +54,9 @@ export const ClustersTable = withErrorBoundary(
             <Text variant="headline4">Clusters</Text>
             <div className="flex-1"></div>
             <DataTableMenuButton enabledFilters={enabledFilters} />
-            {enabledFilters.count > 0 && (
-              <Button
-                aria-label="Toggle columns"
-                variant="outline"
-                role="combobox"
-                size="sm"
-                className="ml-auto flex h-8"
-                onClick={clearFilters}
-              >
-                <X className="size-4" />
-                Clear
-              </Button>
-            )}
             <DataTableViewOptions table={table} />
           </div>
-          <Filters />
+          <ClusterTableFilters />
           <DataTable table={table} />
         </TableProvider>
       </>

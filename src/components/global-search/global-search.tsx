@@ -44,25 +44,26 @@ type Props = VariantProps<typeof globalSearchVariants> &
 
 export const GlobalSearch: React.FC<Props> = ({ size, ...props }) => {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+  const [search, setSearch] = React.useState("")
   const [isFocused, setIsFocused] = React.useState(false)
   const inputRef = React.useRef<HTMLInputElement>(null)
-  const debouncedValue = useDebounceValue(value, 500)
+  const debouncedSearch = useDebounceValue(search, 500)
+  const hasSearch = Boolean(search) && Boolean(debouncedSearch)
 
   const asyncRoutePush = useAsyncRoutePush()
 
   const operatorsQuery = useOperatorsInfiniteQuery({
-    search: debouncedValue,
+    search: debouncedSearch,
     perPage: 5,
   })
 
   const validatorsQuery = useValidatorsInfiniteQuery({
-    search: debouncedValue,
+    search: debouncedSearch,
     perPage: 5,
   })
 
   const clustersQuery = useClustersInfiniteQuery({
-    search: debouncedValue,
+    search: debouncedSearch,
     perPage: 5,
   })
 
@@ -84,7 +85,7 @@ export const GlobalSearch: React.FC<Props> = ({ size, ...props }) => {
 
   return (
     <Popover
-      open={(open || isFocused) && (!!value || hasAnyLoadedData)}
+      open={(open || isFocused) && (hasSearch || hasAnyLoadedData)}
       onOpenChange={setOpen}
     >
       <Command
@@ -96,7 +97,7 @@ export const GlobalSearch: React.FC<Props> = ({ size, ...props }) => {
           <CommandInput
             ref={inputRef}
             placeholder="Search operator ID or name, validator public key, cluster ID or account address"
-            value={value}
+            value={search}
             className={globalSearchVariants({
               size,
               className: textVariants({
@@ -104,7 +105,7 @@ export const GlobalSearch: React.FC<Props> = ({ size, ...props }) => {
                 className: "border border-gray-300 bg-gray-50",
               }),
             })}
-            onValueChange={(value) => setValue(value)}
+            onValueChange={(value) => setSearch(value)}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
           />
@@ -114,7 +115,7 @@ export const GlobalSearch: React.FC<Props> = ({ size, ...props }) => {
           onOpenAutoFocus={(e) => e.preventDefault()}
         >
           <CommandList className="flex flex-col">
-            {!isLoading && value && <CommandEmpty>No found.</CommandEmpty>}
+            {!isLoading && search && <CommandEmpty>No found.</CommandEmpty>}
             {isLoading && (
               <div className="flex items-center justify-center p-6">
                 <Spinner />

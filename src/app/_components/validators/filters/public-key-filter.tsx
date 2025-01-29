@@ -43,7 +43,7 @@ export function PublicKeyFilter() {
   return (
     <FilterButton
       name="Public Key"
-      activeFiltersCount={filters.clusterId?.length ?? 0}
+      activeFiltersCount={filters.publicKey?.length ?? 0}
       onClear={() => setFilters((prev) => ({ ...prev, publicKey: null }))}
       popover={{
         root: {
@@ -58,7 +58,7 @@ export function PublicKeyFilter() {
       <Command>
         <div className="p-2">
           <CommandInput
-            placeholder="Search Cluster IDs"
+            placeholder="Search Public Keys"
             value={search}
             onValueChange={(value) => setSearch(value)}
           />
@@ -74,7 +74,7 @@ export function PublicKeyFilter() {
                 onClick={() =>
                   setFilters((prev) => ({
                     ...prev,
-                    clusterId: xor(prev.clusterId, [id]),
+                    publicKey: xor(prev.publicKey, [id]),
                   }))
                 }
               >

@@ -41,6 +41,7 @@ export function ValidatorsFilter() {
         searchRange={filters.validatorsCount}
         apply={apply}
         remove={remove}
+        step={1}
         defaultRange={defaultRange}
       />
     </FilterButton>

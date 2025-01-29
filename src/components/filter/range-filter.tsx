@@ -16,9 +16,10 @@ type RangeFilterProps = {
   name: string
   defaultRange: [number, number]
   searchRange: [number, number] | null
+  step?: number
   inputs?: Partial<{
-    start: InputProps & { step?: number }
-    end: InputProps & { step?: number }
+    start: InputProps
+    end: InputProps
   }>
   apply: (range: [number, number]) => void
   remove: () => void
@@ -26,7 +27,16 @@ type RangeFilterProps = {
 
 export const RangeFilter: FC<
   ComponentPropsWithoutRef<"div"> & RangeFilterProps
-> = ({ name, defaultRange, inputs, searchRange, apply, remove, ...props }) => {
+> = ({
+  name,
+  defaultRange,
+  inputs,
+  step = 0.01,
+  searchRange,
+  apply,
+  remove,
+  ...props
+}) => {
   const [range, setRange] = useState<[number, number]>(
     searchRange ?? defaultRange
   )
@@ -54,14 +64,14 @@ export const RangeFilter: FC<
       <div className="flex flex-col gap-4 p-4">
         <div className="flex items-center justify-between">
           <Input
-            step={0.01}
+            min={0}
             {...inputs?.start}
+            step={step}
             className={cn(
               "h-8 max-w-[160px] text-sm",
               inputs?.start?.className
             )}
             type="number"
-            min={0}
             value={range[0]}
             onChange={(e) => {
               const newStart = +e.target.value
@@ -69,9 +79,9 @@ export const RangeFilter: FC<
             }}
           />
           <Input
-            step={0.01}
             min={0}
             {...inputs?.end}
+            step={step}
             type="number"
             className={cn("h-8 max-w-[160px] text-sm", inputs?.end?.className)}
             value={range[1]}
@@ -85,7 +95,7 @@ export const RangeFilter: FC<
           className="py-1"
           value={range}
           max={defaultRange[1]}
-          step={inputs?.start?.step ?? 0.01}
+          step={step}
           onValueChange={(values) => setRange(values as [number, number])}
         />
       </div>

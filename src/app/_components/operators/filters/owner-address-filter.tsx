@@ -28,6 +28,9 @@ export function OwnerAddressFilter() {
   const [open, setOpen] = useState(false)
   const [search, setSearch] = useState<string>("")
   const { network, filters, setFilters } = useOperatorsSearchParams()
+
+  const isSearchValidAddress = isAddress(search)
+
   const query = useQuery({
     queryKey: ["operators", "owner-address", search, network],
     queryFn: async () => {
@@ -41,7 +44,7 @@ export function OwnerAddressFilter() {
     select: (data) => [
       ...new Set(data.data.map((operator) => operator.ownerAddress as Address)),
     ],
-    enabled: open && isAddress(search),
+    enabled: open && isSearchValidAddress,
   })
 
   return (
@@ -60,7 +63,11 @@ export function OwnerAddressFilter() {
       }}
     >
       <Command>
-        <div className="p-2 pb-0">
+        <div
+          className={cn("p-2", {
+            "pb-0": isSearchValidAddress,
+          })}
+        >
           <CommandInput
             placeholder="Search addresses"
             value={search}
@@ -92,45 +99,47 @@ export function OwnerAddressFilter() {
             ))}
           </div>
         )}
-        <CommandList
-          className={cn("max-h-none overflow-y-auto", {
-            "pt-0": !filters.ownerAddress?.length,
-          })}
-        >
-          {query.isLoading ? (
-            <CommandLoading className="flex items-center justify-center p-4">
-              <Loader2 className="animate-spin" />
-            </CommandLoading>
-          ) : (
-            <CommandEmpty>This list is empty.</CommandEmpty>
-          )}
-          <CommandGroup>
-            {query.data?.map((owner_address) => (
-              <CommandItem
-                key={owner_address}
-                value={owner_address}
-                className="flex h-10 items-center space-x-2 px-2"
-                onSelect={() => {
-                  setFilters((prev) => ({
-                    ...prev,
-                    ownerAddress: xor(prev.ownerAddress, [owner_address]),
-                  }))
-                }}
-              >
-                <span
-                  className={cn(
-                    "flex-1 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  )}
+        {isSearchValidAddress && (
+          <CommandList
+            className={cn("max-h-none overflow-y-auto", {
+              "pt-0": !filters.ownerAddress?.length,
+            })}
+          >
+            {query.isLoading ? (
+              <CommandLoading className="flex items-center justify-center p-4">
+                <Loader2 className="animate-spin" />
+              </CommandLoading>
+            ) : (
+              <CommandEmpty>This list is empty.</CommandEmpty>
+            )}
+            <CommandGroup>
+              {query.data?.map((owner_address) => (
+                <CommandItem
+                  key={owner_address}
+                  value={owner_address}
+                  className="flex h-10 items-center space-x-2 px-2"
+                  onSelect={() => {
+                    setFilters((prev) => ({
+                      ...prev,
+                      ownerAddress: xor(prev.ownerAddress, [owner_address]),
+                    }))
+                  }}
                 >
-                  {owner_address}
-                </span>
-                <div className="flex h-5 w-6 items-center justify-center rounded-md border border-gray-400">
-                  <MdKeyboardReturn className="size-3 text-gray-500" />
-                </div>
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        </CommandList>
+                  <span
+                    className={cn(
+                      "flex-1 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    )}
+                  >
+                    {owner_address}
+                  </span>
+                  <div className="flex h-5 w-6 items-center justify-center rounded-md border border-gray-400">
+                    <MdKeyboardReturn className="size-3 text-gray-500" />
+                  </div>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        )}
       </Command>
     </FilterButton>
   )

@@ -39,7 +39,7 @@ export function NameFilter() {
         perPage: 10,
       })
     },
-    enabled: open && Boolean(debouncedSearch),
+    enabled: open && Boolean(search && debouncedSearch),
   })
 
   const showList = search && debouncedSearch

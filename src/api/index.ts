@@ -1,16 +1,16 @@
-// import { getSSVNetworkDetails } from "@/hooks/use-ssv-network-details";
-import urlJoin from "url-join";
+import urlJoin from "url-join"
 
-export const endpoint = (...paths: (string | number)[]) => {
-  const ssvNetwork = {
-    api: "https://api.stage.ops.ssvlabsinternal.com/api",
-    apiVersion: "v4",
-    apiNetwork: "holesky",
-  };
+import { getSSVNetworkDetails } from "@/lib/utils/ssv-network-details"
+
+export const endpoint = (chainId: number, ...paths: (string | number)[]) => {
+  const ssvNetwork = getSSVNetworkDetails(chainId)
+  if (!ssvNetwork) {
+    throw new Error(`SSV network details not found for chainId: ${chainId}`)
+  }
   return urlJoin(
     ssvNetwork.api,
     ssvNetwork.apiVersion,
     ssvNetwork.apiNetwork,
     ...paths.map(String)
-  );
-};
+  )
+}

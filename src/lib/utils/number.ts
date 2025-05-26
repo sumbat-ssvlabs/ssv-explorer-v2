@@ -1,52 +1,64 @@
-import { formatUnits } from "viem";
+import { formatUnits } from "viem"
+
+export const currencyFormatter = new Intl.NumberFormat("en-US", {
+  style: "currency",
+  currency: "USD",
+  maximumFractionDigits: 2,
+})
 
 export const numberFormatter = new Intl.NumberFormat("en-US", {
   useGrouping: true,
   maximumFractionDigits: 2,
-});
+})
 
 export const _percentageFormatter = new Intl.NumberFormat("en-US", {
   style: "percent",
   maximumFractionDigits: 2,
-});
+})
 
 export const percentageFormatter = {
   format: (value?: number) => {
-    if (!value) return "0%";
-    return _percentageFormatter.format(value / 100);
+    if (!value) return "N/A"
+    return _percentageFormatter.format(value / 100)
   },
-};
+}
 
 export const bigintFormatter = new Intl.NumberFormat("en-US", {
   useGrouping: false,
   maximumFractionDigits: 7,
-});
+})
 
 export const ethFormatter = new Intl.NumberFormat("en-US", {
   useGrouping: true,
   maximumFractionDigits: 4,
-});
+})
 
 export const formatSSV = (num: bigint, decimals = 18) =>
-  ethFormatter.format(+formatUnits(num, decimals));
+  ethFormatter.format(+formatUnits(num, decimals))
 
 export const formatBigintInput = (num: bigint, decimals = 18) =>
-  bigintFormatter.format(+formatUnits(num, decimals));
+  bigintFormatter.format(+formatUnits(num, decimals))
 
 const units = {
-  seconds: 1000,
-  minutes: 60000,
-  hours: 3600000,
-  days: 86400000,
-  weeks: 604800000,
-  months: 2629746000,
-  years: 31556952000,
-} as const;
+  s: 1000,
+  m: 60000,
+  h: 3600000,
+  d: 86400000,
+  w: 604800000,
+  mon: 2629746000,
+  y: 31556952000,
+} as const
 
-export const ms = (value: number, unit: keyof typeof units): number => {
-  return value * units[unit];
-};
+type Unit = keyof typeof units
+
+const regex = /^([\d.]+)(\w+)$/
+export const ms = (value: `${number}${Unit}`): number => {
+  const match = value.match(regex)
+  if (!match) return 0
+  const [, num, unit] = match
+  return Number(num) * units[unit as keyof typeof units]
+}
 
 export const sortNumbers = <T extends bigint | number>(numbers: T[]): T[] => {
-  return [...numbers].sort((a, b) => Number(a) - Number(b));
-};
+  return [...numbers].sort((a, b) => Number(a) - Number(b))
+}

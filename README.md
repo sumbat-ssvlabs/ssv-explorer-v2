@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# SSV Web
 
-First, run the development server:
+# Development
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### Running application
+
+`yarn start`
+
+Runs the app in the development mode<br />
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+The page will reload if you make edits.<br />
+You will also see any lint errors in the console.
+
+### Testing
+
+#### Functional Tests
+
+`yarn test` - no watching mode
+
+`yarn test:dev` - run tests in watch mode
+
+Launches the test runner in the interactive watch mode.<br />
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+#### E2E Tests
+
+##### Unzip dependencies
+
+```
+unzip cypress/plugins/MetaMask/metamask-chrome-9.5.0.zip
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```
+unzip cypress/integration/ssv/cli/eth2.0-deposit-cli-master.zip
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+##### Install deposit CLI dependencies
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+For the virtualenv users, you can create a new venv:
 
-## Learn More
+```
+cd cypress/integration/ssv/cli/eth2.0-deposit-cli-master
+pip3 install virtualenv
+virtualenv .venv
+source .venv/bin/activate
+```
 
-To learn more about Next.js, take a look at the following resources:
+and install the dependencies:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+python3 setup.py install
+pip3 install -r requirements.txt
+pip3 install pytest
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Check that tests are passing before starting using deposit CLI for auto-generation of keystore files during running cypress:
 
-## Deploy on Vercel
+```
+cd cypress/integration/ssv/cli/eth2.0-deposit-cli-master
+source .venv/bin/activate
+python3 -m pytest .
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Building
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+`yarn build`
+
+Builds the app for production to the `build` folder.<br />
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br />
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### Linting
+
+`yarn lint`
+
+Lint checks works on every change of source code.
+
+Also, lint happens before developer tries to commit (husky package).
+
+### Git Commits
+
+As said upper, on every commit attempt husky runs linter to check source code.
+
+### Git Pushes
+
+On every push attempt tests are running to check that changes are not break anything.
+
+# Documentation
+
+## License
+
+The ssv-api is licensed under the
+[GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.en.html),
+also included in our repository in the `LICENSE` file.
+

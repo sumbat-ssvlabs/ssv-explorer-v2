@@ -1,49 +1,63 @@
-import { endpoint } from "@/src/api";
-import { api } from "@/src/lib/api-client";
-import { add0x } from "@/src/lib/utils/strings";
-import type { Address } from "viem";
+"use server"
 
-export interface IsRegisteredValidatorResponse {
-  type: string;
-  data: {
-    id: number;
-    network: string;
-    version: string;
-    ownerAddress: string;
-    publicKey: string;
-    operators: number[];
-    cluster: string;
-    shares: string;
-    sharesPublicKeys: string[];
-    encryptedKeys: string[];
-    memo: string;
-    blockNumber: number;
-    logIndex: number;
-    transactionIndex: number;
-    addedAtBlockNumber: number;
-    addedAtLogIndex: number;
-    addedAtTransactionIndex: number;
-    isValid: boolean;
-    isDeleted: boolean;
-    isLiquidated: boolean;
-    ignoreOnSync: boolean;
-    createdAt: string;
-    updatedAt: string;
-    isDraft: boolean;
-    isPublicKeyValid: boolean;
-    isSharesValid: boolean;
-    isOperatorsValid: boolean;
-  };
-}
+import { endpoint } from "@/api"
+import { api } from "@/api/api-client"
+import { merge, omitBy } from "lodash-es"
 
-export const getIsRegisteredValidator = async (publicKey: string) => {
-  return await api.get<IsRegisteredValidatorResponse>(
-    endpoint("validators/isRegisteredValidator", add0x(publicKey)),
-  );
-};
+import { type PaginatedValidatorsResponse, type Validator } from "@/types/api"
+import { type ValidatorsSearchSchema } from "@/lib/search-parsers/validators-search-parsers"
+import { stringifyBigints } from "@/lib/utils/bigint"
+import { serializeSortingState } from "@/lib/utils/parsers"
+import { unstable_cache } from "@/lib/utils/unstable-cache"
 
-export const getAllValidators = async (clusterHash: string | Address) => {
-  return await api.get<IsRegisteredValidatorResponse>(
-    endpoint("validators/validatorsByClusterHash", add0x(clusterHash)),
-  );
-};
+export const searchValidators = async (
+  params: Partial<ValidatorsSearchSchema> &
+    Pick<ValidatorsSearchSchema, "network">
+) =>
+  await unstable_cache(
+    async () => {
+      const filtered = omitBy(
+        merge({
+          ...params,
+          ordering: params.ordering
+            ? serializeSortingState(params.ordering)
+            : undefined,
+        }),
+        (value) => value === undefined || value === null
+      )
+
+      const searchParams = new URLSearchParams(
+        filtered as unknown as Record<string, string>
+      )
+      const url = endpoint(params.network, "validators", `?${searchParams}`)
+      const response = await api.get<PaginatedValidatorsResponse>(url)
+      return response
+    },
+    [JSON.stringify(stringifyBigints(params))],
+    {
+      revalidate: 30,
+      tags: ["validators"],
+    }
+  )()
+
+export const getValidator = async (
+  params: Pick<ValidatorsSearchSchema, "network"> & {
+    publicKey: string
+  }
+) =>
+  await unstable_cache(
+    async () => {
+      const response = await api.get<Validator>(
+        endpoint(params.network, "validators", params.publicKey)
+      )
+      if (!response) {
+        throw new Error("Validator not found")
+      }
+      return response
+    },
+    [JSON.stringify(stringifyBigints(params))],
+    {
+      revalidate: 30,
+      tags: ["validator"],
+    }
+  )()

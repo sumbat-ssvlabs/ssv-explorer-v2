@@ -1,0 +1,111 @@
+/* eslint-disable @next/next/no-img-element */
+import { ImageResponse } from "next/og"
+
+export default function Image({ params }: { params: { id: string } }) {
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          position: "relative",
+          height: "100%",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          backgroundColor: "white",
+          padding: "40px",
+          gap: "40px",
+          justifyContent: "center",
+          fontFamily: '"Inter", "Arial", sans-serif',
+        }}
+      >
+        <img
+          src="http://localhost:3000/images/ssvIcons/icon.svg"
+          alt="Operator Avatar"
+          style={{
+            position: "absolute",
+            top: -100,
+            right: -120,
+            height: 380,
+            width: 380,
+            opacity: 0.2,
+            objectFit: "contain",
+          }}
+        />
+
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <img
+            src="http://localhost:3000/images/operator-avatar.svg"
+            style={{
+              width: 92,
+              height: 92,
+              borderRadius: "16px",
+            }}
+            alt="Operator Avatar"
+          />
+          <div
+            style={{ display: "flex", flexDirection: "column", fontSize: 32 }}
+          >
+            <span style={{ fontFamily: "Open Sans", fontWeight: "bold" }}>
+              Operator #{params.id}
+            </span>
+            <span style={{ fontSize: 16 }}>Operator Description</span>
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            gap: "12px",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              minWidth: "120px",
+            }}
+          >
+            <span style={{ fontSize: 14, color: "#666" }}>24H</span>
+            <span style={{ fontSize: 32, fontWeight: 900, color: "#22c55e" }}>
+              98%
+            </span>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              minWidth: "120px",
+            }}
+          >
+            <span style={{ fontSize: 14, color: "#666" }}>30D</span>
+            <span style={{ fontSize: 32, fontWeight: 900, color: "#22c55e" }}>
+              95%
+            </span>
+          </div>
+
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              minWidth: "120px",
+            }}
+          >
+            <span style={{ fontSize: 14, color: "#666" }}>Fee</span>
+            <span style={{ fontSize: 32, fontWeight: 900, color: "#000" }}>
+              2.5 SSV
+            </span>
+          </div>
+        </div>
+      </div>
+    ),
+    {
+      width: 1200 / 2,
+      height: Math.round(630 / 2),
+    }
+  )
+}

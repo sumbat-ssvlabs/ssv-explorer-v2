@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { ImageResponse } from "next/og"
 
+import { siteConfig } from "@/config/site"
+
 export default function Image({ params }: { params: { id: string } }) {
   return new ImageResponse(
     (
@@ -19,7 +21,7 @@ export default function Image({ params }: { params: { id: string } }) {
         }}
       >
         <img
-          src="http://localhost:3000/images/ssvIcons/icon.svg"
+          src={siteConfig.url + "/images/ssvIcons/icon.svg"}
           alt="ssv logo"
           width={380}
           height={380}
@@ -34,7 +36,7 @@ export default function Image({ params }: { params: { id: string } }) {
 
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <img
-            src="http://localhost:3000/images/operator-avatar.svg"
+            src={siteConfig.url + "/images/operator-avatar.svg"}
             width={92}
             height={92}
             style={{

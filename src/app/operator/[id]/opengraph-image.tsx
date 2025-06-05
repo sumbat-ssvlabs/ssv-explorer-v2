@@ -20,13 +20,13 @@ export default function Image({ params }: { params: { id: string } }) {
       >
         <img
           src="http://localhost:3000/images/ssvIcons/icon.svg"
-          alt="Operator Avatar"
+          alt="ssv logo"
+          width={380}
+          height={380}
           style={{
             position: "absolute",
             top: -100,
             right: -120,
-            height: 380,
-            width: 380,
             opacity: 0.2,
             objectFit: "contain",
           }}
@@ -35,9 +35,9 @@ export default function Image({ params }: { params: { id: string } }) {
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <img
             src="http://localhost:3000/images/operator-avatar.svg"
+            width={92}
+            height={92}
             style={{
-              width: 92,
-              height: 92,
               borderRadius: "16px",
             }}
             alt="Operator Avatar"
